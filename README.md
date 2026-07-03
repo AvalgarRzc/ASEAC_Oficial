@@ -34,7 +34,7 @@ Construida pensando en la movilidad. ASEAC es extremadamente ligera, carga al in
 ASEAC no es solo una página web; es un proyecto en constante evolución creado por y para estudiantes. La misión es construir la herramienta definitiva que elimine la fricción administrativa y te permita enfocarte en lo que realmente importa: **tu formación y tu futuro profesional.**
 
 > **Fase Actual:** Versión Oficial 1.0 (Core Visual y Estructural).
-> *Explorando la integración de Inteligencia Artificial para asistencia técnica en próximas fases y la implementacion de mas funcionalidades como tambien el mejoramiento del entorno visual y un entorno comunitario para el uso de los estudiantes que se desea implementar.*  
+> *Explorando la integración de Inteligencia Artificial para asistencia técnica en próximas fases y la implementacion de mas funcionalidades: el mejoramiento del entorno visual y un entorno comunitario para el uso de los estudiantes que se desea implementar.*  
 
 ---
-*Diseñado con pasión por la lógica, el orden y el desarrollo de software.*
+*Diseñado con pasión por la lógica, el estudio arduo sin distracciones, manejo facil de tus materias y horarios.*
