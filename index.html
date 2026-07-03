@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<!--*************************************************************************************************************
+    * ASEAC — index.html                                                                                        *
+    * Estructura principal de la aplicación:                                                                    *
+    *    · <head>   : metadatos PWA, dependencias externas, CSS                                                 *
+    *    · <nav>    : barra de navegación superior--BOTONES                                                     *
+    *    · <main>   : malla curricular estática de ejemplo de la carrera de INGENIERIA DE SISTEMAS              *
+    *    · Modales  : Crear Malla, Horario, Tareas, Estudio                                                     *  
+    *    · <footer> : firma de yo                                                                               *
+    *************************************************************************************************************-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ASEAC</title>
+    <link rel="icon" href="avalgar.ico" type="image/x-icon">
+    <!--******************************************************************************
+        * PWA (Progressive Web App)                                                  *
+        * manifest.json → permite instalar la app en móvil/desktop.                  *
+        * theme-color  → color de la barra de estado del navegador.                  *
+        ****************************************************************************** -->
+    <link rel="manifest" href="manifest.json">
+    <!-- tema por predeterminado para la presentacion de la malla de prueba(#050505) -->
+    <meta name="theme-color" content="#050505">
+    <!--*******************iOS — Comportamiento nativo ********************************************
+        *apple-mobile-web-app-capable   → elimina la barra del navegador en iOS.                  *
+        *apple-mobile-web-app-status-bar-style → barra de estado transparente.                    *
+        *apple-mobile-web-app-title     → nombre que aparece bajo el ícono instalado.             *
+        *apple-touch-icon               → ícono para la pantalla de inicio de iOS.                *
+        *FIX: un único apple-touch-icon apuntando a icon-512.png (PNG recomendado para PWA)       *
+        *******************************************************************************************-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ASEAC">
+    <link rel="apple-touch-icon" href="logo avrzc web.png">
+    <!--**************Android y otros navegadores************************************                                         
+        * mobile-web-app-capable  → habilita modo standalone en Android.            *
+        * application-name        → nombre corto de la PWA.                         *
+        * description             → descripción para SEO y tiendas.                 *
+        *****************************************************************************  -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="ASEAC">
+    <meta name="description" content="Aplicación de Seguimiento Academico">
+    <!--***********************Windows / Edge PWA************************************
+        *msapplication-TileColor → color del tile en el menú inicio de Windows.     *
+        *msapplication-TileImage → ícono del tile cuadrado de Windows.              *
+        *****************************************************************************  -->
+    <meta name="msapplication-TileColor" content="#22252a">
+    <meta name="msapplication-TileImage" content="avalgar.ico">
+    <!--***************************LIBRERIAS EXTERNAS********************************
+        * leader-line-new → librería para dibujar flechas SVG entre elementos.      *
+        * jspdf            → genera archivos PDF en el navegador (módulo PDF).      *
+        * html2canvas      → captura un nodo DOM como imagen canvas (módulo PDF).   *
+        * font-awesome 6   → íconos SVG vectoriales para botones de la UI.          *
+        ***************************************************************************** -->
+    <script src="https://cdn.jsdelivr.net/npm/leader-line-new@1.1.9/leader-line.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- KaTeX para tener notaciones matematicas en la ia-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <!--***********************************************************************************-->
+</head>
+
+<body>
+    <!--*************************************************************************************** 
+        *    NAVBAR — Barra de navegación superior fija.                                      *
+        *    Dividida en dos zonas:                                                           *
+        *        *ZONA 1: .logo         → nombre de la app + subtítulo del desarrollador      *
+        *        *ZONA 2: .navbar-derecha → botones de acción + utilidades inyectadas por JS  *
+        ***************************************************************************************-->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <!-- ** Logo de la aplicación con subtítulo pequeño**  -->
+            <div class="logo">ASEAC <span class="logo-sub">A-RZC</span></div>
+            
+            <div class="dev-info-nav">
+                <span>Desarrollado por <strong>AVALGAR</strong> — 2026</span>
+                <img src="avalgar.ico" alt="Logo Dev" class="logo-dev-nav">
+                <button class="btn-apoyame">Apóyame</button>
+            </div>
+        </div>
+
+        <!-- ********** Zona de botones 1: Acciones principales (botones visibles en la sola pagina)******
+            *********** Zona de botones 2: Utilidades dinámicas (tema, notificaciones etc...)****** -->
+        <div class="navbar-derecha">
+            <div class="acciones-malla">
+                <!-- Reiniciar: borra todo el progreso de aprobación -->
+                <button id="btn-reiniciar"     class="nav-btn nav-btn--danger"  data-tip="Reiniciar progreso">
+                    <i class="fas fa-redo-alt"></i><span>Reiniciar</span>
+                </button>
+                <!-- Importar: carga una malla desde un código Base64 -->
+                <button id="btn-importar"      class="nav-btn nav-btn--ghost"   data-tip="Importar código">
+                    <i class="fas fa-file-import"></i><span>Importar</span>
+                </button>
+                <!-- Exportar: genera un código Base64 de la malla actual -->
+                <button id="btn-exportar"      class="nav-btn nav-btn--outline" data-tip="Exportar malla">
+                    <i class="fas fa-file-export"></i><span>Exportar</span>
+                </button>
+                <!-- Mi Horario: abre el planificador semanal -->
+                <button id="btn-abrir-horario" class="nav-btn nav-btn--primary" data-tip="Mi horario">
+                    <i class="fas fa-calendar-week"></i><span>Mi Horario</span>
+                </button>
+                <!-- Tareas: abre el calendario de tareas y parciales -->
+                <button id="btn-abrir-tareas" class="nav-btn nav-btn--ghost" data-tip="Tareas y Parciales">
+                    <i class="fas fa-tasks"></i><span>Tareas</span>
+                </button>
+                <!-- Estudio: abre el temporizador Pomodoro -->
+                <button id="btn-abrir-estudio" class="nav-btn nav-btn--ghost" data-tip="Modo Estudio">
+                    <i class="fas fa-brain"></i><span>Estudio</span>
+                </button>
+                <!-- Apuntes: block de notas interactivo con imágenes (DB) -->
+                <button id="btn-abrir-apuntes" class="nav-btn nav-btn--ghost" data-tip="Gestor de Apuntes">
+                    <i class="fas fa-book-open"></i><span>Apuntes</span>
+                </button>
+            </div>
+
+            <!-- #nav-utilidades: agrupado ahora bajo botón MENU Hamburguesa-->
+            <div style="position:relative;" id="menu-utilidades-wrapper">
+                <button class="nav-btn nav-btn--ghost" id="btn-menu-utilidades" style="margin-left:8px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); padding: 0 10px;">
+                    <i class="fas fa-bars"></i><span style="margin-left: 5px; letter-spacing:1px;">MENU</span>
+                </button>
+                <div class="nav-utilidades panel-temas oculto" id="nav-utilidades" style="position: absolute; top: calc(100% + 14px); right: 0; flex-direction: column; width: auto; min-width: 50px; padding: 10px; gap: 12px; z-index: 500;"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!--*******************************************************************************************
+        *                       MAIN — MALLA CURRICULAR contenedor                                *
+        *--Contiene el título y el #contenedor-malla con la malla estática                        *
+        *   de ejemplo de Ingeniería de Sistemas (4 semestres) como demostración prederminado.    *
+        *--Cuando el usuario crea/importa su propia malla, JS vacía este                          *
+        *   contenedor y renderiza las columnas dinámicamente.                                    *
+        ******************************************************************************************* -->
+    <main>
+        <h2 id="titulo-malla-pantalla" class="titulo-seccion">Malla Curricular: Ingeniería de Sistemas</h2>
+        
+        <!-- Contenedor del progreso de la malla -->
+        <div id="progreso-malla-inline" class="progreso-malla-inline">
+            <div class="stat-inline"><span class="dot dot-aprobada"></span> APROBADAS <strong id="stat-aprobadas">0</strong></div>
+            <div class="stat-inline"><span class="dot dot-disponible"></span> DISPONIBLES <strong id="stat-restantes">0</strong></div>
+            <div class="stat-inline"><span class="dot dot-total"></span> TOTAL <strong id="stat-total">0</strong></div>
+            
+            <div class="barra-progreso-line">
+                <div id="barra-progreso-fill" class="barra-fill-line"></div>
+            </div>
+            
+            <div class="stat-porcentaje-inline" id="stat-porcentaje">0%</div>
+        </div>
+
+        <div class="contenedor-malla" id="contenedor-malla">
+            <!-- 1er SEMESTRE: materias sin prerrequisitos  -->
+            <div class="columna-nivel">
+                <h3>1er Semestre</h3>
+                <div class="tarjeta-materia disponible" id="SIS-111">
+                    <div class="encabezado-materia"><span>SIS-111</span></div>
+                    <div class="nombre-materia">Programación I</div>
+                </div>
+                <div class="tarjeta-materia disponible" id="MAT-113">
+                    <div class="encabezado-materia"><span>MAT-113</span></div>
+                    <div class="nombre-materia">Análisis Matemático I</div>
+                </div>
+                <div class="tarjeta-materia disponible" id="MAT-114">
+                    <div class="encabezado-materia"><span>MAT-114</span></div>
+                    <div class="nombre-materia">Matemática Discreta I</div>
+                </div>
+                <div class="tarjeta-materia disponible" id="FIS-115">
+                    <div class="encabezado-materia"><span>FIS-115</span></div>
+                    <div class="nombre-materia">Física I</div>
+                </div>
+            </div>
+
+            <!-- ── 2do SEMESTRE: requieren haber aprobado cada materia del 1er semestre ── -->
+            <div class="columna-nivel">
+                <h3>2do Semestre</h3>
+                <div class="tarjeta-materia bloqueada" id="SIS-211" data-prerrequisitos='["SIS-111"]'>
+                    <div class="encabezado-materia"><span>SIS-211</span></div>
+                    <div class="nombre-materia">Programación II</div>
+                </div>
+                <div class="tarjeta-materia bloqueada" id="MAT-212" data-prerrequisitos='["MAT-113"]'>
+                    <div class="encabezado-materia"><span>MAT-212</span></div>
+                    <div class="nombre-materia">Análisis Matemático II</div>
+                </div>
+                <div class="tarjeta-materia bloqueada" id="MAT-213" data-prerrequisitos='["MAT-114"]'>
+                    <div class="encabezado-materia"><span>MAT-213</span></div>
+                    <div class="nombre-materia">Matemática Discreta II</div>
+                </div>
+                <div class="tarjeta-materia bloqueada" id="FIS-214" data-prerrequisitos='["FIS-115"]'>
+                    <div class="encabezado-materia"><span>FIS-214</span></div>
+                    <div class="nombre-materia">Física II</div>
+                </div>
+            </div>
+
+            <!-- ── 3er SEMESTRE: prerrequisitos del 2do semestre ── -->
+            <div class="columna-nivel">
+                <h3>3er Semestre</h3>
+                <div class="tarjeta-materia bloqueada" id="SIS-311" data-prerrequisitos='["SIS-211"]'>
+                    <div class="encabezado-materia"><span>SIS-311</span></div>
+                    <div class="nombre-materia">Programación III</div>
+                </div>
+                <div class="tarjeta-materia bloqueada" id="EDA-312" data-prerrequisitos='["SIS-211", "MAT-213"]'>
+                    <div class="encabezado-materia"><span>EDA-312</span></div>
+                    <div class="nombre-materia">Estructura de Datos y Alg.</div>
+                </div>
+                <div class="tarjeta-materia bloqueada" id="EST-315" data-prerrequisitos='["MAT-213", "MAT-212"]'>
+                    <div class="encabezado-materia"><span>EST-315</span></div>
+                    <div class="nombre-materia">Estadística I</div>
+                </div>
+                <div class="tarjeta-materia bloqueada" id="MAT-314" data-prerrequisitos='["MAT-212", "FIS-214"]'>
+                    <div class="encabezado-materia"><span>MAT-314</span></div>
+                    <div class="nombre-materia">Análisis Matemático III</div>
+                </div>
+            </div>
+
+            <!-- ── 4to SEMESTRE: prerrequisitos del 3er semestre ── -->
+            <div class="columna-nivel">
+                <h3>4to Semestre</h3>
+                <div class="tarjeta-materia bloqueada" id="SIS-411" data-prerrequisitos='["SIS-311", "EDA-312"]'>
+                    <div class="encabezado-materia"><span>SIS-411</span></div>
+                    <div class="nombre-materia">Base de Datos I</div>
+                </div>
+                <div class="tarjeta-materia bloqueada" id="ADS-412" data-prerrequisitos='["EDA-312"]'>
+                    <div class="encabezado-materia"><span>ADS-412</span></div>
+                    <div class="nombre-materia">Análisis y Diseño de Sist.</div>
+                </div>
+                <div class="tarjeta-materia bloqueada" id="EST-417" data-prerrequisitos='["EST-315"]'>
+                    <div class="encabezado-materia"><span>EST-417</span></div>
+                    <div class="nombre-materia">Estadística II</div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Botón IA Flotante — ⏸ EN PAUSA: oculto mientras se optimiza el servidor-cliente.
+         Para reactivar: quitar el style="display:none" y descomentar ia.js abajo. -->
+    <button id="btn-abrir-ia" class="btn-flotante btn-ia-flotante" title="ASEAC-IA (Próximamente)" style="display:none" disabled>
+        <i class="fas fa-robot"></i>
+    </button>
+    <!-- ** BOTÓN FLOTANTE "+" **
+        Posición fija abajo-derecha. Abre el wizard de creación de malla nueva. -->
+    <button id="btn-abrir-modal" class="btn-flotante" title="Crear nueva malla">
+        <span>+</span>
+    </button>
+
+    <!-- *********************************************************************** 
+         *MODAL: CREAR NUEVA MALLA — WIZARD 3 PASOS                            *
+         *Paso 1: Nombre de carrera + tipo de periodo + cantidad de periodos.  *
+         *Paso 2: Input numérico para cantidad de materias por periodo.        *
+         *Paso 3: Sigla + nombre + prerrequisitos de cada materia.             *
+         *JS controla qué paso es visible via clase "activo" en .modal-paso.   *
+         ********************************************************************* -->
+    <div id="modal-malla" class="modal-fondo">
+        <div class="modal-contenido">
+            <div class="modal-header">
+                <h3>Crear Nueva Malla</h3>
+                <span class="cerrar-modal" id="btn-cerrar-modal">&times;</span>
+            </div>
+            <div id="modal-paso-1" class="modal-paso activo">
+                <div class="grupo-input">
+                    <label>Nombre de la Carrera / Malla</label>
+                    <input type="text" id="input-nombre-malla" placeholder="Ej. Ingeniería-licenciatura">
+                </div>
+                <div class="fila-inputs">
+                    <div class="grupo-input">
+                        <label>Tipo de Periodo</label>
+                        <select id="select-tipo-periodo">
+                            <option value="Semestre">Semestres</option>
+                            <option value="Año">Años</option>
+                        </select>
+                    </div>
+                    <div class="grupo-input">
+                        <label>Cantidad</label>
+                        <input type="number" id="input-cantidad-periodos" min="1" max="14" value="1">
+                    </div>
+                </div>
+                <button id="btn-siguiente-paso" class="btn-primario">Siguiente paso</button>
+            </div>
+            <div id="modal-paso-2" class="modal-paso">
+                <p class="texto-instruccion" id="texto-instruccion-paso2">¿Cuántas materias tiene cada periodo?</p>
+                <div id="contenedor-periodos-dinamico" class="contenedor-scroll"></div>
+                <div class="botones-accion">
+                    <button id="btn-volver-paso" class="btn-secundario">Volver</button>
+                    <button id="btn-configurar-materias" class="btn-primario">Configurar Materias</button>
+                </div>
+            </div>
+            <div id="modal-paso-3" class="modal-paso">
+                <p class="texto-instruccion" style="color: var(--color-disponible); font-weight: bold; margin-bottom: 15px;">
+                    Define las Materias y sus Prerrequisitos
+                </p>
+                <div id="contenedor-materias-dinamico" class="contenedor-scroll" style="max-height: 350px;"></div>
+                <div class="botones-accion">
+                    <button id="btn-volver-paso2" class="btn-secundario">Volver</button>
+                    <button id="btn-generar-malla-final" class="btn-primario" style="background-color: var(--color-aprobada); color: #1a1c20;">
+                        Generar Malla
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--************************************************************
+        *MODAL: PLANIFICADOR DE HORARIO SEMANAL                    *
+        *Layout en 2 columnas:                                     *
+        *    IZQUIERDA: .panel-seleccion-materias                  *
+        *    · Lista de materias disponibles (pills clickeables).  *
+        *    · Botón "Limpiar Todo" para borrar el horario completo*
+        *   DERECHA: .calendario-espacio                           *
+        *    · JS inyecta aquí las pestañas Mañana/Tarde y los grids*
+        *En la cabecera: botón PDF para exportar el horario activo. *
+        ************************************************************ -->
+    <div id="modal-horario" class="modal-fondo">
+        <div class="modal-contenido horario-extra-ancho">
+            <div class="modal-header">
+                <h3><i class="fas fa-calendar-alt"></i> Planificador de Semestre — 2026</h3>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <button id="btn-exportar-pdf" class="nav-btn nav-btn--outline" style="height:30px;padding:0 12px;font-size:.75em;"><i class="fas fa-file-pdf"></i><span>PDF</span></button>
+                    <span class="cerrar-modal" id="btn-cerrar-horario">&times;</span>
+                </div>
+            </div>
+            <div class="horario-container-flex">
+                <div class="panel-seleccion-materias">
+                    <h4>Materias Disponibles</h4>
+                    <p class="instruccion-mini">Selecciona una materia y luego haz clic en el horario.</p>
+                    <div id="lista-materias-horario" class="scroll-v"></div>
+                    <button id="btn-limpiar-horario" class="btn-secundario" style="width: 100%; margin-top: 10px;">Limpiar Todo</button>
+                </div>
+                <div class="calendario-espacio">
+                    <div class="calendario-grid" id="grid-horario-modal"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!--*****************************************************************************
+        *MODAL: TAREAS Y PARCIALES — CALENDARIO INTERACTIVO                         *
+        *Layout en 2 columnas:                                                      *
+        *    IZQUIERDA (#cal-panel):                                                *
+        *    · #cal-selector-row → botones ← → y selectores <select> de mes/año.    *
+        *    · #cal-dias-semana  → cabeceras Do/Lu/Ma/Mi/Ju/Vi/Sa.                  *
+        *    · #cal-grid         → grid de 7 cols generado por JS al abrir.         *
+        *    DERECHA (#tareas-side):                                                *
+        *    · #tareas-dia-titulo  → título del día seleccionado.                   *
+        *    · #form-evento        → formulario oculto de nueva tarea/parcial.      *
+        *    · #lista-dia-eventos  → eventos del día seleccionado (generado por JS).*
+        *    · #proximas-wrap      → próximas 6 fechas importantes.                 *
+        *****************************************************************************-->
+    <div id="modal-tareas" class="modal-fondo">
+        <div class="modal-contenido" style="max-width:860px;width:96vw;overflow:hidden;">
+            <div class="modal-header" style="flex-shrink:0;">
+                <h3><i class="fas fa-tasks"></i> Tareas &amp; Parciales</h3>
+                <span class="cerrar-modal" id="btn-cerrar-tareas">&times;</span>
+            </div>
+            <div id="tareas-layout">
+                <!-- IZQUIERDA: Calendario con selector mes/año -->
+                <div id="cal-panel">
+                    <div id="cal-selector-row">
+                        <button id="cal-prev">&#8592;</button>
+                        <div class="cal-nav-labels">
+                            <select id="cal-mes-select"></select>
+                            <select id="cal-ano-select"></select>
+                        </div>
+                        <button id="cal-next">&#8594;</button>
+                    </div>
+                    <div id="cal-dias-semana">
+                        <span>Do</span><span>Lu</span><span>Ma</span>
+                        <span>Mi</span><span>Ju</span><span>Vi</span><span>Sa</span>
+                    </div>
+                    <div id="cal-grid"></div>
+                </div>
+
+                <!-- DERECHA: Eventos -->
+                <div id="tareas-side">
+                    <div id="tareas-dia-titulo">Selecciona un dia</div>
+                    <div id="form-evento" style="display:none;">
+                        <div class="fila-inputs">
+                            <div class="grupo-input">
+                                <label>Hora</label>
+                                <input type="time" id="ev-hora" value="08:00">
+                            </div>
+                            <div class="grupo-input">
+                                <label>Tipo</label>
+                                <select id="ev-tipo">
+                                    <option value="tarea">Tarea</option>
+                                    <option value="parcial">Parcial</option>
+                                    <option value="proyecto">Proyecto</option>
+                                    <option value="examen">Examen</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grupo-input">
+                            <label>Materia</label>
+                            <select id="ev-materia">
+                                <option value="" disabled selected>— Selecciona una materia —</option>
+                            </select>
+                        </div>
+                        <div class="grupo-input">
+                            <label>Descripcion</label>
+                            <input type="text" id="ev-desc" placeholder="Ej. Parcial 1">
+                        </div>
+                        <button id="btn-guardar-evento" class="btn-primario" style="width:100%;margin-top:2px;">
+                            <i class="fas fa-plus"></i> Guardar
+                        </button>
+                    </div>
+                    <div id="lista-dia-eventos"></div>
+                    <div id="proximas-wrap">
+                        <div class="proximas-titulo">Proximas fechas</div>
+                        <div id="lista-proximas"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--*************************************************************************************
+        *MODAL: MODO ESTUDIO — TEMPORIZADOR POMODORO                                        *
+        *Layout en 2 columnas:                                                              *
+        *   IZQUIERDA (#estudio-timer-panel):                                               *
+        *    · #timer-modos        → 4 botones .tmodo (Pomodoro 25m, Descanso 5m,           *
+        *                            Descanso largo 15m, Sesión larga 45m).                 *
+        *    · #timer-wrap         → SVG circular con anillo de progreso.                   *
+        *    .tring-bg → pista gris, .tring-fg → progreso neon animado.                     *
+        *    #timer-inner → tiempo MM:SS y etiqueta del modo, superpuestos al SVG.          *
+        *    · #timer-controles    → botones reset y play/pause.                            *
+        *    · #timer-sesiones-hoy → contador de sesiones completadas hoy.                  *
+        *    DERECHA (#estudio-side):                                                       *
+        *    · #estudio-notas      → textarea con auto-guardado en localStorage.            *
+        *    · #estudio-pendientes → próximas tareas del módulo de Tareas (generado por JS).*
+        ************************************************************************************* -->
+    <div id="modal-estudio" class="modal-fondo">
+        <div class="modal-contenido" style="max-width:820px;width:96vw;">
+            <div class="modal-header">
+                <h3><i class="fas fa-brain"></i> Modo Estudio</h3>
+                <span class="cerrar-modal" id="btn-cerrar-estudio">&times;</span>
+            </div>
+            <div id="estudio-layout">
+                <div id="estudio-timer-panel">
+                    <div id="timer-modos">
+                        <button class="tmodo activo" data-min="25" data-label="Pomodoro">25 min</button>
+                        <button class="tmodo" data-min="15"  data-label="Descanso">15 min</button>
+                        <button class="tmodo" data-min="30" data-label="Descanso largo">30 min</button>
+                        <button class="tmodo" data-min="60" data-label="Sesion larga">60 min</button>
+                    </div>
+                    <div id="timer-wrap">
+                        <svg id="timer-svg" viewBox="0 0 220 220" width="220" height="220">
+                            <circle class="tring-bg" cx="110" cy="110" r="96"/>
+                            <circle class="tring-fg" id="tring-fg" cx="110" cy="110" r="96"/>
+                        </svg>
+                        <div id="timer-inner">
+                            <div id="timer-tiempo">25:00</div>
+                            <div id="timer-label-txt">Cronometro</div>
+                        </div>
+                    </div>
+                    <div id="timer-controles">
+                        <button id="btn-timer-reset"><i class="fas fa-redo"></i></button>
+                        <button id="btn-timer-play"><i class="fas fa-play"></i></button>
+                    </div>
+                    <div id="timer-sesiones-hoy">Sesiones hoy: <strong id="ses-num">0</strong></div>
+                </div>
+                <div id="estudio-side">
+                    <div class="estudio-box">
+                        <h4><i class="fas fa-sticky-note"></i> Notas rapidas</h4>
+                        <textarea id="estudio-notas" placeholder="Anota aqui lo que estudias como tambien las notas importantes de tus materias... No olvides que el estudio es importante pero tambien el descanso :)"></textarea>
+                    </div>
+                    <div class="estudio-box">
+                        <h4><i class="fas fa-list-check"></i> Pendientes proximos</h4>
+                        <div id="estudio-pendientes"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--************************************************************************
+        *MODAL: ASEAC-IA — Asistente de Tutorías                               *
+        *Chat con IA especializado en la malla curricular(gemini).             *
+        ************************************************************************ -->
+    <div id="modal-ia" class="modal-fondo">
+    </div>
+
+    <!-- ****************************************************************
+        *MODAL: APUNTES (INDEXEDDB)                                     *
+        *Layout en 2 columnas:                                          *
+        *    IZQUIERDA (#apuntes-lista-panel):                          *
+        *    · Botón "+ Nuevo Apunte"                                   *
+        *    · Lista clickeable de apuntes.                             *
+        *    DERECHA (#apuntes-editor-panel):                           *
+        *    · Campos de edición (Título, Materia, Texto)               *
+        *    · Zona de inserción y visualización de imágenes adjuntas.  *
+        ***************************************************************** -->
+    <div id="modal-apuntes" class="modal-fondo">
+        <div class="modal-contenido" style="max-width:1000px; width:98vw; height:85vh; display:flex; flex-direction:column; padding:0; overflow: hidden; border-radius: 2px; border: 1px solid rgba(255,255,255,0.05);">
+            <div class="modal-header" style="padding: 18px 24px; border-bottom: 1px solid rgba(255,255,255,0.03); flex-shrink:0;">
+                <h3><i class="fas fa-book-open"></i> Libreta de Apuntes</h3>
+                <span class="cerrar-modal" id="btn-cerrar-apuntes" style="cursor: pointer; opacity: 0.6; transition: 0.2s;">&times;</span>
+            </div>
+
+            <div id="apuntes-layout" style="display:flex; flex:1; overflow:hidden;">
+
+                <!-- IZQUIERDA: Panel de Navegación -->
+                <div id="apuntes-lista-panel" style="width: 280px; border-right: 1px solid rgba(255,255,255,0.03); display:flex; flex-direction:column; padding: 16px;">
+                    <button id="btn-nuevo-apunte" class="btn-primario" style="width:100%; margin-bottom: 16px; justify-content:center;">
+                        <i class="fas fa-plus"></i> Nuevo Apunte
+                    </button>
+                    <div id="apuntes-lista" class="scroll-v" style="flex:1; display:flex; flex-direction:column; gap:8px;">
+                        <div class="apunte-vacio-msg" style="text-align:center; color: var(--texto-secundario); margin-top:20px; font-size: 0.9em; opacity: 0.5;">
+                            Aún no hay apuntes.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DERECHA: Área de Edición Libre -->
+                <div id="apuntes-editor-panel" style="display:none; flex:1; flex-direction:column; background: rgba(0,0,0,0.1);">
+
+                    <div class="editor-header" style="padding: 16px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.02);">
+                        <input type="text" id="apunte-titulo" class="input-transparente" placeholder="Título del apunte..." autocomplete="off" style="font-size: 1.4em; font-weight:700; width:50%; background:transparent; border:none; color:var(--texto-principal); outline:none;">
+                        <div style="display:flex; gap: 10px; align-items:center;">
+                            <select id="apunte-materia" title="Vincular a Materia" style="background: var(--carbon-tarjeta); border: 1px solid rgba(255,255,255,0.05); color: var(--texto-secundario); padding: 6px 10px; border-radius: 2px; outline:none; cursor:pointer;">
+                                <option value="">General (Sin Materia)</option>
+                            </select>
+                            <button id="btn-guardar-apunte" class="btn-primario" style="padding: 6px 14px;"><i class="fas fa-save"></i> Guardar</button>
+                            <button id="btn-borrar-apunte" class="btn-eliminar-apunte" title="Borrar Apunte" style="background:transparent; border:1px solid rgba(255,50,50,0.2); color: #ef4444; padding:6px 12px; border-radius: 2px; cursor:pointer; transition:0.2s;"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="editor-cuerpo scroll-v" style="flex:1; display:flex; flex-direction:column; padding:0;">
+                        <textarea id="apunte-texto" placeholder="Escribe tus notas, fórmulas o resúmenes aquí..." spellcheck="false" style="flex:1; width:100%; border:none; background:transparent; resize:none; padding: 24px; font-size: 1.05em; font-family: inherit; color: var(--texto-principal); line-height:1.6; outline:none; min-height: 250px;"></textarea>
+
+                        <div class="zona-imagenes" style="padding: 24px; border-top: 1px dashed rgba(255,255,255,0.04);">
+                            <div class="imagenes-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                                <h4 style="margin:0; font-size:0.95em; color:var(--texto-secundario);"><i class="fas fa-images"></i> Imágenes Adjuntas (<span id="count-imagenes">0</span>)</h4>
+                                <label for="input-subir-imagen" class="btn-subir-img" style="cursor:pointer; background:rgba(0,229,255,0.1); color:var(--color-disponible); border:1px solid rgba(0,229,255,0.2); border-radius: 2px; padding:6px 12px; font-size:0.85em; font-weight:600; transition:0.2s;">
+                                    <i class="fas fa-plus"></i> <i class="fas fa-image"></i> Adjuntar
+                                </label>
+                                <input type="file" id="input-subir-imagen" accept="image/*" multiple style="display:none;">
+                            </div>
+                            <!-- Galería Grid -->
+                            <div id="apunte-galeria" class="galeria-grid" style="display:flex; flex-wrap:wrap; gap:12px;"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="apuntes-placeholder" style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--texto-secundario); padding:40px; text-align:center;">
+                    <i class="fas fa-book-reader" style="font-size: 3em; margin-bottom: 20px; opacity:0.15;"></i>
+                    <p style="font-size: 1.1em; opacity:0.8;">Selecciona un apunte de la izquierda<br>o crea uno nuevo para empezar a escribir.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL EXPORTAR GLOBAL -->
+    <div id="modal-exportar-global" class="modal-fondo">
+        <div class="modal-contenido" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-export"></i> Crear Respaldo</h3>
+                <span class="cerrar-modal" id="btn-cerrar-export-global">&times;</span>
+            </div>
+            <p style="color:var(--texto-secundario); font-size:0.9em; margin-bottom:15px;">Selecciona qué elementos deseas incluir en el archivo de respaldo (.json):</p>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;">
+                <label style="cursor:pointer;"><input type="checkbox" id="chk-exp-malla" checked> Malla Curricular y Progreso</label>
+                <label style="cursor:pointer;"><input type="checkbox" id="chk-exp-horario" checked> Horarios y Clases</label>
+                <label style="cursor:pointer;"><input type="checkbox" id="chk-exp-tareas" checked> Tareas y Exámenes</label>
+                <label style="cursor:pointer;"><input type="checkbox" id="chk-exp-apuntes" checked> Apuntes (Incluyendo Imágenes y BD)</label>
+                <label style="cursor:pointer;"><input type="checkbox" id="chk-exp-notas" checked> Notas de Estudio e Historial IA</label>
+            </div>
+            <button id="btn-generar-backup" class="btn-primario" style="width:100%;"><i class="fas fa-download"></i> Descargar Respaldo Archivo ASEAC</button>
+        </div>
+    </div>
+
+    <!-- MODAL IMPORTAR GLOBAL -->
+    <div id="modal-importar-global" class="modal-fondo">
+        <div class="modal-contenido" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-import"></i> Restaurar Respaldo</h3>
+                <span class="cerrar-modal" id="btn-cerrar-import-global">&times;</span>
+            </div>
+            <div id="zona-drop-backup" style="border: 2px dashed rgba(0,229,255,0.3); padding:30px; text-align:center; border-radius: 2px; cursor:pointer; margin-bottom:15px;">
+                <i class="fas fa-upload" style="font-size:2em; color:var(--color-disponible); margin-bottom:10px;"></i>
+                <p>Haz clic para buscar o arrastra aquí tu archivo <b>Respaldo_ASEAC.json</b></p>
+                <input type="file" id="input-archivo-backup" accept=".json" style="display:none;">
+            </div>
+
+            <div id="panel-restauracion-opciones" style="display:none;">
+                <h4 style="margin-bottom:10px; color:var(--color-disponible);">Archivo detectado. ¿Qué deseas sobreescribir?</h4>
+                <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;" id="chk-grupo-importar">
+                    <label id="lbl-imp-malla"><input type="checkbox" id="chk-imp-malla" checked> Malla Curricular y Progreso</label>
+                    <label id="lbl-imp-horario"><input type="checkbox" id="chk-imp-horario" checked> Horario</label>
+                    <label id="lbl-imp-tareas"><input type="checkbox" id="chk-imp-tareas" checked> Tareas</label>
+                    <label id="lbl-imp-apuntes"><input type="checkbox" id="chk-imp-apuntes" checked> Apuntes e Imágenes</label>
+                    <label id="lbl-imp-notas"><input type="checkbox" id="chk-imp-notas" checked> Notas Rápidas e IA</label>
+                </div>
+                <button id="btn-ejecutar-restauracion" class="btn-primario" style="width:100%;"><i class="fas fa-sync-alt"></i> Proceder a Restaurar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!--***********************************************************************************
+        *    Escudo de Sanitización Global (XSS)                                          * 
+        *   FIX: movido aquí desde inline en <nav> para centralizar la definición.        * 
+        *   Si utils.js también define escapeHTML,                                        *
+        ***********************************************************************************  -->
+
+    <script>
+        window.escapeHTML = function(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>"']/g, function(sub) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[sub];
+            });
+        };
+    </script>
+
+
+    <!--**************************************************************************** 
+        *    Conexion a la estructura de es estilos de /CSS y a la logica de /JS   *
+        *                                                                          *
+        ****************************************************************************-->
+
+    <!--*****Conexion a  /CSS **********-->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/malla.css">
+    <link rel="stylesheet" href="css/horario.css">
+    <link rel="stylesheet" href="css/tareas.css">
+    <link rel="stylesheet" href="css/estudio.css">
+    <link rel="stylesheet" href="css/apuntes.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <!-- mobile-app.css se carga aquí siempre.
+        El @media(max-width:768px) interno lo activa solo en pantallas móviles.
+        Contiene: ocultar navbar de escritorio, padding Bottom Bar, modales móvil. -->
+    <link rel="stylesheet" href="css/mobile/mobile-app.css">
+
+    <!-- *****Conexion a  /js **********-->
+    <!-- ORDEN DE DEPENDENCIAS (no reordenar sin revisar los comentarios  ._. ):   -->
+    <!-- 1. db.js primero — expone window.DB que necesitan backup.js y apuntes.js.
+        Sin type="module": un script clásico con "export" lanza SyntaxError y
+        window.DB nunca se asigna. -->
+    <script src="js/core/db.js"></script>
+    <script src="js/core/backup.js"></script>
+    <script src="js/core/restaurar.js"></script>
+    <script src="js/core/storage.js"></script>
+    <script src="js/core/theme.js"></script>
+    <script src="js/core/utils.js"></script>
+
+    <!-- ******* Conexion /modules *******-->
+    <script src="js/modules/apuntes.js"></script>
+    <script src="js/modules/estudio.js"></script>
+    <script src="js/modules/horario.js"></script>
+    <!--  IA EN PAUSA — descomentar cuando el servidor-cliente esté optimizado
+    <script src="js/modules/ia.js"></script> las solicitudes como el consumo pueden ser mayor incluso para mi bolsillo :(
+    -->
+    <script src="js/modules/malla.js"></script>
+    <script src="js/modules/modales.js"></script>    
+    <script src="js/modules/tareas.js"></script>
+    <!-- ******* Móvil: Módulos por función (igual que /js/modules para el escritorio) *******
+         · mobile-app.css   -- Reset global móvil (cargado arriba en los CSS)
+         · mobile-malla.js  -- Acordeón de malla por año + mini progreso
+         · mobile-navbar.js -- Bottom Bar de navegación inferior
+         · mobile-init.js   -- Orquestador (análogo a app.js) — llama a los demás
+    *******-->
+    <script src="js/mobile/mobile-malla.js"></script>
+    <script src="js/mobile/mobile-navbar.js"></script>
+    <script src="js/mobile/mobile-init.js"></script>
+    <!-- Orquestador — crea G y llama a cada módulo en orden -->
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+/* ********************************************************************
+   *  css/mobile/mobile-navbar.css — Estilos de la Bottom Bar       *
+   *                                                                  *
+   *  Contiene SOLO los estilos de .mob-bottom-bar y .mob-nav-btn.   *
+   *  Se carga dinámicamente por js/mobile/mobile-init.js.           *
+   *  Para modificar la lógica de botones → js/mobile/mobile-navbar.js*
+   ******************************************************************** */
+
+/* ─── BOTTOM BAR — BARRA DE NAVEGACIÓN INFERIOR ──────────────────────── */
+/* Inyectada solo en móvil por JS. En desktop nunca existe en el DOM.     */
+
+.mob-bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 62px;
+    z-index: 1000;
+
+    /* Glassmorphism */
+    background: rgba(18, 20, 24, 0.94);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 -6px 30px rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 2px;
+    /* Respeto a la muesca/notch de iOS */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ─── BOTONES INDIVIDUALES ──────────────────────────────────────────────── */
+.mob-nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    flex: 1;
+    height: 100%;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.38);
+    cursor: pointer;
+    padding: 6px 2px;
+    border-radius: 2px;
+    transition: color 0.18s ease, transform 0.12s ease;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+.mob-nav-btn i {
+    font-size: 1.2em;
+    line-height: 1;
+}
+
+.mob-nav-btn span {
+    font-size: 0.56em;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+/* Estado activo al tocar */
+.mob-nav-btn:active {
+    transform: scale(0.84);
+    color: var(--color-disponible, #00e5ff);
+}
+
+/* Hover en dispositivos con puntero (tablets con stylus) */
+.mob-nav-btn:hover {
+    color: var(--color-disponible, #00e5ff);
+}
+
+/* Variante peligro (Reiniciar) */
+.mob-nav-btn.mob-danger:active,
+.mob-nav-btn.mob-danger:hover {
+    color: #ff6b6b;
+}
+
+/* ─── BOTONES FLOTANTES: subirlos sobre la Bottom Bar ──────────────────── */
+@media (max-width: 768px) {
+    .btn-flotante {
+        bottom: 78px !important;
+    }
+}

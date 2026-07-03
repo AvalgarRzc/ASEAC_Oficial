@@ -1,0 +1,94 @@
+/* ********************************************************************
+   *  css/mobile/mobile-app.css — Reset Global Móvil                *
+   *                                                                  *
+   *  Propósito: Ajustes GLOBALES que aplican a toda la app en       *
+   *  pantallas ≤ 768px. Análogo a css/base.css pero para móvil.    *
+   *                                                                  *
+   *  Este archivo se CARGA SIEMPRE vía index.html (no dinámico).    *
+   *  Los estilos específicos de módulos se cargan dinámicamente:    *
+   *    · css/mobile/mobile-navbar.css  → Bottom Bar                 *
+   *    · css/mobile/mobile-malla.css   → Acordeón de Malla          *
+   ******************************************************************** */
+
+/* ─── RESET GLOBAL PARA MÓVIL ────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* 1. Ocultar la barra de navegación de escritorio */
+    .navbar {
+        display: none !important;
+    }
+
+    /* 2. Espacio inferior para que el contenido no quede bajo la Bottom Bar */
+    body {
+        padding-bottom: 72px;
+    }
+
+    main {
+        padding-top: 14px;
+    }
+
+    /* 3. Título de la malla: más compacto */
+    #titulo-malla-pantalla {
+        font-size: 0.95em;
+        text-align: center;
+        padding: 8px 16px 0;
+        opacity: 0.8;
+        letter-spacing: 0.03em;
+    }
+}
+
+/* ─── MODALES EN MÓVIL ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .modal-contenido {
+        width: 95% !important;
+        padding: 16px 14px !important;
+        margin: auto;
+        max-height: 88vh;
+        overflow-y: auto;
+    }
+
+    /* Horario: apila el panel de materias encima del grid */
+    .horario-container-flex {
+        flex-direction: column !important;
+        gap: 10px;
+    }
+
+    .panel-seleccion-materias {
+        width: 100% !important;
+        max-height: 140px;
+        overflow-y: auto;
+    }
+
+    /* Apuntes: layout vertical */
+    #apuntes-layout {
+        flex-direction: column !important;
+    }
+
+    #apuntes-lista-panel {
+        width: 100% !important;
+        height: 22vh;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .editor-header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px;
+    }
+
+    #apunte-titulo {
+        width: 100% !important;
+        font-size: 1.2em !important;
+    }
+
+    /* Inputs apilados verticalmente */
+    .fila-inputs {
+        flex-direction: column !important;
+        gap: 10px;
+    }
+
+    .fila-inputs .grupo-input {
+        width: 100%;
+    }
+}

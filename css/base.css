@@ -1,0 +1,54 @@
+/* =============================================
+   RESET Y BASE DEL BODY
+   Tipografía base, color de fondo desde variable CSS,
+   layout flex columna para que el footer quede al fondo.
+   overflow-x hidden para evitar scroll horizontal accidental.
+   ============================================= */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--carbon-fondo);
+    color: var(--texto-principal);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* <main> ocupa todo el espacio disponible entre navbar y footer
+   gracias a flex:1. overflow:hidden previene que las líneas
+   LeaderLine generen scrollbar. */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* =============================================
+   SCROLLBAR GLOBAL
+   ============================================= */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--texto-secundario) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 2px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--texto-secundario);
+    border-radius: 2px;
+    opacity: 0.5;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-disponible);
+}

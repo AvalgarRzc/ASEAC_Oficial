@@ -1,0 +1,1597 @@
+/* =============================================
+   NAVBAR — Barra de navegación superior
+   · position:sticky top:0 para que quede fija al hacer scroll.
+   · z-index:200 para estar sobre la malla y las líneas.
+   · Dividida en: .logo (izquierda) y .navbar-derecha (derecha).
+   · .navbar-derecha agrupa .acciones-malla y .nav-utilidades.
+   · El fondo se sobreescribe por aplicarTema() en JS.
+   ============================================= */
+.navbar {
+    background-color: rgba(3, 4, 6, 0.45);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 0 24px;
+    height: 64px;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 0 !important;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+/* .navbar-derecha: contenedor flex que agrupa el bloque de botones
+   de acción y el bloque de utilidades (tema, notif) en una sola fila. */
+.navbar-derecha {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 1.85em;
+    color: var(--texto-principal);
+    letter-spacing: 4px;
+    text-shadow: none;
+    flex-shrink: 0;
+}
+
+.logo-sub {
+    font-size: 0.38em;
+    opacity: 0.5;
+    font-weight: 500;
+    letter-spacing: 3px;
+    margin-left: 10px;
+    vertical-align: middle;
+    color: var(--texto-secundario);
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dev-info-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: 18px;
+    margin-left: 10px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dev-info-nav span {
+    color: #64748b;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+}
+
+.dev-info-nav strong {
+    color: var(--color-disponible);
+    font-weight: 600;
+}
+
+.logo-dev-nav {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--color-disponible);
+    padding: 1px;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.2));
+}
+
+.logo-dev-nav:hover {
+    transform: rotate(360deg) scale(1.1);
+    filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8));
+}
+
+.btn-apoyame {
+    background: transparent;
+    color: rgba(239, 68, 68, 0.8);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 2px;
+    padding: 4px 10px;
+    font-size: 0.7em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-apoyame:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
+}
+
+/* .acciones-malla: barra "glass" que contiene los botones principales
+   (Reiniciar, Importar, Exportar, Mi Horario, Tareas, Estudio).
+   Usa backdrop-filter:blur para el efecto de cristal esmerilado. */
+.acciones-malla {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 1;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 2px;
+    padding: 5px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* Divisor entre botones */
+.acciones-malla .nav-btn + .nav-btn {
+    margin-left: 2px;
+}
+
+/* .nav-utilidades: barra "glass" de la derecha donde JS inyecta
+   dinámicamente el botón de temas y el de notificaciones. */
+.nav-utilidades {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 2px;
+    padding: 4px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* .nav-util-btn: botones cuadrados de 36×36px para utilidades (ícono solo).
+   Usados por el selector de temas y el botón de notificaciones. */
+.nav-util-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 2px;
+    background: transparent;
+    border: none;
+    color: var(--texto-secundario);
+    font-size: 1.15em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    position: relative;
+}
+.nav-util-btn:hover {
+    background: rgba(255,255,255,0.08);
+    color: var(--texto-principal);
+}
+
+/* .nav-btn: base de TODOS los botones de la navbar.
+   Diseño flex inline con ícono FontAwesome + texto <span>.
+   La etiqueta de texto (<span>) se oculta en móvil via media query. */
+.nav-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 14px;
+    height: 36px;
+    border-radius: 2px;
+    font-size: 0.82em;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--texto-secundario);
+    transition: all 0.18s ease;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.nav-btn span { display: inline; }
+.nav-btn i { font-size: 0.95em; pointer-events: none; flex-shrink: 0; }
+
+/* Tooltip automático via CSS: usa el atributo data-tip como contenido
+   del pseudo-elemento ::after. Aparece con fade+slide al hacer hover.
+   z-index:999 para estar sobre otros elementos. */
+.nav-btn::after {
+    content: attr(data-tip);
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #1a1c22;
+    color: var(--texto-principal);
+    font-size: 0.70em;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 4px 10px;
+    border-radius: 2px;
+    border: 1px solid rgba(255,255,255,0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.15s ease;
+    z-index: 999;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+.nav-btn:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Variantes de estilo del botón navbar:
+   --danger  → rojo (Reiniciar)
+   --ghost   → gris neutro (Importar, Tareas, Estudio)
+   --outline → cyan con borde (Exportar, PDF)
+   --primary → cyan con fondo translúcido (Mi Horario) */
+.nav-btn--danger        { color: rgba(239,68,68,0.7); }
+.nav-btn--danger:hover  { background: rgba(239,68,68,0.12); color: #ef4444; }
+.nav-btn--danger::after { border-color: rgba(239,68,68,0.3); }
+
+.nav-btn--ghost        { color: var(--texto-secundario); }
+.nav-btn--ghost:hover  { background: rgba(255,255,255,0.06); color: var(--texto-principal); }
+
+.nav-btn--outline        { color: rgba(56,189,248,0.75); }
+.nav-btn--outline:hover  { background: rgba(56,189,248,0.1); color: var(--color-disponible); }
+.nav-btn--outline::after { border-color: rgba(56,189,248,0.25); }
+
+.nav-btn--primary {
+    background: rgba(37,99,235,0.15);
+    color: var(--color-disponible);
+    border: 1px solid rgba(56,189,248,0.3) !important;
+}
+.nav-btn--primary:hover {
+    background: rgba(37,99,235,0.25);
+    box-shadow: 0 0 14px rgba(56,189,248,0.25);
+    color: var(--color-disponible);
+}
+.nav-btn--primary::after { border-color: rgba(56,189,248,0.3); color: var(--color-disponible); }
+
+
+/* =============================================
+   BOTÓN FLOTANTE "+"
+   Posición fija bottom-right. Abre el wizard de creación de malla.
+   Círculo de 60px con color del tema, sombra de color y hover scale.
+   z-index:100 para estar sobre la malla pero bajo los modales (1000).
+   ============================================= */
+.btn-flotante {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-disponible);
+    color: var(--carbon-fondo);
+    border: none;
+    border-radius: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.45);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.btn-flotante:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.65);
+}
+
+.btn-ia-flotante {
+    bottom: 105px;
+    background-color: var(--carbon-tarjeta);
+    color: var(--color-disponible);
+    border: 2px solid var(--color-disponible);
+    font-size: 26px;
+}
+.btn-ia-flotante:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+    background-color: rgba(56, 189, 248, 0.1);
+}
+
+
+/* =============================================
+   MODAL BASE
+   · .modal-fondo: overlay full-screen con display:none por defecto.
+     Se activa con style.display="flex" desde JS.
+     backdrop-filter:blur(5px) para el fondo difuminado.
+   · .modal-contenido: caja centrada con padding, bordes redondeados
+     y sombra profunda.
+   · .modal-header: fila entre título y botón "×" de cerrar.
+   · .cerrar-modal: "×" en gris que se vuelve rojo al hover.
+   ============================================= */
+.modal-fondo {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(15, 17, 20, 0.85);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-contenido {
+    background-color: var(--carbon-columna);
+    width: 90%;
+    max-width: 500px;
+    border-radius: 2px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid var(--carbon-tarjeta);
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--carbon-tarjeta);
+    padding-bottom: 15px;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: var(--color-disponible);
+}
+
+.cerrar-modal {
+    color: var(--texto-secundario);
+    font-size: 28px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.cerrar-modal:hover { color: #ef4444; }
+
+
+/* =============================================
+   FORMULARIOS DEL WIZARD (Crear Malla)
+   · .modal-paso: cada paso del wizard, oculto por defecto.
+   · .modal-paso.activo: visible con animación fadeIn.
+   · @keyframes fadeIn: aparece desde abajo con opacity 0→1.
+   · .grupo-input: label encima del input, flexbox vertical.
+   · .fila-inputs: dos inputs lado a lado.
+   · .btn-primario / .btn-secundario: botones de acción del wizard.
+   · .contenedor-scroll: área scrolleable de hasta 250px.
+   · .tarjeta-input-materia: card de fondo oscuro para cada materia
+     del paso 3, con borde izquierdo del color del tema.
+   ============================================= */
+.modal-paso { display: none; }
+.modal-paso.activo { display: block; animation: fadeIn 0.4s ease; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.grupo-input {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.fila-inputs { display: flex; gap: 15px; }
+.fila-inputs .grupo-input { flex: 1; }
+
+.grupo-input label {
+    font-size: 0.9em;
+    color: var(--texto-secundario);
+    margin-bottom: 8px;
+}
+
+.grupo-input input,
+.grupo-input select {
+    background-color: var(--carbon-fondo);
+    border: 1px solid var(--carbon-tarjeta);
+    color: var(--texto-principal);
+    padding: 12px;
+    border-radius: 2px;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.grupo-input input:focus,
+.grupo-input select:focus {
+    border-color: var(--color-disponible);
+}
+
+.btn-primario {
+    width: 100%;
+    background-color: var(--color-disponible);
+    color: var(--carbon-fondo);
+    border: none;
+    padding: 12px;
+    border-radius: 2px;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    margin-top: 10px;
+}
+.btn-primario:hover { opacity: 0.8; }
+
+.botones-accion {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-secundario {
+    flex: 1;
+    background-color: transparent;
+    color: var(--texto-principal);
+    border: 1px solid var(--texto-secundario);
+    padding: 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.btn-secundario:hover { background-color: var(--carbon-tarjeta); }
+
+.contenedor-scroll {
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Paso 3 */
+.tarjeta-input-materia {
+    background-color: var(--carbon-fondo);
+    border: 1px solid var(--carbon-tarjeta);
+    padding: 15px;
+    border-radius: 2px;
+    margin-bottom: 15px;
+    border-left: 3px solid var(--color-disponible);
+}
+
+
+.titulo-periodo-dinamico {
+    color: var(--texto-secundario);
+    border-bottom: 1px dashed var(--carbon-tarjeta);
+    padding-bottom: 5px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.input-pequeno {
+    font-size: 0.85em !important;
+    padding: 8px !important;
+}
+
+
+/* Footer removido */
+
+
+/* =============================================
+   RESPONSIVE — TABLET (≤ 900px)
+   Navbar se comprime pero mantiene fila única.
+   ============================================= */
+@media (max-width: 900px) {
+    .logo { font-size: 1.5em; letter-spacing: 3px; }
+    .logo-sub { display: none; }
+    .nav-btn span { display: none; }
+    .nav-btn { width: 36px; padding: 0; justify-content: center; }
+    .nav-btn i { font-size: 1.05em; }
+    
+    .dev-info-nav span { display: none; }
+    .dev-info-nav { padding-left: 10px; gap: 8px; }
+}
+
+/* =============================================
+   RESPONSIVE — MÓVIL (≤ 768px)
+   Navbar: logo + utilidades en fila 1,
+           botones de acción en fila 2 (grid 3×2).
+   Malla: scroll horizontal con columnas compactas.
+   Horario: pantalla completa, layout vertical.
+   ============================================= */
+@media (max-width: 768px) {
+
+    /* ── NAVBAR ── */
+    .navbar {
+        height: auto !important;
+        flex-wrap: wrap !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 6px 0 !important;
+        padding: 8px 12px !important;
+    }
+
+    /* Logo a la izquierda, tamaño reducido */
+    .logo {
+        font-size: 1.2em;
+        letter-spacing: 2px;
+        flex: 1;
+        order: 1;
+    }
+    .logo-sub { display: none; }
+
+    /* Utilidades (tema + notif) a la derecha de fila 1 */
+    .nav-utilidades {
+        order: 2;
+        flex-shrink: 0;
+        justify-content: flex-end !important;
+    }
+
+    /* Acciones: segunda fila completa, 3 columnas iguales */
+    .navbar-derecha {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 6px !important;
+        order: 3;
+    }
+
+    .acciones-malla {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 5px !important;
+        width: 100% !important;
+        padding: 6px !important;
+    }
+
+    /* Mi Horario ocupa las 3 columnas completas */
+    #btn-abrir-horario {
+        grid-column: 1 / -1 !important;
+    }
+
+    .nav-btn {
+        width: 100% !important;
+        justify-content: center !important;
+        height: 36px !important;
+        font-size: 0.75em !important;
+        padding: 0 6px !important;
+        gap: 5px !important;
+    }
+    .nav-btn span { display: inline !important; }
+    .nav-btn i { font-size: 0.85em; }
+
+    /* ── TÍTULO ── */
+    .titulo-seccion { font-size: 0.9em; margin-bottom: 6px; padding: 0 8px; }
+
+    /* ── MALLA ── */
+    .contenedor-malla {
+        gap: 12px;
+        padding: 6px 8px 12px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+    }
+    .columna-nivel {
+        min-width: 140px;
+        max-width: 165px;
+        padding: 10px 8px;
+        gap: 10px;
+        flex-shrink: 0;
+        scroll-snap-align: start;
+    }
+    .columna-nivel h3   { font-size: 0.65em; }
+    .tarjeta-materia    { padding: 7px 8px; border-left-width: 3px; }
+    .encabezado-materia { font-size: 0.72em; margin-bottom: 2px; }
+    .nombre-materia     { font-size: 0.62em; line-height: 1.3; }
+
+    /* ── BOTÓN FLOTANTE ── */
+    .btn-flotante { width: 46px; height: 46px; font-size: 22px; bottom: 16px; right: 16px; }
+
+    /* ── MODALES ── */
+    .modal-contenido { padding: 14px; width: 96%; max-height: 92vh; }
+
+    /* ── HORARIO MODAL ── */
+    .horario-extra-ancho {
+        width: 100% !important;
+        height: 100dvh !important;   /* dynamic viewport height — respeta barra del nav */
+        max-height: 100dvh !important;
+        border-radius: 2px !important;
+        padding: 8px 6px !important;
+        box-sizing: border-box;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .horario-container-flex {
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+        gap: 6px;
+        overflow: hidden;
+    }
+
+    /* Panel materias en fila horizontal con scroll */
+    .panel-seleccion-materias {
+        flex: 0 0 auto;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        height: auto;
+        max-height: none;
+        background: rgba(255,255,255,0.04);
+        border-radius: 2px;
+        padding: 6px 8px;
+        gap: 6px;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+    .panel-seleccion-materias h4 { display: none; }
+    .instruccion-mini { display: none; }
+
+    .scroll-v {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 5px;
+        padding-bottom: 0;
+        max-height: 38px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .materia-pill {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        padding: 4px 10px;
+        border-radius: 2px;
+        font-size: 0.70em;
+        margin-bottom: 0;
+        border-left: none;
+        border: 2px solid #333;
+        line-height: 1.4;
+    }
+    .pill-info span { display: none; }
+    .materia-pill.seleccionada {
+        transform: none;
+        border-color: var(--color-disponible);
+        background: rgba(0,229,255,0.1);
+    }
+
+    #btn-limpiar-horario {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        margin-top: 0 !important;
+        padding: 4px 10px !important;
+        font-size: 0.68em !important;
+        border-radius: 2px;
+        width: auto !important;
+    }
+
+    /* Área del calendario */
+    .calendario-espacio {
+        flex: 1;
+        min-height: 0;
+        overflow-x: auto;
+        overflow-y: auto;
+        border-radius: 2px;
+        padding: 2px;
+    }
+
+    /* Pestañas de jornada — scroll horizontal si no caben */
+    .turnos-tabs {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 3px;
+        margin-bottom: 4px;
+        padding-bottom: 2px;
+    }
+    .tab-turno {
+        flex: 0 0 auto;
+        padding: 5px 10px;
+        font-size: 0.72em;
+        white-space: nowrap;
+    }
+    .tab-turno small { display: none; }  /* oculta el rango de hora en móvil */
+
+    /* Grid horario compacto */
+    .grid-turno {
+        grid-template-columns: 42px repeat(6, minmax(38px, 1fr));
+        min-width: 300px;
+    }
+    .celda-header { font-size: 0.60em; padding: 4px 2px; }
+    .celda-hora   { font-size: 0.56rem; padding: 0 2px; }
+    .celda-dia    { height: 28px; }
+
+    /* ── FOOTER ── */
+    /* Footer removido */
+}
+
+
+/* =============================================
+   RESPONSIVE — MÓVIL PEQUEÑO (≤ 480px)
+   Ajustes adicionales para pantallas muy pequeñas.
+   ============================================= */
+@media (max-width: 480px) {
+    .columna-nivel    { min-width: 128px; max-width: 150px; }
+    .contenedor-malla { gap: 8px; padding: 4px 6px 10px; }
+    .columna-nivel h3 { font-size: 0.60em; }
+    .tarjeta-materia  { padding: 5px 6px; }
+
+    /* Navbar: 2 columnas en vez de 3 para pantallas muy angostas */
+    .acciones-malla {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    /* Mi Horario sigue ocupando fila completa */
+    #btn-abrir-horario { grid-column: 1 / -1 !important; }
+
+    .grid-turno {
+        grid-template-columns: 38px repeat(6, minmax(34px, 1fr));
+        min-width: 272px;
+    }
+}
+
+
+/* =============================================
+   SELECTOR DE TEMAS DE COLOR
+   · #selector-temas: contenedor relativo que envuelve botón + panel.
+   · .panel-temas: dropdown flotante posicionado bajo el botón.
+     Tiene backdrop-filter:blur(20px) y animación fadeIn.
+     .oculto → display:none para cerrarlo.
+   · .temas-grid: grid de 3 columnas para los 15 botones de tema.
+   · .btn-tema: cada botón con punto de color (.tema-dot) y nombre.
+     .activo: borde del color del tema seleccionado.
+   ============================================= */
+#selector-temas {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* #btn-toggle-temas — usa .nav-util-btn */
+
+.panel-temas {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: #1a1d24;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2px;
+    padding: 16px;
+    z-index: 500;
+    width: 280px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6),
+                inset 0 1px 0 rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
+    animation: fadeIn 0.18s ease;
+}
+.panel-temas.oculto { display: none; }
+
+.temas-titulo {
+    margin: 0 0 12px 0;
+    font-size: 0.7em;
+    color: var(--texto-secundario);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.temas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+}
+
+.btn-tema {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,0.03);
+    border: 1.5px solid rgba(255,255,255,0.07);
+    border-radius: 2px;
+    padding: 10px 6px 8px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    color: var(--texto-principal);
+}
+.btn-tema:hover {
+    border-color: var(--tc, var(--color-disponible));
+    background: rgba(255,255,255,0.07);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.btn-tema.activo {
+    border-color: var(--tc, var(--color-disponible));
+    background: rgba(255,255,255,0.06);
+    box-shadow: 0 0 12px rgba(0,0,0,0.4),
+                inset 0 0 8px rgba(255,255,255,0.03);
+}
+
+.tema-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px var(--tc, #fff);
+}
+
+.tema-label {
+    font-size: 0.68em;
+    white-space: nowrap;
+    opacity: 0.8;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .panel-temas { right: auto; left: 0; min-width: 180px; }
+    /* #btn-toggle-temas handled by .nav-util-btn */
+}
+
+
+/* =============================================
+   MODAL — APOYAR AL DESARROLLADOR
+   · #btn-apoyo: botón rojo en el footer, se vuelve sólido al hover.
+   · .apoyo-contenido: override de modal-contenido para tamaño 420px.
+   · .apoyo-avatar: fila con imagen circular + nombre y descripción.
+   · .apoyo-opciones: columna de 3 botones (método propio, PayPal, QR).
+   · .apoyo-qr-panel: panel colapsable con imagen QR, alias y botón copiar.
+     .oculto → display:none.
+   ============================================= */
+#btn-apoyo {
+    background: transparent;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    border-radius: 2px;
+    padding: 4px 14px;
+    font-size: 0.82em;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+#btn-apoyo:hover {
+    background: #ef4444;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(239,68,68,0.4);
+}
+
+/* Modal apoyo */
+.apoyo-contenido {
+    max-width: 420px !important;
+    padding: 24px !important;
+}
+
+.apoyo-cuerpo {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.apoyo-avatar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px;
+    background: var(--carbon-fondo);
+    border-radius: 2px;
+    border: 1px solid var(--carbon-tarjeta);
+}
+
+.apoyo-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 2px solid var(--color-disponible);
+    filter: drop-shadow(0 0 6px rgba(0,229,255,0.3));
+}
+
+.apoyo-nombre {
+    margin: 0;
+    font-weight: 800;
+    font-size: 1.1em;
+    color: var(--color-disponible);
+    letter-spacing: 1px;
+}
+
+.apoyo-desc {
+    margin: 2px 0 0 0;
+    font-size: 0.78em;
+    color: var(--texto-secundario);
+}
+
+.apoyo-mensaje {
+    margin: 0;
+    font-size: 0.85em;
+    color: var(--texto-secundario);
+    line-height: 1.6;
+    text-align: center;
+    padding: 0 6px;
+}
+
+.apoyo-opciones {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.apoyo-btn {
+    display: block;
+    width: 100%;
+    padding: 11px;
+    border-radius: 2px;
+    font-size: 0.92em;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    border: none;
+    background: var(--color-disponible);
+    color: #000;
+    letter-spacing: 0.3px;
+}
+.apoyo-btn:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+}
+
+.apoyo-btn-paypal {
+    background: #003087;
+    color: #fff;
+}
+
+.apoyo-btn-qr {
+    background: var(--carbon-tarjeta);
+    color: var(--texto-principal);
+    border: 1px solid var(--carbon-tarjeta);
+}
+.apoyo-btn-qr:hover {
+    border-color: var(--color-disponible);
+}
+
+/* Panel QR */
+.apoyo-qr-panel {
+    background: var(--carbon-fondo);
+    border: 1px solid var(--carbon-tarjeta);
+    border-radius: 2px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    animation: fadeIn 0.3s ease;
+}
+.apoyo-qr-panel.oculto { display: none; }
+
+.apoyo-qr-texto {
+    margin: 0;
+    font-size: 0.80em;
+    color: var(--texto-secundario);
+    text-align: center;
+}
+
+.apoyo-qr-placeholder {
+    width: 140px;
+    height: 140px;
+    border: 2px dashed var(--carbon-tarjeta);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72em;
+    color: var(--texto-secundario);
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.apoyo-alias {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--carbon-columna);
+    border: 1px solid var(--carbon-tarjeta);
+    border-radius: 2px;
+    padding: 8px 12px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+#apoyo-alias-texto {
+    font-size: 0.85em;
+    color: var(--color-disponible);
+    font-family: monospace;
+    letter-spacing: 0.5px;
+}
+
+.btn-copiar {
+    background: transparent;
+    border: 1px solid var(--carbon-tarjeta);
+    color: var(--texto-secundario);
+    border-radius: 2px;
+    padding: 4px 8px;
+    font-size: 0.75em;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.btn-copiar:hover {
+    border-color: var(--color-disponible);
+    color: var(--color-disponible);
+}
+
+.apoyo-gracias {
+    margin: 0;
+    text-align: center;
+    font-size: 0.82em;
+    color: var(--texto-secundario);
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+    .apoyo-contenido { max-width: 96% !important; padding: 16px !important; }
+    .apoyo-img { width: 42px; height: 42px; }
+}
+
+
+/* =============================================
+   NOTIFICACIONES — TOAST DE FEEDBACK VISUAL
+   · #aseac-toast: elemento fijo en la parte inferior, centrado.
+     Por defecto opacity:0 y translateY(20px) (invisible y desplazado).
+   · .visible: opacity:1 y translateY(0) — la transición CSS genera
+     el efecto de deslizamiento hacia arriba al aparecer.
+   · .notif-activa: clase que aplica JS al botón de notif cuando
+     el permiso está concedido (cambia el ícono a 🔔 y color verde).
+   ============================================= */
+#aseac-toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #1a1a1e;
+    color: var(--texto-principal);
+    border: 1px solid var(--color-disponible);
+    border-radius: 2px;
+    padding: 12px 20px;
+    font-size: 0.85em;
+    max-width: 360px;
+    text-align: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5),
+                0 0 20px rgba(0,229,255,0.1);
+    line-height: 1.4;
+}
+
+#aseac-toast.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+/* #btn-notif — usa .nav-util-btn */
+.notif-activa {
+    color: var(--color-aprobada) !important;
+}
+.notif-activa::after {
+    border-color: rgba(0,230,118,0.3) !important;
+}
+
+@media (max-width: 768px) {
+    #aseac-toast {
+        bottom: 70px;
+        max-width: 90vw;
+        font-size: 0.80em;
+    }
+}
+
+.contenedor-malla {
+    position: relative;
+}
+
+/* Columnas fijas — sin drag */
+.columna-nivel h3 {
+    cursor: default;
+    user-select: none;
+}
+.columna-nivel h3::before {
+    content: '';
+}
+
+
+/* =============================================
+   MÓDULO TAREAS — CALENDARIO INTERACTIVO
+   Layout del modal en dos paneles 50/50:
+   ─────────────────────────────────────────
+   PANEL IZQUIERDO (#cal-panel):
+   · Fondo oscuro #0e0e16, flex columna.
+   · #cal-selector-row: fila con botones ← → y selectores de mes/año.
+     #cal-mes-select → texto cyan, sin borde (appearance:none).
+     #cal-ano-select → texto gris semitransparente.
+   · #cal-dias-semana: fila de 7 etiquetas Do/Lu/Ma/Mi/Ju/Vi/Sa.
+   · #cal-grid: grid 7 columnas con celdas cuadradas (aspect-ratio:1).
+     .cal-celda: celda clickeable con hover scale(1.1).
+     .cal-num: número del día con clamp() para ser responsive.
+     .hoy: fondo cyan 10% + borde cyan + número en color del tema.
+     .seleccionado: fondo sólido del color del tema + glow shadow.
+     .cal-dot: punto pequeño de 4px bajo el número si hay eventos.
+   ─────────────────────────────────────────
+   PANEL DERECHO (#tareas-side):
+   · Fondo #111118, scroll vertical personalizado.
+   · #tareas-dia-titulo: encabezado con emoji y el día seleccionado.
+   · #form-evento: formulario de nueva tarea/parcial (display:none por defecto,
+     se muestra al seleccionar un día). Contiene hora, tipo, materia y descripción.
+   · .ev-item: tarjeta de evento con hora, tipo, materia, descripción y botón borrar.
+     El botón borrar (.ev-del) aparece solo al hacer hover sobre la tarjeta.
+   · #proximas-wrap: sección de "Próximas fechas" con badges de días restantes.
+     .prox-badge.urg → amarillo para eventos en ≤1 día.
+   ------------------------------------------------
+   Responsive ≤680px: una sola columna, calendario arriba, eventos abajo.
+   ============================================= */
+
+/* Modal base */
+#modal-tareas .modal-contenido {
+    max-width: 860px;
+    width: 96vw;
+    height: 82vh;
+    max-height: 640px;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+    border-radius: 2px;
+}
+#modal-tareas .modal-header {
+    padding: 16px 22px 14px;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    background: rgba(0,0,0,.2);
+}
+
+/* Layout principal: cal izq | side der */
+#tareas-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+}
+
+/* ********** PANEL IZQUIERDO ********** */
+#cal-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 18px;
+    background: #0e0e16;
+    border-right: 1px solid rgba(255,255,255,.05);
+    overflow: hidden;
+    gap: 12px;
+}
+
+/* Navegación mes/año */
+#cal-selector-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+#cal-selector-row button {
+    background: rgba(255,255,255,.06);
+    border: none;
+    color: var(--texto-secundario);
+    width: 30px; height: 30px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: .85em;
+    transition: all .15s;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+}
+#cal-selector-row button:hover {
+    background: var(--color-disponible);
+    color: #000;
+}
+.cal-nav-labels {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+}
+#cal-mes-select {
+    background: transparent;
+    border: none;
+    color: var(--color-disponible);
+    font-size: 1em;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: .5px;
+    -webkit-appearance: none;
+    appearance: none;
+    text-align: center;
+}
+#cal-ano-select {
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,.5);
+    font-size: .85em;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+}
+#cal-mes-select option, #cal-ano-select option {
+    background: #1a1a2e;
+    color: #fff;
+}
+
+/* Días semana */
+#cal-dias-semana {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 0 2px;
+}
+#cal-dias-semana span {
+    text-align: center;
+    font-size: .62em;
+    color: rgba(255,255,255,.25);
+    font-weight: 700;
+    padding: 3px 0 6px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+/* Grid días */
+#cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    flex: 1;
+    align-content: start;
+    padding: 0 2px;
+}
+
+.cal-celda {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background .12s, transform .1s;
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    gap: 3px;
+}
+.cal-celda:not(.vacia):hover {
+    background: rgba(255,255,255,.07);
+    transform: scale(1.1);
+}
+.cal-celda.vacia { cursor: default; pointer-events: none; }
+
+.cal-num {
+    font-size: clamp(.58em, 1.8vw, .8em);
+    color: rgba(255,255,255,.55);
+    line-height: 1;
+    font-weight: 500;
+    transition: color .12s;
+    z-index: 1;
+}
+.cal-celda:not(.vacia):hover .cal-num { color: #fff; }
+
+/* Hoy */
+.cal-celda.hoy {
+    background: rgba(0,229,255,.1);
+}
+.cal-celda.hoy .cal-num {
+    color: var(--color-disponible);
+    font-weight: 800;
+}
+.cal-celda.hoy::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 2px;
+    border: 1.5px solid rgba(0,229,255,.4);
+}
+
+/* Seleccionado */
+.cal-celda.seleccionado {
+    background: var(--color-disponible) !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 16px rgba(0,229,255,.35);
+}
+.cal-celda.seleccionado::after { display: none; }
+.cal-celda.seleccionado .cal-num {
+    color: #000 !important;
+    font-weight: 900;
+}
+
+/* Punto de evento */
+.cal-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--color-disponible);
+    box-shadow: 0 0 4px var(--color-disponible);
+    flex-shrink: 0;
+}
+.cal-celda.seleccionado .cal-dot {
+    background: rgba(0,0,0,.5);
+    box-shadow: none;
+}
+
+/* ********** PANEL DERECHO ********** */
+#tareas-side {
+    display: flex;
+    flex-direction: column;
+    background: #111118;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-width: 0;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,229,255,.2) transparent;
+}
+
+
+/* Título del día */
+#tareas-dia-titulo {
+    padding: 16px 18px 12px;
+    font-size: .82em;
+    font-weight: 700;
+    color: var(--color-disponible);
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    flex-shrink: 0;
+    letter-spacing: .5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+}
+#tareas-dia-titulo::before {
+    content: '📅';
+    font-size: 1em;
+}
+
+/* Formulario */
+#form-evento {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    flex-shrink: 0;
+}
+.fila-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.grupo-input { display: flex; flex-direction: column; gap: 5px; }
+.grupo-input label {
+    font-size: .62em;
+    color: rgba(255,255,255,.35);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.grupo-input input, .grupo-input select {
+    background: rgba(255,255,255,.05);
+    border: 1.5px solid rgba(255,255,255,.08);
+    border-radius: 2px;
+    color: var(--texto-principal);
+    padding: 8px 10px;
+    font-size: .83em;
+    font-family: inherit;
+    width: 100%;
+    transition: border-color .15s, background .15s;
+}
+.grupo-input input:focus, .grupo-input select:focus {
+    outline: none;
+    border-color: var(--color-disponible);
+    background: rgba(0,229,255,.05);
+}
+.grupo-input select option { background: #1a1a2e; color: #fff; }
+
+/* Botón guardar */
+#btn-guardar-evento {
+    background: var(--color-disponible);
+    color: #000;
+    border: none;
+    border-radius: 2px;
+    padding: 10px;
+    font-size: .84em;
+    font-weight: 800;
+    cursor: pointer;
+    width: 100%;
+    font-family: inherit;
+    letter-spacing: .5px;
+    transition: opacity .15s, transform .1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+#btn-guardar-evento:hover { opacity: .88; transform: translateY(-1px); }
+#btn-guardar-evento:active { transform: translateY(0); }
+
+/* Lista eventos del día */
+#lista-dia-eventos {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 18px;
+    gap: 6px;
+    flex: 1;
+}
+.ev-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 2px;
+    padding: 9px 11px;
+    transition: border-color .15s, background .15s;
+}
+.ev-item:hover {
+    border-color: rgba(0,229,255,.3);
+    background: rgba(0,229,255,.04);
+}
+.ev-hora {
+    font-size: .75em; font-weight: 800;
+    color: var(--color-disponible);
+    min-width: 40px;
+    background: rgba(0,229,255,.1);
+    padding: 4px 6px;
+    border-radius: 2px;
+    text-align: center;
+    flex-shrink: 0;
+}
+.ev-body { flex: 1; min-width: 0; }
+.ev-top { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; flex-wrap: wrap; }
+.ev-tipo {
+    font-size: .62em;
+    background: rgba(255,255,255,.07);
+    padding: 2px 7px; border-radius: 2px;
+    color: rgba(255,255,255,.4);
+    text-transform: capitalize;
+}
+.ev-mat { font-size: .8em; color: #fff; font-weight: 700; }
+.ev-desc { font-size: .73em; color: rgba(255,255,255,.4); }
+.ev-del {
+    background: none; border: none;
+    color: rgba(255,255,255,.2); cursor: pointer;
+    opacity: 0; font-size: .8em; padding: 5px;
+    border-radius: 2px; transition: all .15s; flex-shrink: 0;
+}
+.ev-item:hover .ev-del { opacity: 1; }
+.ev-del:hover { color: #f87171; background: rgba(248,113,113,.1); }
+.ev-vacio {
+    font-size: .78em; color: rgba(255,255,255,.25);
+    padding: 16px 0; text-align: center;
+    letter-spacing: .5px;
+}
+
+/* Próximas fechas */
+#proximas-wrap {
+    border-top: 1px solid rgba(255,255,255,.05);
+    padding: 12px 18px 16px;
+    flex-shrink: 0;
+}
+.proximas-titulo {
+    font-size: .6em; text-transform: uppercase;
+    letter-spacing: 1.5px; color: rgba(255,255,255,.25);
+    margin-bottom: 8px; font-weight: 700;
+}
+#lista-proximas { display: flex; flex-direction: column; gap: 5px; }
+.prox-item { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
+.prox-badge {
+    font-size: .65em; font-weight: 800;
+    background: rgba(255,255,255,.05);
+    padding: 3px 8px; border-radius: 2px;
+    color: rgba(255,255,255,.4);
+    white-space: nowrap; min-width: 46px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,.08);
+}
+.prox-badge.urg {
+    color: #fbbf24;
+    border-color: rgba(251,191,36,.3);
+    background: rgba(251,191,36,.08);
+}
+.prox-info {
+    font-size: .74em; color: rgba(255,255,255,.45);
+    min-width: 0; overflow: hidden;
+    text-overflow: ellipsis; white-space: nowrap;
+}
+
+@media (max-width: 680px) {
+    #tareas-layout { grid-template-columns: 1fr; }
+    #modal-tareas .modal-contenido { height: 92vh; max-height: none; }
+    #cal-panel { border-right: none; border-bottom: 1px solid rgba(255,255,255,.05); }
+}
+
+
+
+
+/* =============================================
+    MÓDULO IA — ASEAC-IA Chat
+   ============================================= */
+
+/* =============================================
+    DROPDOWN PRERREQUISITOS CASCADA
+   ============================================= */
+
+.prereq-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    font-size: 0.9em;
+    cursor: pointer;
+    color: var(--texto-secundario);
+    transition: all 0.2s ease;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    white-space: nowrap; /* Evita que las siglas se partan en 2 renglones */
+}
+
+.prereq-item:hover {
+    background: rgba(0, 229, 255, 0.08) !important; /* Fuerza hover CSS */
+    color: var(--texto-principal);
+    border-color: rgba(0, 229, 255, 0.3);
+}
+
+.prereq-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    
+    /* Forzar el tamaño rígidamente */
+    width: 20px !important; 
+    height: 20px !important;
+    min-width: 20px; 
+    max-width: 20px;
+    
+    background-color: transparent;
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    
+    /* Evitar que flexbox lo estire o lo encoja */
+    flex-shrink: 0;
+    flex-grow: 0; 
+}
+
+.prereq-checkbox:checked {
+    background-color: var(--color-disponible, #00e5ff);
+    border-color: var(--color-disponible, #00e5ff);
+}
+
+.prereq-checkbox:checked::after {
+    content: "✓";
+    color: var(--carbon-fondo, #0f1114);
+    font-size: 14px;
+    font-weight: 900;
+}

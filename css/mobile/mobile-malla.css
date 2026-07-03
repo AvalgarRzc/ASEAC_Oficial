@@ -1,0 +1,217 @@
+/* ********************************************************************
+   *  css/mobile/mobile-malla.css — Estilos del Acordeón de Malla   *
+   *                                                                  *
+   *  Contiene SOLO los estilos de la vista de malla en acordeón.    *
+   *  Se carga dinámicamente por js/mobile/mobile-init.js.           *
+   *  Para modificar la lógica → js/mobile/mobile-malla.js           *
+   ******************************************************************** */
+
+/* ─── MALLA: ACORDEÓN POR AÑO (MÓVIL) — DISEÑO PREMIUM ─────────────────── */
+@media (max-width: 768px) {
+
+    /* Contenedor de la malla: cambia a lista vertical */
+    #contenedor-malla {
+        flex-direction: column !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        scroll-snap-type: none !important;
+        padding: 8px 12px 90px 12px !important;
+        gap: 10px !important;
+    }
+
+    /* ── Grupo (tarjeta principal de cada año) ──────────────────────── */
+    .mobile-accordion-group {
+        background: rgba(18, 20, 26, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 2px !important;
+        overflow: hidden;
+        box-shadow: 10 2px 12px rgba(0,0,0,0.35);
+    }
+
+    /* ── Header del acordeón ────────────────────────────────────────── */
+    .mobile-accordion-header {
+        padding: 12px 14px;
+        display: flex;
+        justify-content:flex-start;
+        align-items: center;
+        background: rgba(30, 34, 44, 0.6);
+        cursor: pointer;
+        transition: background 0.2s ease;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+    }
+
+    .mobile-accordion-header:active {
+        background: rgba(0, 229, 255, 0.05);
+    }
+
+    /* ── Zona izquierda: badge de año + barra de progreso mini ──────── */
+    .mob-year-left {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mob-year-badge {
+        font-size: 1em;
+        font-weight: 700;
+        color: var(--color-disponible, #00e5ff);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .mob-year-progress {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .mob-year-bar {
+        flex: 1;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        overflow: hidden;
+    }
+
+    .mob-year-bar-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--color-disponible, #38BDF8), #4ADE80);
+        border-radius: 2px;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mob-year-counter {
+        font-size: 0.7em;
+        color: rgba(255, 255, 255, 0.35);
+        font-weight: 600;
+        white-space: nowrap;
+        letter-spacing: 0.03em;
+    }
+
+    /* ── Ícono chevron ──────────────────────────────────────────────── */
+    .mob-chevron {
+        transition: transform 0.3s ease;
+        color: rgba(255, 255, 255, 0.3);
+        font-size: 0.85em;
+        margin-left: 10px;
+        flex-shrink: 0;
+    }
+
+    .mobile-accordion-header.active .mob-chevron {
+        transform: rotate(180deg);
+        color: var(--color-disponible, #00e5ff);
+    }
+
+    /* ── Contenido colapsable ───────────────────────────────────────── */
+    .mobile-accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                    padding 0.25s ease;
+        padding: 0;
+    }
+
+    .mobile-accordion-header.active + .mobile-accordion-content {
+        padding: 10px;
+    }
+
+    /* ── Grid de dos columnas (1er Semestre | 2do Semestre) ─────────── */
+    .mobile-year-grid {
+        display: flex;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .mobile-semester-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-width: 0;
+    }
+
+    .mobile-semester-col--full {
+        flex: 1;
+    }
+
+    /* Etiqueta de cada columna de semestre */
+    .mobile-semester-title {
+        text-align: center;
+        font-size: 0.7em;
+        color: rgba(255, 255, 255, 0.35);
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        margin-bottom: 4px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+    }
+
+    .mobile-semester-title i {
+        font-size: 0.65em;
+        opacity: 0.5;
+    }
+
+    /* ── Tarjeta de materia dentro del grid móvil ───────────────────── */
+    .mobile-accordion-content .tarjeta-materia {
+        width: 100% !important;
+        min-width: unset !important;
+        box-sizing: border-box;
+        border-radius: 2px !important;
+        padding: 8px 8px 20px 8px; /* Espacio abajo para el status dot */
+        margin-bottom: 0;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.12s ease, box-shadow 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .mobile-accordion-content .tarjeta-materia:active {
+        transform: scale(0.96);
+    }
+
+    .mobile-accordion-content .tarjeta-materia .encabezado-materia {
+        font-size: 0.75em;
+        margin-bottom: 3px;
+    }
+
+    .mobile-accordion-content .tarjeta-materia .nombre-materia {
+        font-size: 0.78em;
+        line-height: 1.25;
+        word-break: break-word;
+    }
+
+    /* Punto de estado en esquina inferior derecha de la tarjeta */
+    .mob-card-status-dot {
+        position: absolute;
+        bottom: 5px;
+        right: 6px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+        transition: background 0.3s ease;
+    }
+
+    .mobile-accordion-content .tarjeta-materia.aprobada .mob-card-status-dot {
+        background: #00ff95;
+        box-shadow: 0 0 6px #00ff95;
+    }
+
+    .mobile-accordion-content .tarjeta-materia.disponible .mob-card-status-dot {
+        background: var(--color-disponible, #00e5ff);
+    }
+
+    .mobile-accordion-content .tarjeta-materia.bloqueada .mob-card-status-dot {
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
