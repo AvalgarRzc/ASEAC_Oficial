@@ -1,6 +1,6 @@
 # ASEAC — Plataforma de Acompañamiento Académico
 
-> **Tu carrera de Ingeniería de Sistemas, visualizada lógicamente.**
+> **Tu carrera PROFESIONAL, visualizada lógicamente.**
 
 Bienvenido a **ASEAC**, el centro de mando diseñado para revolucionar la forma en que los estudiantes gestionan, planifican y visualizan su vida universitaria. 
 
