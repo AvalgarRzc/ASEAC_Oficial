@@ -43,71 +43,13 @@ function initTareas(G) {
         // ─────────────────────────────────────────────────────────────
         // CASCADE MATERIA: puebla el <select> con las materias de la
         // malla activa, agrupadas por semestre/periodo.
+        // Delegado a la utilidad global en utils.js
         // ─────────────────────────────────────────────────────────────
         function poblarSelectMateria() {
             const sel = document.getElementById('ev-materia');
-            sel.innerHTML = '<option value="" disabled selected>— Selecciona una materia —</option>';
-
-            // ── FUENTE 1: Malla dinámica en localStorage ──────────────────
-            let datos = [];
-            try {
-                const raw = localStorage.getItem('aseac-malla-datos');
-                if (raw) {
-                    const parsed = JSON.parse(raw);
-                    if (Array.isArray(parsed) && parsed.length > 0) datos = parsed;
-                }
-            } catch(e) { datos = []; }
-
-            // ── FUENTE 2: Tarjetas estáticas del DOM (fallback) ───────────
-            if (datos.length === 0) {
-                document.querySelectorAll('.tarjeta-materia').forEach(t => {
-                    const id     = t.id || '';
-                    const nombre = t.querySelector('.nombre-materia')?.innerText?.trim() || id;
-                    const columna = t.closest('.columna-nivel');
-                    const nivel   = columna?.querySelector('h3')?.innerText?.trim() || 'General';
-                    if (id) datos.push({ id, nombre, nivel });
-                });
+            if (G.poblarSelectorMaterias) {
+                G.poblarSelectorMaterias(sel, '<option value="" disabled selected>— Selecciona una materia —</option>', true);
             }
-
-            if (datos.length === 0) {
-                const opt = document.createElement('option');
-                opt.value = ''; opt.disabled = true;
-                opt.textContent = '⚠ No hay malla cargada';
-                sel.appendChild(opt);
-                return;
-            }
-
-            // Si el nivel es texto (ej: "1er Semestre"), no prefijamos de nuevo
-            const tieneNivelCompleto = datos.some(m => isNaN(parseInt(m.nivel)));
-            const tipoPeriodo = tieneNivelCompleto
-                ? ''
-                : (localStorage.getItem('aseac-malla-periodo') || 'Semestre');
-
-            // Agrupar por nivel
-            const grupos = {};
-            datos.forEach(m => {
-                const lv = (m.nivel || 'General').toString();
-                if (!grupos[lv]) grupos[lv] = [];
-                grupos[lv].push(m);
-            });
-
-            // Ordenar niveles (numérico si es posible, alfabético si no)
-            Object.keys(grupos)
-                .sort((a, b) => {
-                    const na = parseInt(a), nb = parseInt(b);
-                    return (isNaN(na) || isNaN(nb)) ? a.localeCompare(b) : na - nb;
-                })
-                .forEach(nivel => {
-                    const grp = document.createElement('optgroup');
-                    grp.label = tipoPeriodo ? `${tipoPeriodo} ${nivel}` : nivel;
-                    grupos[nivel].forEach(m => {
-                        const opt = document.createElement('option');
-                        opt.value = m.id;
-                        opt.textContent = `${m.id} — ${m.nombre}`;
-                        grp.appendChild(opt);
-                    });
-                    sel.appendChild(grp);
-                });
         }
 
         // Poblar selects de mes y año

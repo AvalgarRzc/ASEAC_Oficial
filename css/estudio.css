@@ -1,3 +1,4 @@
+/*estudio.css conectado a la opcion de estudio, pomodoro, como notas*/
 #estudio-layout { display:grid; grid-template-columns:270px 1fr; gap:22px; margin-top:14px; }
 #estudio-timer-panel { display:flex; flex-direction:column; align-items:center; gap:14px; background:var(--carbon-columna); border-radius: 2px; padding:18px 12px; border:1px solid var(--carbon-tarjeta); }
 #timer-modos { display:grid; grid-template-columns:1fr 1fr; gap:5px; width:100%; }
@@ -30,3 +31,19 @@
     #estudio-layout { grid-template-columns:1fr; }
     #timer-wrap,#timer-svg { width:180px; height:180px; }
     #timer-tiempo { font-size:2em; }
+}
+/* ================================================================
+   REDISEÑO — módulo Pomodoro / Estudio (sin glow/neón)
+   ================================================================ */
+#estudio-timer-panel, .estudio-box, #estudio-notas, .estudio-pend-item {
+    background: var(--ct-panel) !important;
+    border-color: var(--ct-borde) !important;
+}
+.tmodo { border-color: var(--ct-borde) !important; }
+.tmodo.activo, .tmodo:hover { border-color: var(--ct-acento) !important; color: var(--ct-acento) !important; }
+
+.tring-fg { filter: none !important; }
+#timer-tiempo { text-shadow: none !important; }
+#btn-timer-play { box-shadow: none !important; }
+#btn-timer-reset { background: var(--ct-borde) !important; }
+.pend-dias { background: var(--ct-borde) !important; }

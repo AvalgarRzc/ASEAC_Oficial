@@ -20,28 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
         bloquesPorCelda           : {},
         colorLineaInactiva        : '#505863',
         materiaSeleccionadaHorario: null,
+        // Fallback de color por sigla (obtenerColorPorSigla lee la CSS var
+        // --color-disponible en vivo; este array solo aplica si la var falla).
         coloresNeon: [
-            // Paleta Educación: Azul vibrante · Celeste · Amarillo · Verde · Violeta suave
-            '#38BDF8', // celeste vibrante (disponible)
-            '#2563EB', // azul educación
-            '#4ADE80', // verde éxito
-            '#FBBF24', // amarillo dinamismo
-            '#818CF8', // violeta suave
-            '#34D399', // verde esmeralda
-            '#60A5FA', // azul claro
-            '#F472B6', // rosa suave
-            '#A78BFA', // lavanda
-            '#38BDF8', // celeste (repetición para aleatorizar)
-            '#FCD34D', // amarillo dorado
-            '#6EE7B7', // verde menta
-            '#93C5FD', // azul pálido
-            '#C4B5FD', // violeta pálido
-            '#5EEAD4', // turquesa
-            '#86EFAC', // verde claro
-            '#FDE68A', // amarillo pálido
-            '#BAE6FD', // celeste claro
-            '#DDD6FE', // lavanda claro
-            '#BBF7D0', // menta claro
+            '#c9a24b', // ámbar base
+            '#d4ad57', // ámbar claro +
+            '#bd9640', // ámbar oscuro -
+            '#dab868', // ámbar muy claro
+            '#b08a37', // ámbar oscuro
+            '#c5993e', // ámbar intermedio
         ],
     };
 
@@ -77,5 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // FIX v1.1: initApuntes(G) agregado aquí — antes era un módulo ES autoejecutable
     // sin acceso a G. Ahora sigue el patrón estándar y puede integrarse con el namespace.
     initApuntes(G);     // Módulo 4: bloc de notas con imágenes (IndexedDB)
+
+    // Rediseño: expone G para que js/core/panel-lateral.js (script nuevo
+    // y aislado) pueda sincronizar las líneas LeaderLine al filtrar por año.
+    // No cambia ningún comportamiento existente de la app.
+    window.G = G;
 
 });

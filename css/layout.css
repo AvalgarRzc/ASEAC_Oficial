@@ -7,23 +7,21 @@
    · El fondo se sobreescribe por aplicarTema() en JS.
    ============================================= */
 .navbar {
-    background-color: rgba(3, 4, 6, 0.45);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    background-color: #1C1C1E;
     padding: 0 24px;
-    height: 64px;
+    height: 60px;
     display: flex !important;
     flex-direction: row !important;
     justify-content: space-between !important;
     align-items: center !important;
     gap: 0 !important;
-    box-shadow: 0 4px 30px rgba(0,0,0,0.4);
-    border-bottom: 1px solid rgba(255,255,255,0.03);
+    box-shadow: none;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
     position: sticky;
     top: 0;
     z-index: 200;
     box-sizing: border-box;
-    transition: all 0.3s ease;
+    transition: none;
 }
 
 /* .navbar-derecha: contenedor flex que agrupa el bloque de botones
@@ -35,22 +33,24 @@
 }
 
 .logo {
-    font-weight: 800;
-    font-size: 1.85em;
+    font-weight: 700;
+    font-size: 1.4em;
     color: var(--texto-principal);
-    letter-spacing: 4px;
+    letter-spacing: 5px;
     text-shadow: none;
     flex-shrink: 0;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
 }
 
 .logo-sub {
-    font-size: 0.38em;
-    opacity: 0.5;
+    font-size: 0.40em;
+    opacity: 0.4;
     font-weight: 500;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     margin-left: 10px;
     vertical-align: middle;
     color: var(--texto-secundario);
+    font-family: 'Inter', system-ui, sans-serif;
 }
 
 .navbar-left {
@@ -83,36 +83,36 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    border: 1px solid var(--color-disponible);
+    border: 1px solid rgba(255,255,255,0.2);
     padding: 1px;
-    transition: all 0.3s ease;
-    filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.2));
+    transition: border-color 0.2s ease;
+    filter: none;
 }
 
 .logo-dev-nav:hover {
-    transform: rotate(360deg) scale(1.1);
-    filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8));
+    border-color: var(--color-disponible);
+    filter: none;
 }
 
 .btn-apoyame {
     background: transparent;
-    color: rgba(239, 68, 68, 0.8);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    border-radius: 2px;
+    color: rgba(180, 80, 80, 0.85);
+    border: 1px solid rgba(180, 80, 80, 0.3);
+    border-radius: 0;
     padding: 4px 10px;
     font-size: 0.7em;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background 0.2s ease, border-color 0.2s ease;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .btn-apoyame:hover {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
-    border-color: rgba(239, 68, 68, 0.6);
-    box-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
+    background: rgba(180, 80, 80, 0.1);
+    color: #b45050;
+    border-color: rgba(180, 80, 80, 0.5);
+    box-shadow: none;
 }
 
 /* .acciones-malla: barra "glass" que contiene los botones principales
@@ -123,14 +123,11 @@
     align-items: center;
     gap: 2px;
     flex-shrink: 1;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 2px;
-    padding: 5px;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 4px 24px rgba(0,0,0,0.3),
-                inset 0 1px 0 rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 0;
+    padding: 4px;
+    box-shadow: none;
 }
 
 /* Divisor entre botones */
@@ -145,14 +142,11 @@
     align-items: center;
     gap: 2px;
     flex-shrink: 0;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 2px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 0;
     padding: 4px;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 4px 24px rgba(0,0,0,0.3),
-                inset 0 1px 0 rgba(255,255,255,0.06);
+    box-shadow: none;
 }
 
 /* .nav-util-btn: botones cuadrados de 36×36px para utilidades (ícono solo).
@@ -161,20 +155,20 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 2px;
+    width: 32px;
+    height: 32px;
+    border-radius: 0;
     background: transparent;
     border: none;
     color: var(--texto-secundario);
-    font-size: 1.15em;
+    font-size: 1em;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background 0.15s ease, color 0.15s ease;
     flex-shrink: 0;
     position: relative;
 }
 .nav-util-btn:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.07);
     color: var(--texto-principal);
 }
 
@@ -187,19 +181,20 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 0 14px;
-    height: 36px;
-    border-radius: 2px;
-    font-size: 0.82em;
+    padding: 0 12px;
+    height: 32px;
+    border-radius: 0;
+    font-size: 0.78em;
     font-weight: 600;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.5px;
     cursor: pointer;
     border: none;
     background: transparent;
     color: var(--texto-secundario);
-    transition: all 0.18s ease;
+    transition: background 0.15s ease, color 0.15s ease;
     font-family: inherit;
     white-space: nowrap;
+    text-transform: uppercase;
 }
 
 .nav-btn span { display: inline; }
@@ -240,28 +235,28 @@
    --ghost   → gris neutro (Importar, Tareas, Estudio)
    --outline → cyan con borde (Exportar, PDF)
    --primary → cyan con fondo translúcido (Mi Horario) */
-.nav-btn--danger        { color: rgba(239,68,68,0.7); }
-.nav-btn--danger:hover  { background: rgba(239,68,68,0.12); color: #ef4444; }
-.nav-btn--danger::after { border-color: rgba(239,68,68,0.3); }
+.nav-btn--danger        { color: rgba(180,80,80,0.75); }
+.nav-btn--danger:hover  { background: rgba(180,80,80,0.10); color: #b45050; }
+.nav-btn--danger::after { border-color: rgba(180,80,80,0.25); }
 
 .nav-btn--ghost        { color: var(--texto-secundario); }
-.nav-btn--ghost:hover  { background: rgba(255,255,255,0.06); color: var(--texto-principal); }
+.nav-btn--ghost:hover  { background: rgba(255,255,255,0.05); color: var(--texto-principal); }
 
-.nav-btn--outline        { color: rgba(56,189,248,0.75); }
-.nav-btn--outline:hover  { background: rgba(56,189,248,0.1); color: var(--color-disponible); }
-.nav-btn--outline::after { border-color: rgba(56,189,248,0.25); }
+.nav-btn--outline        { color: var(--color-disponible); opacity: 0.8; }
+.nav-btn--outline:hover  { background: rgba(200,184,154,0.08); color: var(--color-disponible); opacity: 1; }
+.nav-btn--outline::after { border-color: rgba(200,184,154,0.2); }
 
 .nav-btn--primary {
-    background: rgba(37,99,235,0.15);
+    background: rgba(200,184,154,0.08);
     color: var(--color-disponible);
-    border: 1px solid rgba(56,189,248,0.3) !important;
+    border: 1px solid rgba(200,184,154,0.25) !important;
 }
 .nav-btn--primary:hover {
-    background: rgba(37,99,235,0.25);
-    box-shadow: 0 0 14px rgba(56,189,248,0.25);
-    color: var(--color-disponible);
+    background: rgba(200,184,154,0.14);
+    box-shadow: none;
+    color: var(--texto-principal);
 }
-.nav-btn--primary::after { border-color: rgba(56,189,248,0.3); color: var(--color-disponible); }
+.nav-btn--primary::after { border-color: rgba(200,184,154,0.2); color: var(--color-disponible); }
 
 
 /* =============================================
@@ -272,18 +267,18 @@
    ============================================= */
 .btn-flotante {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 60px;
-    height: 60px;
+    bottom: 28px;
+    right: 28px;
+    width: 52px;
+    height: 52px;
     background-color: var(--color-disponible);
     color: var(--carbon-fondo);
     border: none;
-    border-radius: 10px;
-    font-size: 25px;
+    border-radius: 0;
+    font-size: 22px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.45);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: none;
+    transition: background-color 0.2s ease, transform 0.15s ease;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -291,21 +286,21 @@
 }
 
 .btn-flotante:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.65);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .btn-ia-flotante {
-    bottom: 105px;
+    bottom: 94px;
     background-color: var(--carbon-tarjeta);
     color: var(--color-disponible);
-    border: 2px solid var(--color-disponible);
-    font-size: 26px;
+    border: 1px solid rgba(200,184,154,0.3);
+    font-size: 22px;
 }
 .btn-ia-flotante:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
-    background-color: rgba(56, 189, 248, 0.1);
+    transform: translateY(-2px);
+    box-shadow: none;
+    background-color: rgba(200,184,154,0.08);
 }
 
 
@@ -323,21 +318,21 @@
     display: none;
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(15, 17, 20, 0.85);
+    background-color: rgba(10, 10, 12, 0.88);
     z-index: 1000;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(5px);
+    backdrop-filter: none;
 }
 
 .modal-contenido {
-    background-color: var(--carbon-columna);
+    background-color: #242428;
     width: 90%;
     max-width: 500px;
-    border-radius: 2px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    border: 1px solid var(--carbon-tarjeta);
+    border-radius: 0;
+    padding: 28px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.08);
     position: relative;
 }
 
@@ -345,23 +340,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
-    border-bottom: 1px solid var(--carbon-tarjeta);
-    padding-bottom: 15px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding-bottom: 14px;
 }
 
 .modal-header h3 {
     margin: 0;
-    color: var(--color-disponible);
+    color: var(--texto-principal);
+    font-size: 0.95em;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
 }
 
 .cerrar-modal {
     color: var(--texto-secundario);
-    font-size: 28px;
+    font-size: 24px;
     cursor: pointer;
-    transition: color 0.3s;
+    transition: color 0.2s;
+    opacity: 0.6;
 }
-.cerrar-modal:hover { color: #ef4444; }
+.cerrar-modal:hover { color: #b45050; opacity: 1; }
 
 
 /* =============================================
@@ -421,35 +421,38 @@
 .btn-primario {
     width: 100%;
     background-color: var(--color-disponible);
-    color: var(--carbon-fondo);
+    color: #1C1C1E;
     border: none;
-    padding: 12px;
-    border-radius: 2px;
-    font-weight: bold;
-    font-size: 1em;
+    padding: 11px;
+    border-radius: 0;
+    font-weight: 700;
+    font-size: 0.88em;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: opacity 0.3s;
+    transition: opacity 0.2s ease;
     margin-top: 10px;
 }
-.btn-primario:hover { opacity: 0.8; }
+.btn-primario:hover { opacity: 0.85; }
 
 .botones-accion {
     display: flex;
-    gap: 15px;
-    margin-top: 20px;
+    gap: 12px;
+    margin-top: 18px;
 }
 
 .btn-secundario {
     flex: 1;
     background-color: transparent;
-    color: var(--texto-principal);
-    border: 1px solid var(--texto-secundario);
-    padding: 12px;
-    border-radius: 2px;
+    color: var(--texto-secundario);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 11px;
+    border-radius: 0;
+    font-size: 0.88em;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: background 0.2s ease, border-color 0.2s ease;
 }
-.btn-secundario:hover { background-color: var(--carbon-tarjeta); }
+.btn-secundario:hover { background-color: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.2); }
 
 .contenedor-scroll {
     max-height: 250px;
@@ -485,7 +488,7 @@
 }
 
 
-/* Footer removido */
+
 
 
 /* =============================================
@@ -716,8 +719,7 @@
     .celda-hora   { font-size: 0.56rem; padding: 0 2px; }
     .celda-dia    { height: 28px; }
 
-    /* ── FOOTER ── */
-    /* Footer removido */
+
 }
 
 
@@ -765,34 +767,32 @@
 
 .panel-temas {
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 6px);
     right: 0;
-    background: #1a1d24;
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 2px;
-    padding: 16px;
+    background: #242428;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 0;
+    padding: 14px;
     z-index: 500;
-    width: 280px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.6),
-                inset 0 1px 0 rgba(255,255,255,0.06);
-    backdrop-filter: blur(20px);
-    animation: fadeIn 0.18s ease;
+    width: 260px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    animation: fadeIn 0.15s ease;
 }
 .panel-temas.oculto { display: none; }
 
 .temas-titulo {
-    margin: 0 0 12px 0;
-    font-size: 0.7em;
+    margin: 0 0 10px 0;
+    font-size: 0.65em;
     color: var(--texto-secundario);
     text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 600;
+    letter-spacing: 2.5px;
+    font-weight: 700;
 }
 
 .temas-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 6px;
+    gap: 5px;
 }
 
 .btn-tema {
@@ -800,39 +800,38 @@
     flex-direction: column;
     align-items: center;
     gap: 5px;
-    background: rgba(255,255,255,0.03);
-    border: 1.5px solid rgba(255,255,255,0.07);
-    border-radius: 2px;
-    padding: 10px 6px 8px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 0;
+    padding: 9px 5px 7px;
     cursor: pointer;
-    transition: all 0.18s ease;
+    transition: background 0.15s ease, border-color 0.15s ease;
     color: var(--texto-principal);
 }
 .btn-tema:hover {
-    border-color: var(--tc, var(--color-disponible));
-    background: rgba(255,255,255,0.07);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border-color: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+    transform: none;
+    box-shadow: none;
 }
 .btn-tema.activo {
-    border-color: var(--tc, var(--color-disponible));
+    border-color: rgba(255,255,255,0.2);
     background: rgba(255,255,255,0.06);
-    box-shadow: 0 0 12px rgba(0,0,0,0.4),
-                inset 0 0 8px rgba(255,255,255,0.03);
+    box-shadow: none;
 }
 
 .tema-dot {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    border-radius: 0;
     flex-shrink: 0;
-    box-shadow: 0 0 8px var(--tc, #fff);
+    box-shadow: none;
 }
 
 .tema-label {
-    font-size: 0.68em;
+    font-size: 0.62em;
     white-space: nowrap;
-    opacity: 0.8;
+    opacity: 0.7;
     text-align: center;
 }
 
@@ -851,25 +850,7 @@
    · .apoyo-qr-panel: panel colapsable con imagen QR, alias y botón copiar.
      .oculto → display:none.
    ============================================= */
-#btn-apoyo {
-    background: transparent;
-    border: 1px solid #ef4444;
-    color: #ef4444;
-    border-radius: 2px;
-    padding: 4px 14px;
-    font-size: 0.82em;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-#btn-apoyo:hover {
-    background: #ef4444;
-    color: #fff;
-    box-shadow: 0 0 12px rgba(239,68,68,0.4);
-}
 
-/* Modal apoyo */
 .apoyo-contenido {
     max-width: 420px !important;
     padding: 24px !important;
@@ -894,17 +875,17 @@
 .apoyo-img {
     width: 52px;
     height: 52px;
-    border-radius: 50%;
-    border: 2px solid var(--color-disponible);
-    filter: drop-shadow(0 0 6px rgba(0,229,255,0.3));
+    border-radius: 0;
+    border: 1px solid rgba(255,255,255,0.15);
+    filter: none;
 }
 
 .apoyo-nombre {
     margin: 0;
-    font-weight: 800;
-    font-size: 1.1em;
-    color: var(--color-disponible);
-    letter-spacing: 1px;
+    font-weight: 700;
+    font-size: 1em;
+    color: var(--texto-principal);
+    letter-spacing: 1.5px;
 }
 
 .apoyo-desc {
@@ -1061,23 +1042,22 @@
    ============================================= */
 #aseac-toast {
     position: fixed;
-    bottom: 90px;
+    bottom: 88px;
     left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: #1a1a1e;
+    transform: translateX(-50%) translateY(16px);
+    background: #2A2A2E;
     color: var(--texto-principal);
-    border: 1px solid var(--color-disponible);
-    border-radius: 2px;
-    padding: 12px 20px;
-    font-size: 0.85em;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0;
+    padding: 11px 18px;
+    font-size: 0.82em;
     max-width: 360px;
     text-align: center;
     z-index: 9999;
     opacity: 0;
     pointer-events: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5),
-                0 0 20px rgba(0,229,255,0.1);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.45);
     line-height: 1.4;
 }
 
@@ -1092,7 +1072,7 @@
     color: var(--color-aprobada) !important;
 }
 .notif-activa::after {
-    border-color: rgba(0,230,118,0.3) !important;
+    border-color: rgba(122,158,126,0.3) !important;
 }
 
 @media (max-width: 768px) {
@@ -1180,9 +1160,9 @@
 #cal-panel {
     display: flex;
     flex-direction: column;
-    padding: 20px 18px;
-    background: #0e0e16;
-    border-right: 1px solid rgba(255,255,255,.05);
+    padding: 18px 16px;
+    background: #1E1E20;
+    border-right: 1px solid rgba(255,255,255,.06);
     overflow: hidden;
     gap: 12px;
 }
@@ -1194,20 +1174,20 @@
     gap: 6px;
 }
 #cal-selector-row button {
-    background: rgba(255,255,255,.06);
-    border: none;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.07);
     color: var(--texto-secundario);
-    width: 30px; height: 30px;
-    border-radius: 2px;
+    width: 28px; height: 28px;
+    border-radius: 0;
     cursor: pointer;
-    font-size: .85em;
-    transition: all .15s;
+    font-size: .82em;
+    transition: background .15s;
     flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
 }
 #cal-selector-row button:hover {
-    background: var(--color-disponible);
-    color: #000;
+    background: rgba(200,184,154,0.15);
+    color: var(--texto-principal);
 }
 .cal-nav-labels {
     flex: 1;
@@ -1219,30 +1199,31 @@
 #cal-mes-select {
     background: transparent;
     border: none;
-    color: var(--color-disponible);
-    font-size: 1em;
-    font-weight: 800;
+    color: var(--texto-principal);
+    font-size: 0.9em;
+    font-weight: 700;
     cursor: pointer;
-    font-family: inherit;
-    letter-spacing: .5px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    letter-spacing: 1px;
     -webkit-appearance: none;
     appearance: none;
     text-align: center;
+    text-transform: uppercase;
 }
 #cal-ano-select {
     background: transparent;
     border: none;
-    color: rgba(255,255,255,.5);
-    font-size: .85em;
-    font-weight: 600;
+    color: rgba(255,255,255,.4);
+    font-size: .82em;
+    font-weight: 500;
     cursor: pointer;
-    font-family: inherit;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
     -webkit-appearance: none;
     appearance: none;
 }
 #cal-mes-select option, #cal-ano-select option {
-    background: #1a1a2e;
-    color: #fff;
+    background: #242428;
+    color: #E8E2D9;
 }
 
 /* Días semana */
@@ -1303,42 +1284,42 @@
 
 /* Hoy */
 .cal-celda.hoy {
-    background: rgba(0,229,255,.1);
+    background: rgba(200,184,154,.08);
 }
 .cal-celda.hoy .cal-num {
     color: var(--color-disponible);
-    font-weight: 800;
+    font-weight: 700;
 }
 .cal-celda.hoy::after {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 2px;
-    border: 1.5px solid rgba(0,229,255,.4);
+    border-radius: 0;
+    border: 1px solid rgba(200,184,154,.3);
 }
 
 /* Seleccionado */
 .cal-celda.seleccionado {
     background: var(--color-disponible) !important;
-    transform: scale(1.05);
-    box-shadow: 0 4px 16px rgba(0,229,255,.35);
+    transform: none;
+    box-shadow: none;
 }
 .cal-celda.seleccionado::after { display: none; }
 .cal-celda.seleccionado .cal-num {
-    color: #000 !important;
-    font-weight: 900;
+    color: #1C1C1E !important;
+    font-weight: 800;
 }
 
 /* Punto de evento */
 .cal-dot {
-    width: 4px; height: 4px;
-    border-radius: 50%;
+    width: 3px; height: 3px;
+    border-radius: 0;
     background: var(--color-disponible);
-    box-shadow: 0 0 4px var(--color-disponible);
+    box-shadow: none;
     flex-shrink: 0;
 }
 .cal-celda.seleccionado .cal-dot {
-    background: rgba(0,0,0,.5);
+    background: rgba(28,28,30,.5);
     box-shadow: none;
 }
 
@@ -1346,32 +1327,35 @@
 #tareas-side {
     display: flex;
     flex-direction: column;
-    background: #111118;
+    background: #1E1E22;
     overflow-y: auto;
     overflow-x: hidden;
     min-width: 0;
     scrollbar-width: thin;
-    scrollbar-color: rgba(0,229,255,.2) transparent;
+    scrollbar-color: rgba(255,255,255,.08) transparent;
 }
 
 
 /* Título del día */
 #tareas-dia-titulo {
-    padding: 16px 18px 12px;
-    font-size: .82em;
+    padding: 14px 18px 12px;
+    font-size: .78em;
     font-weight: 700;
-    color: var(--color-disponible);
+    color: var(--texto-secundario);
     border-bottom: 1px solid rgba(255,255,255,.05);
     flex-shrink: 0;
-    letter-spacing: .5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
     display: flex;
     align-items: center;
     gap: 8px;
-    min-height: 48px;
+    min-height: 44px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 #tareas-dia-titulo::before {
-    content: '📅';
-    font-size: 1em;
+    content: '▸';
+    font-size: 0.9em;
+    color: var(--color-disponible);
 }
 
 /* Formulario */
@@ -1383,16 +1367,16 @@
     border-bottom: 1px solid rgba(255,255,255,.05);
     flex-shrink: 0;
 }
-.fila-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.grupo-input { display: flex; flex-direction: column; gap: 5px; }
-.grupo-input label {
+#form-evento .fila-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+#form-evento .grupo-input { display: flex; flex-direction: column; gap: 5px; }
+#form-evento .grupo-input label {
     font-size: .62em;
     color: rgba(255,255,255,.35);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
-.grupo-input input, .grupo-input select {
+#form-evento .grupo-input input, #form-evento .grupo-input select {
     background: rgba(255,255,255,.05);
     border: 1.5px solid rgba(255,255,255,.08);
     border-radius: 2px;
@@ -1403,34 +1387,35 @@
     width: 100%;
     transition: border-color .15s, background .15s;
 }
-.grupo-input input:focus, .grupo-input select:focus {
+#form-evento .grupo-input input:focus, #form-evento .grupo-input select:focus {
     outline: none;
-    border-color: var(--color-disponible);
-    background: rgba(0,229,255,.05);
+    border-color: rgba(200,184,154,.4);
+    background: rgba(200,184,154,.04);
 }
-.grupo-input select option { background: #1a1a2e; color: #fff; }
+#form-evento .grupo-input select option { background: #242428; color: #E8E2D9; }
 
 /* Botón guardar */
 #btn-guardar-evento {
     background: var(--color-disponible);
-    color: #000;
+    color: #1C1C1E;
     border: none;
-    border-radius: 2px;
+    border-radius: 0;
     padding: 10px;
-    font-size: .84em;
-    font-weight: 800;
+    font-size: .80em;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
     cursor: pointer;
     width: 100%;
     font-family: inherit;
-    letter-spacing: .5px;
-    transition: opacity .15s, transform .1s;
+    transition: opacity .15s;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
 }
-#btn-guardar-evento:hover { opacity: .88; transform: translateY(-1px); }
-#btn-guardar-evento:active { transform: translateY(0); }
+#btn-guardar-evento:hover { opacity: .85; }
+#btn-guardar-evento:active { opacity: 1; }
 
 /* Lista eventos del día */
 #lista-dia-eventos {
@@ -1444,49 +1429,51 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(255,255,255,.07);
-    border-radius: 2px;
+    background: rgba(255,255,255,.02);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 0;
     padding: 9px 11px;
     transition: border-color .15s, background .15s;
 }
 .ev-item:hover {
-    border-color: rgba(0,229,255,.3);
-    background: rgba(0,229,255,.04);
+    border-color: rgba(200,184,154,.2);
+    background: rgba(200,184,154,.03);
 }
 .ev-hora {
-    font-size: .75em; font-weight: 800;
+    font-size: .72em; font-weight: 700;
     color: var(--color-disponible);
     min-width: 40px;
-    background: rgba(0,229,255,.1);
+    background: rgba(200,184,154,.08);
     padding: 4px 6px;
-    border-radius: 2px;
+    border-radius: 0;
     text-align: center;
     flex-shrink: 0;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 .ev-body { flex: 1; min-width: 0; }
 .ev-top { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; flex-wrap: wrap; }
 .ev-tipo {
-    font-size: .62em;
-    background: rgba(255,255,255,.07);
-    padding: 2px 7px; border-radius: 2px;
-    color: rgba(255,255,255,.4);
-    text-transform: capitalize;
+    font-size: .60em;
+    background: rgba(255,255,255,.05);
+    padding: 2px 6px; border-radius: 0;
+    color: rgba(255,255,255,.35);
+    text-transform: uppercase;
+    letter-spacing: .5px;
 }
-.ev-mat { font-size: .8em; color: #fff; font-weight: 700; }
-.ev-desc { font-size: .73em; color: rgba(255,255,255,.4); }
+.ev-mat { font-size: .8em; color: var(--texto-principal); font-weight: 700; font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+.ev-desc { font-size: .73em; color: rgba(255,255,255,.38); }
 .ev-del {
     background: none; border: none;
-    color: rgba(255,255,255,.2); cursor: pointer;
+    color: rgba(255,255,255,.18); cursor: pointer;
     opacity: 0; font-size: .8em; padding: 5px;
-    border-radius: 2px; transition: all .15s; flex-shrink: 0;
+    border-radius: 0; transition: all .15s; flex-shrink: 0;
 }
 .ev-item:hover .ev-del { opacity: 1; }
-.ev-del:hover { color: #f87171; background: rgba(248,113,113,.1); }
+.ev-del:hover { color: #b45050; background: rgba(180,80,80,.08); }
 .ev-vacio {
-    font-size: .78em; color: rgba(255,255,255,.25);
+    font-size: .75em; color: rgba(255,255,255,.22);
     padding: 16px 0; text-align: center;
-    letter-spacing: .5px;
+    letter-spacing: 1px; text-transform: uppercase;
 }
 
 /* Próximas fechas */
@@ -1503,18 +1490,19 @@
 #lista-proximas { display: flex; flex-direction: column; gap: 5px; }
 .prox-item { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
 .prox-badge {
-    font-size: .65em; font-weight: 800;
-    background: rgba(255,255,255,.05);
-    padding: 3px 8px; border-radius: 2px;
-    color: rgba(255,255,255,.4);
+    font-size: .62em; font-weight: 700;
+    background: rgba(255,255,255,.04);
+    padding: 3px 8px; border-radius: 0;
+    color: rgba(255,255,255,.35);
     white-space: nowrap; min-width: 46px;
     text-align: center;
-    border: 1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.07);
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 .prox-badge.urg {
-    color: #fbbf24;
-    border-color: rgba(251,191,36,.3);
-    background: rgba(251,191,36,.08);
+    color: #C4A44A;
+    border-color: rgba(196,164,74,.25);
+    background: rgba(196,164,74,.06);
 }
 .prox-info {
     font-size: .74em; color: rgba(255,255,255,.45);
@@ -1530,10 +1518,6 @@
 
 
 
-
-/* =============================================
-    MÓDULO IA — ASEAC-IA Chat
-   ============================================= */
 
 /* =============================================
     DROPDOWN PRERREQUISITOS CASCADA
@@ -1555,9 +1539,9 @@
 }
 
 .prereq-item:hover {
-    background: rgba(0, 229, 255, 0.08) !important; /* Fuerza hover CSS */
+    background: rgba(200, 184, 154, 0.06) !important;
     color: var(--texto-principal);
-    border-color: rgba(0, 229, 255, 0.3);
+    border-color: rgba(200, 184, 154, 0.2);
 }
 
 .prereq-checkbox {
@@ -1585,13 +1569,427 @@
 }
 
 .prereq-checkbox:checked {
-    background-color: var(--color-disponible, #00e5ff);
-    border-color: var(--color-disponible, #00e5ff);
+    background-color: var(--color-disponible, #C8B89A);
+    border-color: var(--color-disponible, #C8B89A);
 }
 
 .prereq-checkbox:checked::after {
     content: "✓";
-    color: var(--carbon-fondo, #0f1114);
-    font-size: 14px;
+    color: #1C1C1E;
+    font-size: 13px;
     font-weight: 900;
+}
+
+/* ================================================================
+   REDISEÑO — NAVBAR, MODALES Y SHELL DE DOBLE SIDEBAR
+   Va al final del archivo para ganar sobre las reglas originales
+   de layout.css con la misma especificidad, sin pelear por !important
+   contra archivos que carguen después.
+   ================================================================ */
+
+/* ---- Navbar ---- */
+.navbar { background-color: var(--ct-panel) !important; border-bottom: 1px solid var(--ct-borde) !important; }
+.logo { font-family: var(--ct-mono) !important; color: var(--ct-acento) !important; text-shadow: none !important; }
+.logo-sub { color: var(--texto-secundario) !important; }
+
+.logo-dev-nav { border-color: var(--ct-borde) !important; box-shadow: none !important; transition: border-color 0.2s ease; }
+.logo-dev-nav:hover { border-color: var(--ct-acento) !important; }
+
+.nav-btn--ghost:hover { color: var(--ct-acento) !important; }
+.nav-btn--outline { color: var(--ct-acento) !important; }
+.nav-btn--primary {
+    background: rgba(201, 162, 75, 0.08) !important;
+    color: var(--ct-acento) !important;
+    border-color: rgba(201, 162, 75, 0.3) !important;
+}
+.acciones-malla, .nav-utilidades { background: rgba(255, 255, 255, 0.02) !important; border-color: var(--ct-borde) !important; }
+
+/* La navbar ahora solo necesita mostrar créditos/apoyo — el logo
+   grande y los botones de acción quedaron duplicados en los sidebars,
+   así que se ocultan aquí (siguen existiendo en el DOM y funcionando
+   vía #sidebar-der, solo no se muestran dos veces). */
+.navbar .logo { display: none; }
+.navbar .acciones-malla { display: none; }
+.navbar-left { border-left: none; }
+.navbar { justify-content: flex-end !important; }
+
+/* La navbar ya no muestra nada propio (logo, créditos y acciones
+   quedaron todos reubicados en los sidebars) — se oculta del todo
+   para recuperar esa franja de alto para la malla, en vez de dejarla
+   como tira vacía (marcada en rojo en la anotación del usuario). */
+.navbar { display: none !important; }
+#app-columna-central main { padding-top: 0; }
+
+/* Con la navbar oculta, el único lugar donde se lee "ASEAC" es el
+   texto vertical del sidebar — se le sube la visibilidad más abajo,
+   junto a su regla base (#sidebar-izq .texto-vertical), para que la
+   sigla del proyecto siga siendo notoria. */
+
+/* La franja "Desarrollado por AVALGAR — 2026 [ícono]" quedaba
+   flotando sola arriba, ocupando espacio sin aportar nada (marcada
+   en blanco en la anotación del usuario) — se oculta. El botón
+   "Apóyame" SÍ se conserva, pero reubicado (ver index.html, un
+   simple appendChild) junto al resto de accesos del sidebar
+   izquierdo (destino de la flecha verde de la anotación). */
+.dev-info-nav span,
+.dev-info-nav strong,
+.logo-dev-nav {
+    display: none;
+}
+.dev-info-nav {
+    border-left: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+/* Botón Apóyame reubicado: mismo tamaño/forma que los demás íconos
+   del sidebar, centrado, sin el estilo "chip" ancho que tenía en la
+   navbar horizontal. */
+#sidebar-izq-footer .btn-apoyame {
+    width: 36px;
+    height: 36px;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;         /* oculta el texto largo "Apóyame"... */
+    letter-spacing: 0;
+    border-radius: 2px;
+}
+#sidebar-izq-footer .btn-apoyame::before {
+    content: "\f004";     /* ...y muestra un corazón (Font Awesome) en su lugar */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 14px;
+}
+
+/* ---- Modales y formularios ---- */
+.modal-contenido { background-color: var(--ct-panel) !important; border-color: var(--ct-borde) !important; box-shadow: none !important; }
+.modal-header { border-bottom-color: var(--ct-borde) !important; }
+.modal-header h3 { font-family: var(--ct-mono); color: var(--ct-acento) !important; letter-spacing: 2px; }
+
+.grupo-input input, .grupo-input select {
+    background-color: var(--ct-fondo) !important;
+    border-color: var(--ct-borde) !important;
+    color: var(--texto-principal) !important;
+    font-family: var(--ct-mono);
+}
+.grupo-input input:focus, .grupo-input select:focus {
+    border-color: var(--ct-acento) !important;
+    box-shadow: 0 0 0 1px rgba(201, 162, 75, 0.25) !important;
+}
+
+.btn-primario { background-color: var(--ct-acento) !important; color: #0f1115 !important; }
+.btn-flotante { background-color: var(--ct-acento) !important; color: #0f1115 !important; box-shadow: none !important; }
+.btn-ia-flotante { background-color: var(--ct-panel) !important; color: var(--ct-verde) !important; border-color: rgba(92, 158, 111, 0.3) !important; }
+
+/* ================================================================
+   SHELL DE DOBLE SIDEBAR
+   #sidebar-izq / #niveles / #futuras / #sidebar-der son <aside>
+   nuevos en index.html; #app-columna-central envuelve el <nav> y
+   el <main> originales sin modificarlos. Los botones duplicados en
+   #sidebar-der solo hacen click() sobre los originales — misma
+   lógica de siempre, ver index.html.
+   ================================================================ */
+#app-shell {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* ---- Sidebar izquierda ---- */
+#sidebar-izq {
+    width: 64px;
+    flex-shrink: 0;
+    height: 100vh;
+    background: var(--ct-sidebar-bg);
+    border-right: 1px solid var(--ct-borde);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 0;
+}
+#sidebar-izq .perfil-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--ct-borde);
+    box-shadow: inset 0 0 6px rgba(255,255,255,0.05);
+    transition: border-color .2s;
+    margin-bottom: 20px;
+}
+#sidebar-izq .perfil-icon:hover { border-color: var(--ct-acento); }
+
+#sidebar-izq .texto-vertical {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: var(--ct-mono);
+    letter-spacing: 4px;
+    font-size: .8em;
+    font-weight: 700;
+    color: rgba(230, 230, 230, 0.7);
+    margin-bottom: auto;
+    padding-bottom: 16px;
+    position: relative;
+    transition: color .2s;
+}
+/* Punto de acento — detalle de "wordmark" que marca el cierre del
+   nombre, como un logotipo con firma, no solo texto suelto. */
+#sidebar-izq .texto-vertical::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--ct-acento);
+}
+#sidebar-izq .texto-vertical:hover { color: var(--ct-acento); }
+
+#sidebar-izq-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-top: 25px;
+    margin-bottom: 28px; /* lo separa del borde inferior, se cortaba en pantalla completa */
+    border-top: 1px solid var(--ct-borde);
+    width: 100%;
+}
+#sidebar-izq-footer #btn-menu-utilidades {
+    margin-left: 0 !important;
+    width: 36px; height: 36px; padding: 0 !important;
+    justify-content: center;
+}
+#sidebar-izq-footer #btn-menu-utilidades span { display: none !important; }
+
+/* #nav-utilidades y #panel-temas fueron diseñados con right:0 y
+   width:260px esperando colgar de una navbar horizontal ancha. En
+   el sidebar de 64px eso los sacaba de pantalla por la izquierda
+   (por eso no se veían/no se podían clickear). Se fuerza
+   position:fixed con coordenadas fijas y seguras. */
+#sidebar-izq-footer #nav-utilidades {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 16px !important;
+    left: 74px !important;
+    right: auto !important;
+    width: auto !important;
+    min-width: 44px !important;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    z-index: 3000 !important;
+}
+#sidebar-izq-footer #panel-temas {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 16px !important;
+    left: 128px !important;
+    right: auto !important;
+    width: 260px !important;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    z-index: 3001 !important;
+}
+
+/* ---- Columna central (navbar + malla, sin tocar su HTML) ---- */
+#app-columna-central {
+    flex: 1;
+    min-width: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+/* Fuerza a que TODO hijo directo respete el ancho disponible en vez
+   de forzar overflow hacia afuera de la columna (bug clásico de
+   flexbox: min-width:auto por defecto) — evita que la malla se vea
+   "atropellada" por el panel de materias futuras al hacer scroll. */
+#app-columna-central > * { min-width: 0; }
+#app-columna-central main {
+    flex: 1;
+    overflow: auto;
+    background-color: var(--ct-fondo);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 26px 26px;
+}
+
+/* LeaderLine dibuja su SVG con position:fixed cubriendo toda la
+   ventana y, al no llevar z-index propio, puede pintarse por encima
+   de los sidebars/paneles nuevos. Se lo baja explícitamente. */
+svg.leader-line { z-index: 5 !important; }
+#sidebar-izq, #niveles, #futuras, #sidebar-der {
+    position: relative;
+    z-index: 20;
+}
+
+/* ---- Sidebar derecha (accesos directos) ---- */
+#sidebar-der {
+    width: 56px;
+    flex-shrink: 0;
+    height: 100vh;
+    background: var(--ct-sidebar-bg);
+    border-left: 1px solid var(--ct-borde);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 0;
+    gap: 14px;
+}
+#sidebar-der .accion-btn {
+    width: 34px; height: 34px;
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; border: none;
+    color: var(--texto-secundario);
+    font-size: 15px;
+    cursor: pointer;
+    position: relative;
+    transition: color .15s, background .15s;
+}
+#sidebar-der .accion-btn:hover { color: var(--ct-acento); background: rgba(201,162,75,.08); }
+#sidebar-der .accion-btn[data-tip]:hover::after {
+    content: attr(data-tip);
+    position: absolute; right: calc(100% + 8px); top: 50%; transform: translateY(-50%);
+    background: var(--ct-fondo); border: 1px solid var(--ct-borde);
+    padding: 4px 9px; font-size: .68em; white-space: nowrap;
+    color: var(--texto-principal); border-radius: 2px;
+}
+
+/* ---- Selector de niveles (alineado como columna de borde recto) ---- */
+#niveles {
+    width: 64px;
+    flex-shrink: 0;
+    height: 100vh;
+    background: var(--ct-sidebar-bg);
+    border-right: 1px solid var(--ct-borde);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 0;
+    gap: 5px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+.nivel-eyebrow {
+    font-family: var(--ct-mono);
+    font-size: .58em;
+    letter-spacing: 2px;
+    color: var(--texto-secundario);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+.nivel-item {
+    width: 46px;
+    padding: 7px 3px;
+    text-align: center;
+    background: transparent;
+    border: 1px solid var(--ct-borde);
+    border-radius: 2px;
+    font-family: var(--ct-mono);
+    font-size: .64em;
+    color: var(--texto-secundario);
+    cursor: pointer;
+    transition: all .15s;
+}
+.nivel-item--todos {
+    margin-bottom: 6px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--ct-borde);
+    font-size: .58em;
+    letter-spacing: .5px;
+}
+.nivel-item:hover { border-color: var(--ct-acento); color: var(--ct-acento); }
+.nivel-item.activo {
+    border-color: var(--ct-acento);
+    color: var(--ct-acento);
+    background: rgba(201, 162, 75, .08);
+}
+
+/* ---- Materias futuras ---- */
+#futuras {
+    width: 150px;
+    flex-shrink: 0;
+    height: 100vh;
+    background: var(--ct-sidebar-bg);
+    border-left: 1px solid var(--ct-borde);
+    padding: 18px 12px;
+    overflow-y: auto;
+}
+#futuras h3 {
+    font-size: .68em;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--texto-secundario);
+    margin: 0 0 14px;
+    font-weight: 700;
+}
+.futura-sem { margin-bottom: 16px; }
+.futura-sem-label {
+    font-family: var(--ct-mono);
+    color: var(--ct-acento);
+    font-size: .78em;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+.futura-chip {
+    background: var(--ct-fondo);
+    border: 1px solid var(--ct-borde);
+    border-radius: 2px;
+    padding: 6px 8px;
+    font-size: .68em;
+    color: var(--texto-secundario);
+    margin-bottom: 5px;
+    font-family: var(--ct-mono);
+    cursor: pointer;
+    transition: border-color .15s, color .15s;
+}
+.futura-chip:hover { border-color: var(--ct-acento); color: var(--ct-acento); }
+.futuras-vacio {
+    font-size: .68em;
+    color: var(--texto-secundario);
+    opacity: .6;
+    line-height: 1.5;
+}
+
+/* ---- Responsive: en móvil el shell se pliega y se deja el
+   comportamiento original de mobile-*.css sin pelear por
+   especificidad ---- */
+@media (max-width: 768px) {
+    #app-shell { flex-direction: column; height: auto; overflow: visible; }
+    #sidebar-izq {
+        width: 100%; height: auto; flex-direction: row;
+        justify-content: space-between; padding: 8px 14px;
+        border-right: none; border-bottom: 1px solid var(--ct-borde);
+    }
+    #sidebar-izq .texto-vertical { display: none; }
+    #sidebar-izq .perfil-icon { margin-bottom: 0; }
+    #sidebar-izq-footer { flex-direction: row; border-top: none; padding-top: 0; width: auto; }
+
+    #sidebar-der {
+        width: 100%; height: auto; flex-direction: row;
+        justify-content: space-around; padding: 8px 4px;
+        border-left: none; border-top: 1px solid var(--ct-borde);
+    }
+    #app-columna-central { height: auto; overflow: visible; }
+    #app-columna-central main { overflow: visible; }
+
+    #niveles {
+        width: 100%; height: auto; flex-direction: row;
+        margin: 0; border-radius: 0;
+        border-right: none; border-bottom: 1px solid var(--ct-borde);
+        padding: 8px 10px; overflow-x: auto; overflow-y: hidden;
+    }
+    .nivel-eyebrow { display: none; }
+    .nivel-item { flex-shrink: 0; }
+
+    #futuras {
+        width: 100%; height: auto;
+        border-left: none; border-top: 1px solid var(--ct-borde);
+        max-height: 160px;
+    }
 }

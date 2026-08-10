@@ -1,19 +1,19 @@
-/* ********************************************************************
-   *  css/mobile/mobile-app.css — Reset Global Móvil                *
+﻿/* ********************************************************************
+   *  css/mobile/mobile-app.css — Reset Global Movil                *
    *                                                                  *
-   *  Propósito: Ajustes GLOBALES que aplican a toda la app en       *
-   *  pantallas ≤ 768px. Análogo a css/base.css pero para móvil.    *
+   *  Proposito: Ajustes GLOBALES que aplican a toda la app en       *
+   *  pantallas <= 768px. Analogo a css/base.css pero para movil.    *
    *                                                                  *
-   *  Este archivo se CARGA SIEMPRE vía index.html (no dinámico).    *
-   *  Los estilos específicos de módulos se cargan dinámicamente:    *
-   *    · css/mobile/mobile-navbar.css  → Bottom Bar                 *
-   *    · css/mobile/mobile-malla.css   → Acordeón de Malla          *
+   *  Este archivo se CARGA SIEMPRE via index.html (no dinamico).    *
+   *  Los estilos especificos de modulos se cargan dinamicamente:    *
+   *    . css/mobile/mobile-navbar.css  -> Bottom Bar                 *
+   *    . css/mobile/mobile-malla.css   -> Acordeon de Malla          *
    ******************************************************************** */
 
-/* ─── RESET GLOBAL PARA MÓVIL ────────────────────────────────────────── */
+/* --- RESET GLOBAL PARA MOVIL -------------------------------------------- */
 @media (max-width: 768px) {
 
-    /* 1. Ocultar la barra de navegación de escritorio */
+    /* 1. Ocultar la barra de navegacion de escritorio */
     .navbar {
         display: none !important;
     }
@@ -27,7 +27,7 @@
         padding-top: 14px;
     }
 
-    /* 3. Título de la malla: más compacto */
+    /* 3. Titulo de la malla: mas compacto */
     #titulo-malla-pantalla {
         font-size: 0.95em;
         text-align: center;
@@ -37,7 +37,7 @@
     }
 }
 
-/* ─── MODALES EN MÓVIL ─────────────────────────────────────────────────── */
+/* --- MODALES EN MOVIL ---------------------------------------------------- */
 @media (max-width: 768px) {
     .modal-contenido {
         width: 95% !important;
@@ -47,48 +47,192 @@
         overflow-y: auto;
     }
 
-    /* Horario: apila el panel de materias encima del grid */
+    /* ==========================================================
+       HORARIO: chips de materias en carrusel horizontal
+       ========================================================== */
+
+    /* Apila el panel de materias encima del grid del horario */
     .horario-container-flex {
         flex-direction: column !important;
-        gap: 10px;
+        gap: 8px;
     }
 
+    /* El panel de materias se convierte en fila de chips con
+       scroll tacti horizontal. */
     .panel-seleccion-materias {
         width: 100% !important;
-        max-height: 140px;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center;
+        max-height: none !important;
+        height: auto !important;
+        padding: 6px 8px !important;
+        gap: 6px;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .panel-seleccion-materias::-webkit-scrollbar { display: none; }
+
+    /* Ocultar titulo e instruccion en fila horizontal */
+    .panel-seleccion-materias h4,
+    .instruccion-mini {
+        display: none !important;
+    }
+
+    /* El contenedor .scroll-v: fila inline sin saltos */
+    .scroll-v {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 5px;
+        flex: 1;
+        min-width: 0;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .scroll-v::-webkit-scrollbar { display: none; }
+
+    /* Cada chip de materia: compacto y no se parte */
+    .materia-pill {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        min-height: 34px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.70em;
+        margin-bottom: 0;
+        border: 2px solid #333;
+        line-height: 1.4;
+        transition: border-color 0.15s, background 0.15s;
+    }
+    /* Solo mostrar la sigla en movil */
+    .pill-info span { display: none; }
+    .materia-pill.seleccionada {
+        transform: none;
+        border-color: var(--color-disponible);
+        background: rgba(0, 229, 255, 0.12);
+        box-shadow: 0 0 0 1px var(--color-disponible);
+    }
+
+    /* Boton Limpiar alineado al final de la fila */
+    #btn-limpiar-horario {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        margin-top: 0 !important;
+        padding: 4px 10px !important;
+        font-size: 0.68em !important;
+        border-radius: 20px;
+        width: auto !important;
+    }
+
+    /* ==========================================================
+       CALENDARIO (Tareas y Parciales)
+       ========================================================== */
+
+    /* Modal mas alto para dar espacio al calendario y eventos */
+    #modal-tareas .modal-contenido {
+        height: 94dvh !important;
+        max-height: 94dvh !important;
+        padding: 0 !important;
+    }
+
+    /* Layout en columna unica */
+    #tareas-layout {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto 1fr;
+        height: 100%;
         overflow-y: auto;
     }
 
-    /* Apuntes: layout vertical */
-    #apuntes-layout {
-        flex-direction: column !important;
-    }
-
-    #apuntes-lista-panel {
-        width: 100% !important;
-        height: 22vh;
+    /* Panel del calendario: altura automatica */
+    #cal-panel {
         border-right: none !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 12px 10px !important;
+        gap: 8px !important;
+        height: auto;
     }
 
+    /* Celdas mas grandes para dedos en pantallas tactiles */
+    #cal-grid {
+        gap: 3px !important;
+    }
+    .cal-celda {
+        min-height: 36px;
+    }
+    .cal-num {
+        font-size: clamp(0.65em, 2.5vw, 0.85em) !important;
+    }
+    /* Navegacion mes/ano mas compacta */
+    #cal-selector-row button {
+        width: 34px;
+        height: 34px;
+    }
+
+    /* Panel lateral de eventos: scroll independiente */
+    #tareas-side {
+        min-height: 200px;
+    }
+
+    /* Formulario de nuevo evento: inputs en columna */
+    .fila-inputs {
+        grid-template-columns: 1fr !important;
+        gap: 8px;
+    }
+
+    /* ==========================================================
+       APUNTES
+       ========================================================== */
+
+    /* Layout: columna unica - lista arriba, editor abajo */
+    #apuntes-layout {
+        flex-direction: column !important;
+        overflow: hidden;
+    }
+
+    /* Lista de apuntes: altura comoda con scroll */
+    #apuntes-lista-panel {
+        width: 100% !important;
+        height: 30vh !important;
+        min-height: 140px;
+        max-height: 220px;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+        overflow-y: auto;
+        flex-shrink: 0;
+    }
+
+    /* Editor: ocupa el espacio restante */
+    #apuntes-editor-panel {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* Encabezado del editor: columna para que el titulo no se comprima */
     .editor-header {
         flex-direction: column !important;
         align-items: stretch !important;
-        gap: 10px;
+        gap: 8px;
+        padding: 10px 12px !important;
     }
 
+    /* Titulo del apunte */
     #apunte-titulo {
         width: 100% !important;
-        font-size: 1.2em !important;
+        font-size: 1.1em !important;
     }
 
-    /* Inputs apilados verticalmente */
-    .fila-inputs {
-        flex-direction: column !important;
-        gap: 10px;
-    }
-
-    .fila-inputs .grupo-input {
-        width: 100%;
+    /* Area de texto: crece para llenar el espacio */
+    #apunte-contenido {
+        flex: 1;
+        min-height: 180px;
+        resize: none;
     }
 }

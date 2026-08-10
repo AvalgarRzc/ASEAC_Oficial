@@ -1,19 +1,21 @@
 /* =============================================
    RESET Y BASE DEL BODY
-   Tipografía base, color de fondo desde variable CSS,
-   layout flex columna para que el footer quede al fondo.
-   overflow-x hidden para evitar scroll horizontal accidental.
+   #app-shell maneja el layout principal (doble sidebar).
+   El body usa display:block — el flex-column fue reemplazado
+   por el rediseño; overflow y height se controlan aquí.
    ============================================= */
+html, body { height: 100%; overflow: hidden; }
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--carbon-fondo);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--ct-fondo);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 26px 26px;
+    background-position: -1px -1px;
     color: var(--texto-principal);
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    display: block;
 }
 
 /* <main> ocupa todo el espacio disponible entre navbar y footer
@@ -29,26 +31,17 @@ main {
 }
 
 /* =============================================
-   SCROLLBAR GLOBAL
+   SCROLLBAR GLOBAL — delgada, colores del tema
    ============================================= */
 * {
     scrollbar-width: thin;
-    scrollbar-color: var(--texto-secundario) transparent;
+    scrollbar-color: var(--ct-borde) transparent;
 }
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--ct-borde); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--ct-acento); }
 
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 2px;
-}
-::-webkit-scrollbar-thumb {
-    background: var(--texto-secundario);
-    border-radius: 2px;
-    opacity: 0.5;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: var(--color-disponible);
+@media (max-width: 768px) {
+    html, body { overflow: auto; }
 }

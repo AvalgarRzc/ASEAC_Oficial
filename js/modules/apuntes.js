@@ -63,76 +63,12 @@ function initApuntes(G) {
 
     // *******************************************************************
     // CASCADE MATERIA — sincronizado con la malla activa de ASEAC
-    // Prioridad:
-    //   1. localStorage['aseac-malla-datos'] → malla dinámica guardada
-    //   2. Fallback: tarjetas .tarjeta-materia del DOM (malla estática)
-    // Agrupa por semestre/periodo usando <optgroup>
+    // Delegado a la utilidad global en utils.js
     // *******************************************************************
     async function cargarMateriaDropdown() {
-        // Resetear: solo queda la opción "General"
-        selectMateria.innerHTML = '<option value="">General (Sin Materia)</option>';
-
-        // ** FUENTE 1: Malla dinámica guardada en localStorage *********
-        let datos = [];
-        try {
-            const raw = localStorage.getItem('aseac-malla-datos');
-            if (raw) {
-                const parsed = JSON.parse(raw);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    datos = parsed; // formato: [{id, nombre, nivel, prerrequisitos}]
-                }
-            }
-        } catch(e) { datos = []; }
-
-        // ** FUENTE 2: Tarjetas estáticas del DOM (fallback) ***********
-        if (datos.length === 0) {
-            document.querySelectorAll('.tarjeta-materia').forEach(tarjeta => {
-                const id     = tarjeta.id || '';
-                const nombre = tarjeta.querySelector('.nombre-materia')?.innerText?.trim() || id;
-                // El nivel viene del h3 de la columna: "1er Semestre", "Semestre 1", etc.
-                const columna = tarjeta.closest('.columna-nivel');
-                const nivel   = columna?.querySelector('h3')?.innerText?.trim() || 'General';
-                if (id) datos.push({ id, nombre, nivel });
-            });
+        if (G.poblarSelectorMaterias) {
+            G.poblarSelectorMaterias(selectMateria, '<option value="">General (Sin Materia)</option>', false);
         }
-
-        // Si no hay nada, se queda solo con "General (Sin Materia)"
-        if (datos.length === 0) return;
-
-        // ── Etiqueta del tipo de periodo (Semestre / Año / etc.) ────────
-        // Para malla dinámica: localStorage['aseac-malla-periodo']
-        // Para malla estática: el h3 ya tiene el texto completo, no se prefija
-        const tieneNivelCompleto = datos.some(m => isNaN(parseInt(m.nivel)));
-        const tipoPeriodo = tieneNivelCompleto
-            ? ''  // el nivel ya incluye "Semestre X", no duplicar
-            : (localStorage.getItem('aseac-malla-periodo') || 'Semestre');
-
-        // ── Agrupar por nivel ─────────────────────────────────────────
-        const grupos = {};
-        datos.forEach(m => {
-            const lv = m.nivel || 'General';
-            if (!grupos[lv]) grupos[lv] = [];
-            grupos[lv].push(m);
-        });
-
-        // ── Ordenar niveles (numérico si es posible, alfabético si no) ─
-        const nivelesOrdenados = Object.keys(grupos).sort((a, b) => {
-            const na = parseInt(a), nb = parseInt(b);
-            return (isNaN(na) || isNaN(nb)) ? a.localeCompare(b) : na - nb;
-        });
-
-        // ── Insertar optgroups y opciones ─────────────────────────────
-        nivelesOrdenados.forEach(nivel => {
-            const grp = document.createElement('optgroup');
-            grp.label = tipoPeriodo ? `${tipoPeriodo} ${nivel}` : nivel;
-            grupos[nivel].forEach(m => {
-                const opt = document.createElement('option');
-                opt.value = m.id;
-                opt.textContent = `${m.id} — ${m.nombre}`;
-                grp.appendChild(opt);
-            });
-            selectMateria.appendChild(grp);
-        });
     }
 
     // ── Cargar apuntes desde IndexedDB ───────────────────────────────

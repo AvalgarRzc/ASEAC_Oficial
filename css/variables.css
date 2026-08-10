@@ -1,34 +1,49 @@
 /* ********************************************************************
-   *  ASEAC — variables.css                                            *
-   *  Hoja de variables CSS. Paleta: Educación / Formación Online      *
-   *  Emoción: Claridad, crecimiento, dinamismo                        *
-   *  Colores base: Azul vibrante · Celeste · Blanco · Amarillo        *
-   *                                                                    *
-   *  Estas variables son sobrescritas por aplicarTema() en JS cada    *
-   *  vez que el usuario cambia el tema de color.                      *
-   *  · --carbon-*     → colores de fondo (fondo, columna, tarjeta)   *
-   *  · --texto-*      → colores de texto principal y secundario       *
-   *  · --color-*      → colores de estado de las tarjetas de materia  *
-   ******************************************************************** */
+ *  ASEAC — variables.css                                            *
+ *  Paleta: REDISEÑO "Dark Terminal" — Antracita + Ámbar apagado     *
+ *  (sin cian, sin neón — ver historial del rediseño)                *
+ *                                                                    *
+ *  Estas variables son sobrescritas por aplicarTema() en JS cada    *
+ *  vez que el usuario cambia el tema de color.                      *
+ *  · --carbon-*     → colores de fondo (fondo, columna, tarjeta)   *
+ *  · --texto-*      → colores de texto principal y secundario       *
+ *  · --color-*      → colores de estado de las tarjetas de materia  *
+ *  · --ct-*         → variables propias del rediseño (sidebars,     *
+ *                      paneles nuevos). Alias de las de arriba para *
+ *                      que TODO siga sincronizado con el selector   *
+ *                      de temas 🎨, nunca valores fijos aparte.     *
+ ******************************************************************** */
 
 :root {
     /* ── Fondos ── */
-    --carbon-fondo:    #0D1B2A; /* Azul noche profundo — más educativo que el negro puro */
-    --carbon-columna:  rgba(37, 99, 235, 0.06);  /* Columna con sutil tinte azul */
-    --carbon-tarjeta:  rgba(37, 99, 235, 0.10);  /* Tarjeta con tinte azul */
+    --carbon-fondo:    #0f1115; /* Antracita oscuro */
+    --carbon-columna:  rgba(26, 28, 32, 0.92);
+    --carbon-tarjeta:  rgba(35, 38, 44, 0.90);
 
     /* ── Textos ── */
-    --texto-principal:  #F0F6FF; /* Blanco con ligero tinte azul — más suave que puro blanco */
-    --texto-secundario: #7FA8C9; /* Azul grisáceo apagado */
+    --texto-principal:  #e6e6e6;
+    --texto-secundario: #6B7280; /* Gris pizarra neutro */
 
     /* ── Estados de materias ── */
-    --color-disponible: #38BDF8; /* Celeste vibrante — "listo para avanzar" */
-    --color-aprobada:   #4ADE80; /* Verde claro éxito — "logrado" */
-    --color-bloqueada:  #1E3A5F; /* Azul oscuro apagado — "bloqueado" */
+    --color-disponible: #c9a24b; /* Ámbar apagado — reemplaza al cian/crema */
+    --color-aprobada:   #5c9e6f; /* Verde grisáceo, sin saturar */
+    --color-bloqueada:  #1a1c20;
 
-    /* ── Acento amarillo (dinamismo) — referenciable en CSS ── */
-    --color-acento:     #FBBF24; /* Amarillo dorado — logro / highlight */
+    /* ── Acento secundario ── */
+    --color-acento:     #c9a24b;
 
-    /* ── Azul principal de la marca ── */
-    --color-primario:   #2563EB; /* Azul educación vibrante */
+    /* ── Tono base de marca ── */
+    --color-primario:   #5c9e6f;
+
+    /* ── Variables del rediseño (sidebars/paneles nuevos) ──
+       Alias de las de arriba: cambian solas si el usuario elige
+       otro tema o si aplicarTema() sobrescribe --color-disponible. */
+    --ct-fondo:  var(--carbon-fondo);
+    --ct-panel:  var(--carbon-columna);
+    --ct-sidebar-bg: #101216; /* Color sólido base para evitar transparencia de las líneas */
+    --ct-borde:  #374151;
+    --ct-acento: var(--color-disponible);
+    --ct-verde:  var(--color-aprobada);
+    --ct-mono:   'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
 }
+

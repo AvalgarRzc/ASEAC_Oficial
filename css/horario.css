@@ -344,3 +344,27 @@
     .tarjeta-materia    { padding: 8px 12px; }
 }
 
+
+/* ================================================================
+   REDISEÑO — módulo Horario
+   ================================================================ */
+.horario-extra-ancho { background: var(--ct-fondo) !important; border-color: var(--ct-borde) !important; }
+
+.panel-seleccion-materias, .calendario-espacio, .grid-turno,
+.tab-turno, .celda-header, .celda-hora, .celda-dia {
+    background: var(--ct-fondo) !important;
+    border-color: var(--ct-borde) !important;
+}
+.panel-seleccion-materias h4, .instruccion-mini { border-color: var(--ct-borde) !important; }
+
+.materia-pill { background: var(--ct-panel) !important; border-color: var(--ct-borde) !important; box-shadow: none !important; }
+.materia-pill:hover { box-shadow: none !important; }
+.materia-pill.seleccionada { box-shadow: none !important; }
+
+.tab-turno.activo { background: var(--ct-fondo) !important; border-color: var(--ct-acento) !important; color: var(--ct-acento) !important; }
+.celda-header { color: var(--ct-acento) !important; text-shadow: none !important; }
+.celda-hora { color: var(--texto-secundario) !important; text-shadow: none !important; opacity: 0.8 !important; }
+.celda-dia:hover { border-color: var(--ct-acento) !important; background: rgba(201, 162, 75, 0.05) !important; }
+.bloque-materia { box-shadow: none !important; }
+
+#btn-limpiar-horario:hover { background: var(--ct-panel) !important; }

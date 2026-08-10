@@ -193,13 +193,10 @@ function initTheme(G) {
         r.setProperty('--texto-secundario', t.textoSecundario || '#94a3b8');
         r.setProperty('--color-acento',     t.acento || t.disponible); 
         r.setProperty('--desplegable-fondo', t.desplegableFondo || t.navbar);
+        r.setProperty('--ct-sidebar-bg',      t.navbar || t.fondo || '#1a1c20');
 
-        // Fondos directos
-        document.body.style.backgroundColor = t.fondo;
-        const navbarEl = document.querySelector('.navbar');
-        if (navbarEl) navbarEl.style.backgroundColor = t.navbar;
 
-        // Marcar botón activo en el panel
+        // Marcar botón activo en el panel de temas
         document.querySelectorAll('.btn-tema').forEach(b => b.classList.remove('activo'));
         const btn = document.querySelector(`.btn-tema[data-tema="${id}"]`);
         if (btn) btn.classList.add('activo');
@@ -208,8 +205,14 @@ function initTheme(G) {
         localStorage.setItem('aseac-tema', id);
 
         // Redibujar flechas con nuevos colores (si existe la función en G)
-        if (G && typeof G.reposicionarLineas === 'function') {
-            setTimeout(G.reposicionarLineas, 50);
+        // Actualiza el color "activo" cacheado de cada línea para que las flechas
+        // ya dibujadas también cambien de color al elegir un tema nuevo.
+        if (G && Array.isArray(G.lineasConexion)) {
+            const nuevoColorActivo = t.disponible;
+            G.lineasConexion.forEach(c => { c.colorActivo = nuevoColorActivo; });
+            if (typeof G.actualizarMallaYLineas === 'function') {
+                setTimeout(G.actualizarMallaYLineas, 50);
+            }
         }
     }
 

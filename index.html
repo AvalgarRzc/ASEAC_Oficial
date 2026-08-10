@@ -67,6 +67,31 @@
 </head>
 
 <body>
+<div id="app-shell">
+
+<!-- ============================================================
+     SIDEBAR IZQUIERDA (rediseño) — avatar + logo vertical.
+     El #menu-utilidades-wrapper (tema + notificaciones) se
+     reubica aquí por JS al cargar, ver script al final del body.
+     Ningún id existente cambia ni se borra.
+     ============================================================ -->
+<aside id="sidebar-izq">
+    <img src="avalgar.ico" alt="Perfil" class="perfil-icon" title="AVALGAR">
+    <div class="texto-vertical">ASEAC</div>
+    <div id="sidebar-izq-footer"></div>
+</aside>
+
+<!-- ============================================================
+     SELECTOR DE NIVELES (rediseño) — botones generados por
+     js/core/panel-lateral.js a partir de las .columna-nivel que
+     malla.js ya renderiza. Solo hacen scroll, no alteran estado.
+     ============================================================ -->
+<aside id="niveles">
+    <div class="nivel-eyebrow">Nivel</div>
+    <div id="niveles-body"></div>
+</aside>
+
+<div id="app-columna-central">
     <!--*************************************************************************************** 
         *    NAVBAR — Barra de navegación superior fija.                                      *
         *    Dividida en dos zonas:                                                           *
@@ -235,6 +260,56 @@
 
         </div>
     </main>
+</div><!-- /#app-columna-central -->
+
+<!-- ============================================================
+     MATERIAS FUTURAS (rediseño) — llenado por
+     js/core/panel-lateral.js con las tarjetas .disponible
+     (prerrequisitos cumplidos, aún no aprobadas), agrupadas por
+     nivel. Es de solo lectura: un clic resalta la tarjeta real.
+     ============================================================ -->
+<aside id="futuras">
+    <h3>Materias futuras</h3>
+    <div id="futuras-body"></div>
+</aside>
+
+<!-- ============================================================
+     SIDEBAR DERECHA (rediseño) — accesos directos.
+     Cada botón SOLO hace click() sobre el botón real que ya
+     existía en la navbar (mismo id, mismo listener de siempre).
+     No se define ninguna función nueva ni se toca ningún .js.
+     ============================================================ -->
+<aside id="sidebar-der">
+    <button class="accion-btn" data-tip="Reiniciar"     onclick="document.getElementById('btn-reiniciar').click()"><i class="fas fa-redo-alt"></i></button>
+    <button class="accion-btn" data-tip="Importar"       onclick="document.getElementById('btn-importar').click()"><i class="fas fa-file-import"></i></button>
+    <button class="accion-btn" data-tip="Exportar"       onclick="document.getElementById('btn-exportar').click()"><i class="fas fa-file-export"></i></button>
+    <button class="accion-btn" data-tip="Mi Horario"     onclick="document.getElementById('btn-abrir-horario').click()"><i class="fas fa-calendar-week"></i></button>
+    <button class="accion-btn" data-tip="Tareas"         onclick="document.getElementById('btn-abrir-tareas').click()"><i class="fas fa-tasks"></i></button>
+    <button class="accion-btn" data-tip="Estudio"        onclick="document.getElementById('btn-abrir-estudio').click()"><i class="fas fa-brain"></i></button>
+    <button class="accion-btn" data-tip="Apuntes"        onclick="document.getElementById('btn-abrir-apuntes').click()"><i class="fas fa-book-open"></i></button>
+</aside>
+
+</div><!-- /#app-shell -->
+
+<!-- ============================================================
+     REUBICACIÓN del selector de tema/notificaciones al sidebar
+     izquierdo. Es un simple appendChild — el elemento conserva su
+     id (#menu-utilidades-wrapper) y todos sus listeners intactos,
+     por eso se hace después de que el resto del HTML ya existe,
+     sin esperar a los demás scripts.
+     ============================================================ -->
+<script>
+    document.getElementById('sidebar-izq-footer')
+        .appendChild(document.getElementById('menu-utilidades-wrapper'));
+
+    // Rediseño: el botón "Apóyame" vivía dentro de la franja de créditos
+    // de la navbar (.dev-info-nav), que ahora se oculta por ocupar
+    // espacio de más. Se reubica el botón (mismo elemento, mismos
+    // listeners de modales.js — está enganchado por querySelector,
+    // no por posición) junto al resto de accesos del sidebar izquierdo.
+    const btnApoyo = document.querySelector('.btn-apoyame');
+    if (btnApoyo) document.getElementById('sidebar-izq-footer').appendChild(btnApoyo);
+</script>
 
     <!-- Botón IA Flotante — ⏸ EN PAUSA: oculto mientras se optimiza el servidor-cliente.
          Para reactivar: quitar el style="display:none" y descomentar ia.js abajo. -->
@@ -632,7 +707,9 @@
     <link rel="stylesheet" href="css/tareas.css">
     <link rel="stylesheet" href="css/estudio.css">
     <link rel="stylesheet" href="css/apuntes.css">
-    <link rel="stylesheet" href="css/mobile.css">
+    <!-- El rediseño ya vive distribuido dentro de variables.css, base.css,
+         layout.css, malla.css, horario.css, tareas.css, estudio.css y
+         apuntes.css (al final de cada uno) — ver historial del proyecto. -->
     <!-- mobile-app.css se carga aquí siempre.
         El @media(max-width:768px) interno lo activa solo en pantallas móviles.
         Contiene: ocultar navbar de escritorio, padding Bottom Bar, modales móvil. -->
@@ -667,6 +744,9 @@
          · mobile-init.js   -- Orquestador (análogo a app.js) — llama a los demás
     *******-->
     <script src="js/mobile/mobile-malla.js"></script>
+
+    <!-- Script NUEVO y aislado del rediseño — no modifica ninguno de los anteriores -->
+    <script src="js/core/panel-lateral.js"></script>
     <script src="js/mobile/mobile-navbar.js"></script>
     <script src="js/mobile/mobile-init.js"></script>
     <!-- Orquestador — crea G y llama a cada módulo en orden -->

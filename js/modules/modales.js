@@ -361,22 +361,12 @@ function initModales(G) {
 
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js')
-            .then(reg => {
-                swRegistration = reg;
-                console.log('ASEAC: Service Worker registrado');
-            })
-            .catch(err => console.warn('ASEAC: SW no disponible:', err));
+            .then(reg => { swRegistration = reg; })
+            .catch(() => {});
     }
 
-    // PWA - Solicitar Almacenamiento Persistente
     if (navigator.storage && navigator.storage.persist) {
-        navigator.storage.persist().then(persistent => {
-            if (persistent) {
-                console.log("ASEAC: Almacenamiento concedido como PERSISTENTE.");
-            } else {
-                console.log("ASEAC: Almacenamiento VOLÁTIL (Sujeto a limpieza del OS visualizando falta de disco).");
-            }
-        });
+        navigator.storage.persist();
     }
 
     // =============================================

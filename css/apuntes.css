@@ -19,9 +19,7 @@
 }
 
 .apunte-item.activo {
-    background: rgba(0, 229, 255, 0.1);
-    border-color: rgba(0, 229, 255, 0.3);
-    border-left: 3px solid rgba(0, 229, 255, 0.8);
+    /* Colores aplicados por el bloque de rediseño (sección final) */
 }
 
 .apunte-item h4 {
@@ -160,3 +158,25 @@
     color: #e0e0e0;
     background: #13161c;
 }
+
+/* ================================================================
+   REDISEÑO — módulo Apuntes
+   ================================================================ */
+.apunte-item { background: rgba(255,255,255,0.02); border-color: var(--ct-borde) !important; }
+.apunte-item:hover { background: rgba(255,255,255,0.045) !important; }
+.apunte-item.activo {
+    background: rgba(201, 162, 75, 0.07) !important;
+    border-color: rgba(201, 162, 75, 0.25) !important;
+    border-left-color: var(--ct-acento) !important;
+    box-shadow: none !important;
+}
+.img-thumb-container { border-color: var(--ct-borde) !important; }
+#lightbox-img-overlay img { box-shadow: none !important; }
+
+#apunte-materia {
+    background: var(--ct-panel) !important;
+    border-color: var(--ct-borde) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath fill='%23c9a24b' d='M1 1l4 4 4-4'/%3E%3C/svg%3E") !important;
+}
+#apunte-materia:focus { border-color: rgba(201, 162, 75, 0.5) !important; box-shadow: none !important; }
+#apunte-materia optgroup { color: var(--ct-acento) !important; }
