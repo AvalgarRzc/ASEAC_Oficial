@@ -21,7 +21,7 @@ No más dudas sobre qué materias puedes tomar el próximo semestre. ASEAC lee l
 ### 🎨 Tu Entorno, Tus Reglas
 Sabemos que cada estudiante se concentra de manera diferente. Por eso, ASEAC incluye un sistema de temas dinámicos. Ya sea que prefieras la estética sobria del modo terminal, colores institucionales, o un entorno de alta concentración visual, la interfaz se adapta a tu estilo de trabajo al instante.
 
-### 📊 Gestión de Horarios y Productividad (Próximamente)
+### 📊 Gestión de Horarios y Productividad
 Un espacio integrado para que organices tu semana, gestiones tus tareas y mantengas tus apuntes estructurados, todo desde un único panel de control.
 
 ### 📱 Experiencia Fluida y Accesible
@@ -37,4 +37,4 @@ ASEAC no es solo una página web; es un proyecto en constante evolución creado 
 > *Explorando la integración de Inteligencia Artificial para asistencia técnica en próximas fases y la implementacion de mas funcionalidades: el mejoramiento del entorno visual y un entorno comunitario para el uso de los estudiantes que se desea implementar.*  
 
 ---
-*Diseñado con pasión por la lógica, el estudio arduo sin distracciones, manejo facil de tus materias y horarios.*
+*Diseñado con pasión para que está plataforma sea de gran ayuda para lo estudiantes en general y próximamente implementar nuevas ideas para no solo los estudiantes de nivel superior si no también las de las básicas también, el estudio arduo sin distracciones , manejo facil de tus materias y horarios.*
