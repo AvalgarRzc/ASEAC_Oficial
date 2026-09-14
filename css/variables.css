@@ -1,0 +1,26 @@
+:root{
+
+    --carbon-fondo:     #f0f4fb;
+    --carbon-columna:   rgba(255, 255, 255, 0.96);
+    --carbon-tarjeta:   rgba(255, 255, 255, 1.0);
+
+    --texto-principal:   #1a2035;
+    --texto-secundario:  #546e8a;
+    --ct-hover-bg:       rgba(21, 101, 192, 0.08);
+
+    --color-disponible:  #1565c0;    
+    --color-aprobada:    #2e7d32;    
+    --color-bloqueada:   #e3eaf6;    
+
+    --color-acento:      #1565c0;
+    --color-primario:    #1976d2;
+
+    --ct-fondo:          var(--carbon-fondo);
+    --ct-panel:          #ffffff;
+    --ct-sidebar-bg:     #1353a0;
+    --ct-borde:          #c8d8eb;
+    --ct-acento:         var(--color-disponible);
+    --ct-verde:          var(--color-aprobada);
+    --ct-mono:           'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    --desplegable-fondo: #ffffff;
+}

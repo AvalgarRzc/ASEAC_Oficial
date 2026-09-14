@@ -1,0 +1,221 @@
+@media (max-width: 768px) {
+
+    #contenedor-malla {
+        display: flex !important;
+        flex-direction: column !important;
+        min-height: auto !important;
+        flex: none !important;
+        overflow-y: visible !important;
+        overflow-x: hidden !important;
+        scroll-snap-type: none !important;
+        padding: 8px 12px 30px 12px !important;
+        gap: 12px !important;
+    }
+
+    .mobile-accordion-group {
+        background: var(--ct-panel);
+        border: 1px solid var(--ct-borde);
+        border-radius: 6px !important;
+        overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        flex-shrink: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .mobile-accordion-header {
+        padding: 12px 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--ct-hover-bg, var(--ct-panel));
+        cursor: pointer;
+        transition: background 0.2s ease;
+        border-bottom: 1px solid var(--ct-borde);
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+        flex-shrink: 0 !important;
+        min-height: 52px !important;
+        box-sizing: border-box !important;
+    }
+
+    .mobile-accordion-header:active {
+        background: var(--ct-hover-bg);
+        opacity: 0.9;
+    }
+
+    .mob-year-left {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mob-year-badge {
+        font-size: 0.95em;
+        font-weight: 700;
+        color: var(--ct-acento, var(--color-disponible, #00e5ff));
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        font-family: var(--ct-mono, inherit);
+        line-height: 1.2;
+    }
+
+    .mob-year-progress {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .mob-year-bar {
+        flex: 1;
+        height: 5px;
+        background: var(--ct-progreso-bg, rgba(125, 125, 125, 0.2));
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .mob-year-bar-fill {
+        height: 100%;
+        width: 0%;
+        background: var(--ct-acento, var(--color-disponible, #38BDF8));
+        border-radius: 3px;
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mob-year-counter {
+        font-size: 0.72em;
+        color: var(--texto-secundario);
+        font-weight: 600;
+        white-space: nowrap;
+        letter-spacing: 0.03em;
+        font-family: var(--ct-mono, inherit);
+    }
+
+    .mob-chevron {
+        transition: transform 0.3s ease;
+        color: var(--texto-secundario);
+        font-size: 0.85em;
+        margin-left: 12px;
+        flex-shrink: 0;
+    }
+
+    .mobile-accordion-header.active .mob-chevron {
+        transform: rotate(180deg);
+        color: var(--ct-acento, var(--color-disponible, #00e5ff));
+    }
+
+    .mobile-accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                    padding 0.25s ease;
+        padding: 0 10px;
+        background: var(--ct-panel);
+        box-sizing: border-box;
+    }
+
+    .mobile-accordion-header.active + .mobile-accordion-content {
+        padding: 10px;
+    }
+
+    .mobile-year-grid {
+        display: flex;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .mobile-semester-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-width: 0;
+    }
+
+    .mobile-semester-col--full {
+        flex: 1;
+    }
+
+    .mobile-semester-title {
+        text-align: center;
+        font-size: 0.7em;
+        color: var(--texto-secundario);
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        margin-bottom: 4px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid var(--ct-borde);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        font-family: var(--ct-mono, inherit);
+    }
+
+    .mobile-semester-title i {
+        font-size: 0.65em;
+        color: var(--ct-acento);
+        opacity: 0.8;
+    }
+
+    .mobile-accordion-content .tarjeta-materia {
+        width: 100% !important;
+        min-width: unset !important;
+        box-sizing: border-box;
+        border-radius: 4px !important;
+        padding: 8px 8px 18px 8px;
+        margin-bottom: 0;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.12s ease, border-color 0.2s ease, background 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+        background: var(--ct-panel);
+        border: 1px solid var(--ct-borde);
+    }
+
+    .mobile-accordion-content .tarjeta-materia:active {
+        transform: scale(0.97);
+    }
+
+    .mobile-accordion-content .tarjeta-materia .encabezado-materia {
+        font-size: 0.75em;
+        margin-bottom: 3px;
+        font-family: var(--ct-mono, inherit);
+        color: var(--texto-principal);
+    }
+
+    .mobile-accordion-content .tarjeta-materia .nombre-materia {
+        font-size: 0.75em;
+        line-height: 1.25;
+        word-break: break-word;
+        color: var(--texto-secundario);
+    }
+
+    .mob-card-status-dot {
+        position: absolute;
+        bottom: 5px;
+        right: 6px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--ct-borde);
+        transition: background 0.3s ease;
+    }
+
+    .mobile-accordion-content .tarjeta-materia.aprobada .mob-card-status-dot {
+        background: var(--ct-verde, #2e7d32);
+        box-shadow: 0 0 6px var(--ct-verde, #2e7d32);
+    }
+
+    .mobile-accordion-content .tarjeta-materia.disponible .mob-card-status-dot {
+        background: var(--ct-acento, var(--color-disponible, #00e5ff));
+    }
+
+    .mobile-accordion-content .tarjeta-materia.bloqueada .mob-card-status-dot {
+        background: var(--texto-secundario);
+        opacity: 0.4;
+    }
+}

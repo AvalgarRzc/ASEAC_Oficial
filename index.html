@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ASEAC</title>
+    <meta name="description" content="ASEAC - Aplicacion de Seguimiento Academico. gestiona tu malla curricular, horario semanal, examenes apuntes en un solo lugar.">
+    <meta name="theme-color" content="#050505">
+    <!--pwa-->
+    <link rel="manifest" href="manifest.json">
+    <!--favicon e iconos-->
+    <link rel="icon" href="avalgar.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <!--ios tamaño -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ASEAC">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!--android-otros navegadores-->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="ASEAC">
+    <!--windows-->
+    <meta name="msapplication-Tilecolor" content="#050505">
+    <meta name="msapplication-TileImage" content="icon-192.png">
+    <!--librerias externas para la funcion de la aplication-->
+    <script src="https://cdn.jsdelivr.net/npm/leader-line-new@1.1.9/leader-line.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/malla.css">
+    <link rel="stylesheet" href="css/horario.css">
+    <link rel="stylesheet" href="css/tareas.css">
+    <link rel="stylesheet" href="css/estudio.css">
+    <link rel="stylesheet" href="css/apuntes.css">
+    <link rel="stylesheet" href="css/mobile/mobile-app.css">
+    <link rel="stylesheet" href="css/mobile/mobile-navbar.css">
+    <link rel="stylesheet" href="css/mobile/mobile-malla.css">
+</head>
+
+<body>
+    <!--contenedor principal y central de la aplicacion-->
+    <div id="app-shell">
+        <!--========sidebar izquierdo=======-->
+        <aside id="sidebar-izq">
+            <div class="sidebar-brand">
+                <img class="perfil-icon" src="logo avrzc web.png" alt="ASEAC Logo" onerror="this.src='avalgar.ico'">
+                <div class="brand-text">
+                    <span class="brand-name">ASEAC</span>
+                    <span class="brand-sub">A-RZC</span>
+                </div>
+            </div>
+            <div class="texto-vertical"> ASEAC </div>
+            <div id="sidebar-izq-footer"></div> <!--contenedor de el apoyo y la configuracion de color-->
+        </aside>
+        <!--contenedor de nivel academico 1, 2, 3 entre año-->
+        <aside id="niveles">
+            <div class="niveles-eyebrow"> Nivel </div>
+            <div id="niveles-body"></div>
+        </aside>
+        <!--========COLUMNA CENTRAL=======-->
+        <div id="app-columna-central">
+            <nav  class="navbar" aria-label="Navagacion principal">
+                <!--navbar izquierdo-->
+                <div class="navbar-left"> <!--cambiarlo a la izquierda-->
+                    <div class="logo">ASEAC <span class="logo-sub">A-RZC</span></div>
+                    <div class="dev-info-nav">
+                        <span>Desarrollado por <strong>AVALGAR</strong>--2026</span>
+                        <img src="avalgar.ico" alt="Logo Dev" class="logo-dev-nav">
+                        <button type="button" class="btn-apoyame">Apoyame</button>
+                    </div>
+                </div>
+
+                <!--Navbar derecho navegador de las  funcionalidades de la aplicacion-->
+                <div class="navbar-derecha">
+                    <div class="acciones-malla">
+                        <button type="button" id="btn-reiniciar" class="nav-btn nav-btn--danger" data-tip="Reiniciar-progreso">
+                            <i class="fas fa-redo-alt" aria-hidden="true"></i>
+                            <span>reiniciar</span>
+                        </button>
+
+                        <button type="button" id="btn-importar" class="nav-btn nav-btn--ghost" data-tip="Importar codigo">
+                            <i class="fas fa-file-import" aria-hidden="true"></i>
+                            <span>importar</span>
+                        </button>
+
+                        <button type="button" id="btn-exportar" class="nav-btn nav-btn--outline" data-tip="Exportar malla">
+                            <i class="fas fa-file-export" aria-hidden="true"></i>
+                            <span>exportar</span>
+                        </button>
+
+                        <button type="button" id="btn-abrir-horario" class="nav-btn nav-btn--primary" data-tip="Mi horario">
+                            <i class="fas fa-calendar-week" aria-hidden="true"></i>
+                            <span>Mi Horario</span>
+                        </button>
+
+                        <button type="button" id="btn-abrir-tareas" class="nav-btn nav-btn--ghost" data-tip="Tareas y Parciales">
+                            <i class="fas fa-tasks" aria-hidden="true"></i>
+                            <span>Tareas y Parciales</span>
+                        </button>
+
+                        <button type="button" id="btn-abrir-estudio" class="nav-btn nav-btn--ghost" data-tip="Modo Estudio">
+                            <i class="fas fa-brain" aria-hidden="true"></i>
+                            <span>Modo Estudio</span>
+                        </button>
+
+                        <button type="button" id="btn-abrir-apuntes" class="nav-btn nav-btn--ghost" data-tip="Gestor de Apuntes">
+                            <i class="fas fa-book-open" aria-hidden="true"></i>
+                            <span>Gestor de Apuntes</span>
+                        </button>
+                    </div>
+
+                    <!-- utilidades de colores y notificaciones-->
+                    <div id="menu-utilidades-wrapper" class="menu-utilidades-wrapper">
+                        <button type="button" class="nav-btn nav-btn--ghost" id="btn-menu-utilidades" aria-label="Abrir menu de utilidades">
+                            <i class="fas fa-bars" aria-hidden="true"></i>
+                            <span>Menu</span>
+                        </button>
+                        <div class="nav-utilidades oculto" id="nav-utilidades"></div>
+                    </div>
+                </div>
+            </nav>
+
+            <main>
+                <h1 id="titulo-malla-pantalla" class="titulo-seccion">MALLA CURRICULAR: Ingenieria de Sistemas</h1>
+                <!--linea de progreso-->
+                <div id="progreso-malla-inline" class="progreso-malla-inline">
+                    <div class="stat-inline">
+                        <span class="dot dot-aprobada" aria-hidden="true"></span>
+                        APROBADAS 
+                        <strong id="stat-aprobadas">0</strong>
+                    </div>
+
+                    <div class="stat-inline">
+                        <span class="dot dot-disponible" aria-hidden="true"></span>
+                        DISPONIBLES <strong id="stat-disponibles">0</strong>
+                    </div>
+
+                    <div class="stat-inline">
+                        <span class="dot dot-total" aria-hidden="true"></span>
+                        TOTAL
+                        <strong id="stat-total">0</strong>
+                    </div>
+
+                    <div class="barra-progreso-line">
+                        <div id="barra-progreso-fill" class="barra-fill-line"></div>
+                    </div>
+
+                    <div class="stat-porcentaje-inline" id="stat-porcentaje">0%</div>
+                </div>
+
+                <!--MALLA CURICULAR-->
+                <div class="contenedor-malla" id="contenedor-malla">
+                    <!--1er semestre-->
+                    <div class="columna-nivel">
+                        <h3>1er Semestre</h3>
+                        <div class="tarjeta-materia disponible" id="SIS-111">
+                            <div class="encabezado-materia">
+                                <span>SIS-111</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Programacion I
+                            </div>
+                        </div>
+
+                        <div class="tarjeta-materia disponible" id="MAT-113">
+                            <div class="encabezado-materia">
+                                <span>MAT-113</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Calculo I
+                            </div>
+                        </div>
+
+                        <div class="tarjeta-materia disponible" id="MAT-114">
+                            <div class="encabezado-materia">
+                                <span>MAT-114</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Algebra I
+                            </div>
+                        </div>
+
+                        <div class="tarjeta-materia disponible" id="FIS-115">
+                            <div class="encabezado-materia">
+                                <span>FIS-115</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Fisica I
+                            </div>
+                        </div>
+                    </div>
+                    <!--2do semestre-->
+
+                    <div class="columna-nivel">
+                        <h3>2do Semestre</h3>
+
+                        <div class="tarjeta-materia bloqueada" id="SIS-211" data-prerrequisitos='["SIS-111"]'>
+                            <div class="encabezado-materia">
+                                <span>SIS-211</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Programacion II
+                            </div>
+                        </div>
+                        <div class="tarjeta-materia bloqueada" id="MAT-212" data-prerrequisitos='["MAT-113"]'>
+                            <div class="encabezado-materia">
+                                <span>MAT-212</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Calculo II
+                            </div>
+                        </div>
+
+                        <div class="tarjeta-materia bloqueada" id="MAT-213" data-prerrequisitos='["MAT-114"]'>
+                            <div class="encabezado-materia">
+                                <span>MAT-213</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Algebra II
+                            </div>
+                        </div>
+
+                        <div class="tarjeta-materia bloqueada" id="FIS-215" data-prerrequisitos='["FIS-115"]'>
+                            <div class="encabezado-materia">
+                                <span>FIS-215</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Fisica II
+                            </div>
+                        </div>
+                    </div>
+                <!--3er  Semestre-->
+
+                    <div class="columna-nivel">
+                        <h3>3er Semestre</h3>
+
+                        <div class="tarjeta-materia bloqueada" id="EDA-312" data-prerrequisitos='["SIS-211", "MAT-212"]'>
+                            <div class="encabezado-materia">
+                                <span>EDA-312</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Estructura de Datos
+                            </div>
+                        </div>
+
+                        <div class="tarjeta-materia bloqueada" id="EST-315" data-prerrequisitos='["MAT-213"]'>
+                            <div class="encabezado-materia">
+                                <span>EST-315</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Estadistica I
+                            </div>
+                        </div>
+
+                        <div class="tarjeta-materia bloqueada" id="MAT-314" data-prerrequisitos='["MAT-114", "MAT-213"]'>
+                            <div class="encabezado-materia">
+                                <span>MAT-314</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Algebra Lineal II
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="columna-nivel">
+                        <h3>4to Semestre</h3>
+                        <div class="tarjeta-materia bloqueada" id="SIS-411" data-prerrequisitos='["SIS-211", "SIS-111"]'>
+                            <div class="encabezado-materia">
+                                <span>SIS-411</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Bases de Datos I
+                            </div>
+                        </div>
+
+                        <div class="tarjeta-materia bloqueada" id="ADS-412" data-prerrequisitos='["SIS-211", "EST-315"]'>
+                            <div class="encabezado-materia">
+                                <span>AYD-412</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Analisis y Diseño I
+                            </div>
+                        </div>
+
+                        <div class="tarjeta-materia bloqueada" id="EST-415" data-prerrequisitos='["EST-315"]'>
+                            <div class="encabezado-materia">
+                                <span>EST-413</span>
+                            </div>
+                            <div class="nombre-materia">
+                                Estadistica II
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <!--MATERIAS FUTURAS-->
+
+        <aside id="futuras">
+            <h3>Materias Futuras</h3>
+            <div id="futuras-body"></div>
+        </aside>
+        <!--========SIDEBAR DERECHO (ACCESOS DIRECTOS)=======-->
+        <aside id="sidebar-der">
+            <button type="button" class="accion-btn" data-tip="Reiniciar progreso" onclick="document.getElementById('btn-reiniciar').click()">
+                <i class="fas fa-redo-alt" aria-hidden="true"></i>
+                <span>Reiniciar</span>
+            </button>
+            <button type="button" class="accion-btn" data-tip="Importar código" onclick="document.getElementById('btn-importar').click()">
+                <i class="fas fa-file-import" aria-hidden="true"></i>
+                <span>Importar</span>
+            </button>
+            <button type="button" class="accion-btn" data-tip="Exportar malla" onclick="document.getElementById('btn-exportar').click()">
+                <i class="fas fa-file-export" aria-hidden="true"></i>
+                <span>Exportar</span>
+            </button>
+            <button type="button" class="accion-btn" data-tip="Mi Horario" onclick="document.getElementById('btn-abrir-horario').click()">
+                <i class="fas fa-calendar-week" aria-hidden="true"></i>
+                <span>Horario</span>
+            </button>
+            <button type="button" class="accion-btn" data-tip="Tareas y Parciales" onclick="document.getElementById('btn-abrir-tareas').click()">
+                <i class="fas fa-tasks" aria-hidden="true"></i>
+                <span>Tareas</span>
+            </button>
+            <button type="button" class="accion-btn" data-tip="Modo Estudio" onclick="document.getElementById('btn-abrir-estudio').click()">
+                <i class="fas fa-brain" aria-hidden="true"></i>
+                <span>Estudio</span>
+            </button>
+            <button type="button" class="accion-btn" data-tip="Gestor de Apuntes" onclick="document.getElementById('btn-abrir-apuntes').click()">
+                <i class="fas fa-book-open" aria-hidden="true"></i>
+                <span>Apuntes</span>
+            </button>
+        </aside>
+    </div>
+    <!--BOTONES FLOTANTES-->
+    <button id="btn-abrir-modal" class="btn-flotante" title="Crear Nueva Malla" aria-label="Crear Nueva Malla">
+        <span aria-hidden="true"><strong>+</strong></span>
+    </button>
+    <!--Modal del boton flotante, crear  nueva malla curricular-->
+
+    <div id="modal-malla" class="modal-fondo" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-malla">
+        <div class="modal-contenido">
+            <div class="modal-header">
+                <h3 id="titulo-modal-malla">Crear Nueva Malla Curricular</h3>
+            <button type="button" class="cerrar-modal" id="btn-cerrar-modal" aria-label="Cerrar ventana">&times;</button>
+            </div>
+            <!--paso para crear malla-->
+            <div id="modal-paso-1" class="modal-paso activo">
+                <div class="grupo-input">
+                    <label for="input-nombre-malla">
+                        Nombre de la carrera / Malla Curricular
+                    </label>
+                    <input type="text" id="input-nombre-malla" name="nombre-malla" placeholder="Ej. Ingenieria-Licenciatura">
+                </div>
+
+                <div class="fila-inputs">
+                    <div class="grupo-input">
+                        <label for="select-tipo-periodo">Tipo de Periodo Semestral/Anual</label>
+                        <select name="tipo-periodo" id="select-tipo-periodo">
+                            <option value="Semestre">Semestre</option>
+                            <option value="Año">Años</option>
+                            <!--No Conozco carreras trimestrales, pero si se que hay colegios con ese tipo de periodos. Asi que para las proximas actualizaciones pensare en un sistema
+                            implementado a ASEAC para facilitar el uso de estas herramientas dinamicas y tal vez basicas. -->
+                        </select>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label for="input-cantidad-periodos">Cantidad </label>
+                        <input type="number" id="input-cantidad-periodos" name="cantidad-periodos" min="1" max="14" value="1">
+                    </div>
+                </div>
+
+                <!--Despues de elegir la posicion de años/semestrales pasamosa lkas materias-->
+                <button type="button" id="btn-siguiente-paso" class="btn-primario">Siguiente paso</button>
+            </div>
+
+            <!--paso 2-->
+
+            <div id="modal-paso-2" class="modal-paso">
+                <p class="texto-instruccion" id="texto-instruccion-paso2">¿Cuántas materias tiene cada periodo de su malla?</p>
+                <div id="contenedor-periodos-dinamico" class="contenedor-scroll"></div>
+                <div class="botones-accion">
+                    <button type="button" id="btn-volver-paso" class="btn-secundario">Volver</button>
+                    <button type="button" id="btn-configurar-materias" class="btn-primario"> Configurar materias</button>
+                </div>
+            </div>
+
+            <!--paso 3 genear malla-->
+            
+            <div id="modal-paso-3" class="modal-paso">
+                <p class="texto-instruccion texto-instruccion--disponible"> Define las materias y sus <strong>Prerrequisitos</strong></p>
+                <div id="contenedor-materias-dinamico" class="contenedor-scroll"></div>
+
+                <div class="botones-accion">
+                    <button type="button" id="btn-volver-paso2" class="btn-secundario">Volver</button>
+                    <button type="button" id="btn-generar-malla-final" class="btn-primario btn-primario--aprobada">Generar Malla</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===========Modal : HORARIO===============-->
+    <div id="modal-horario" class="modal-fondo" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-horario">
+        <div class="modal-contenido horario-extra-ancho">
+            <div class="modal-header">
+                <h3 id="titulo-modal-horario">
+                    <i class="fas fa-calendar-alt" aria-hidden="true"></i> Planificador de Semestre - 2026
+                </h3>
+
+                <div class="modal-header-actions"> <!--********************-->
+                    
+                    <button type="button" id="btn-exportar-pdf" class="nav-btn nav-btn--outline">
+                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                        <span> PDF</span>
+
+                    </button>
+
+                    <button type="button" class="cerrar-modal" id="btn-cerrar-horario" aria-label="Cerrar ventana">
+                        &times;
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navegación móvil tipo tabs para Horario (solo visible en móviles) -->
+            <div class="mobile-tabs-horario">
+                <button type="button" class="tab-btn-horario activo" id="tab-btn-materias-horario">
+                    <i class="fas fa-book" aria-hidden="true"></i> <span>Materias</span>
+                </button>
+                <button type="button" class="tab-btn-horario" id="tab-btn-cuadricula-horario">
+                    <i class="fas fa-th" aria-hidden="true"></i> <span id="tab-label-cuadricula">Horario Semanal</span>
+                </button>
+            </div>
+
+            <!--Panel del control del horario y planificacion-->
+
+            <div class="horario-container-flex">
+                <div class="panel-seleccion-materias">
+                    <h4>Materias Disponibles</h4>
+                    <p class="instruccion-mini">Selecciona una materia y luego haz click en el horario</p>
+                    <div id="lista-materias-horario" class="scroll-v"></div>
+
+                    <button type="button" id="btn-limpiar-horario" class="btn-secundario">
+                        Limpiar Todo
+                    </button>
+                </div>
+
+                <div class="horario-cuadricula-wrap">
+                    <!-- Barra móvil con botón volver e indicador de materia seleccionada -->
+                    <div class="mobile-horario-nav">
+                        <button type="button" id="btn-volver-materias-horario" class="btn-volver-horario">
+                            <i class="fas fa-arrow-left" aria-hidden="true"></i> <span>Materias</span>
+                        </button>
+                        <div id="banner-materia-activa-mobile" class="banner-materia-mobile">
+                            <span id="txt-materia-activa-mobile">Toca para asignar</span>
+                        </div>
+                    </div>
+
+                    <div class="calendar-espacio">
+                        <div class="calendar-grid" id="grid-horario-modal"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================Modal Tareas y parciales================-->
+
+    <div id="modal-tareas" class="modal-fondo" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-tareas">
+        <div class="modal-contenido modal-contenido--tareas">
+            <div class="modal-header">
+                <h3 id="titulo-modal-tareas">
+                    <i class="fas fa fa-tasks" aria-hidden="true"></i>
+                        Tareas &amp; Parciales
+                </h3>
+                <button type="button" class="cerrar-modal" id="btn-cerrar-tareas" aria-label="Cerrar ventana">
+                    &times;
+                </button>
+            </div>
+
+            <!-- Navegación móvil tipo tabs (solo visible en móviles) -->
+            <div class="mobile-tabs-tareas">
+                <button type="button" class="tab-btn-tarea activo" id="tab-btn-calendario">
+                    <i class="fas fa-calendar-alt" aria-hidden="true"></i> <span>Calendario</span>
+                </button>
+                <button type="button" class="tab-btn-tarea" id="tab-btn-eventos">
+                    <i class="fas fa-calendar-check" aria-hidden="true"></i> <span id="tab-label-eventos">Tareas y Eventos</span>
+                </button>
+            </div>
+
+            <div id="tareas-layout"> <!--calendario de tareas y parciales-->
+                <div id="cal-panel"> <!--*********************-->
+
+                    <div id="cal-selector-row"> <!--*******************************-->
+                        <button type="button" id="cal-prev" aria-label="Mes anterior"> &#8592;</button>
+                        <div class="cal-nav-labels">
+                            <select id="cal-mes-select" aria-label="Seleccionar mes"></select>
+                            <select id="cal-ano-select" aria-label="Seleccionar año"></select> <!--se leera mal pero el taipeo es lo importante-->
+                        </div>
+                        <button type="button" id="cal-next" aria-label="Mes siguiente"> &#8594; </button>
+                    </div>
+
+                    <div id="cal-dias-semana" aria-hidden="true">
+                        <span>Do</span>
+                        <span>Lu</span>
+                        <span>Ma</span>
+                        <span>Mi</span>
+                        <span>Ju</span>
+                        <span>Vi</span>
+                        <span>Sa</span>
+                    </div>
+                    <div id="cal-grid"></div>
+
+                    <!-- Pie de calendario móvil con sugerencia y botón de acceso rápido -->
+                    <div class="mobile-cal-footer">
+                        <div class="mobile-cal-hint">
+                            <i class="fas fa-hand-pointer" aria-hidden="true"></i>
+                            <span>Toca cualquier día para ver o añadir eventos</span>
+                        </div>
+                        <button type="button" id="btn-ir-hoy" class="btn-ir-hoy-mobile">
+                            <i class="fas fa-crosshairs" aria-hidden="true"></i> Ir a hoy
+                        </button>
+                    </div>
+                </div>
+
+                <!--Eventos-->
+
+                <div id="tareas-side">
+                    <!-- Barra móvil para volver a la vista del calendario -->
+                    <div class="mobile-tareas-back-nav">
+                        <button type="button" id="btn-volver-calendario" class="btn-volver-calendario">
+                            <i class="fas fa-arrow-left" aria-hidden="true"></i> <span>Ver Calendario</span>
+                        </button>
+                    </div>
+
+                    <div id="tareas-dia-titulo">
+                        Selecciona un dia para guardar tus pendientes futuros
+                    </div>
+                    <div id="form-evento" hidden>
+                        <div class="fila-inputs">
+                            <div class="grupo-input">
+                                <label for="ev-hora">
+                                    Hora
+                                    <input type="time" id="ev-hora" name="ev-hora" value="08:00">
+                                </label>
+                            </div>
+                            <div class="grupo-input">
+                                <label for="ev-tipo">Tipo</label>
+                                <select name="ev-tipo" id="ev-tipo">
+                                    <option value="tarea">Tarea</option>
+                                    <option value="parcial">Parcial</option>
+                                    <option value="proyecto">Proyecto</option>
+                                    <option value="examen">Examen</option>
+                                    <option value="presentacion">Presentación</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grupo-input">
+                            <label for="ev-materia">Materia</label>
+                            <select name="ev-materia" id="ev-materia">
+                                <option value="" disabled selected>- Selecciona una materia -</option>
+                            </select>
+                        </div>
+
+                        <div class="grupo-input">
+                            <label for="ev-desc">Descripcion</label>
+                            <input type="text" id="ev-desc" name="ev-desc" placeholder="Ej. Parcial-Tarea 1">
+                        </div>
+                        <button type="button" id="btn-guardar-evento" class="btn-primario">
+                            <i class="fas fa-plus" aria-hidden="true"></i> Guardar
+                        </button>
+                    </div>
+
+                    <div id="lista-dia-eventos"></div>
+                    <div id="proximas-wrap">
+                        <div class="proximas-titulo">
+                            Proximos eventos
+                        </div>
+                        <div id="lista-proximas"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--================MODAL: modo Estudio=====================-->
+
+    <div id="modal-estudio" class="modal-fondo" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-estudio">
+        <div class="modal-contenido modal-contenido--estudio">
+            <div class="modal-header">
+                <h3 id="titulo-modal-estudio">
+                    <i class="fas fa-brain" aria-hidden="true"></i>
+                    Modo Estudio
+                </h3>
+                <button type="button" class="cerrar-modal" id="btn-cerrar-estudio" aria-label="Cerrar ventana">
+                    &times;
+                </button>
+            </div>
+            <div id="estudio-layout">
+                <div id="estudio-timer-panel">
+                    <div id="timer-modos">
+                        <button type="button" class="tmodo activo" data-min="25" data-label="Pomodoro">
+                            25 min
+                        </button>
+                        <button type="button" class="tmodo" data-min="15" data-label="Descanso">
+                            15 min
+                        </button>
+                        <button type="button" class="tmodo" data-min="30" data-label="Descanso largo">
+                            30 min
+                        </button>
+                        <button type="button" class="tmodo" data-min="60" data-label="Sesion larga">
+                            60 min
+                        </button>
+                    </div>
+                    <div id="timer-wrap"> <!--https://diegologs.com/reloj-analogico-javascript/ no con manecillas, pero de igual forma sirvio-->
+                        <svg id="timer-svg" viewBox="0 0 220 220" width="220" height="220" aria-hidden="true">
+                            <circle class="tring-bg" cx="110" cy="110" r="96"/>
+                            <circle class="tring-fg" id="tring-fg" cx="110" cy="110" r="96"/>
+                        </svg>
+                        <div id="timer-inner">
+                            <div id="timer-tiempo">
+                                25:00
+                            </div>
+                            <div id="timer-label-txt">
+                                Cronómetro
+                            </div>
+                        </div>
+                    </div>
+                    <div id="timer-controles">
+                        <button type="button" id="btn-timer-reset" aria-label="Reiniciar temporizador">
+                            <i class="fas fa-redo" aria-hidden="true">
+                            </i>
+                        </button>
+                        <button type="button" id="btn-timer-play" aria-label="Iniciar o pausar temporizador">
+                            <i class="fas fa-play" aria-hidden="true">
+                            </i>
+                        </button>
+                    </div>
+                    <div id="timer-sesiones-hoy">
+                        Sesiones hoy:
+                        <strong id="ses-num">
+                            0
+                        </strong>
+                    </div>
+                </div>
+                <div id="estudio-side">
+                    <div class="estudio-box">
+                        <h4>
+                            <i class="fas fa-sticky-note"aria-hidden="true"></i>
+                            Notas rápidas
+                        </h4>
+                        <textarea id="estudio-notas" placeholder="Anota aqui lo que estudias como tambien las notas importantes de tus materias... No olvides que el estudio es importante pero tambien el descanso :)"></textarea>
+                    </div>
+                    <div class="estudio-box">
+                        <h4>
+                            <i class="fas fa-list-check" aria-hidden="true"></i>
+                            Pendientes próximos
+                        </h4>
+                        <div id="estudio-pendientes"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-ia" class="modal-fondo" role="dialog" aria-modal="true" aria-label="ASEAC IA">
+        <div class="modal-contenido" style="text-align:center; padding:40px 28px;">
+            <div class="modal-header">
+                <h3 id="titulo-modal-ia">
+                    <i class="fas fa-robot" aria-hidden="true"></i>
+                    ASEAC-IA
+                </h3>
+                <button type="button" class="cerrar-modal" id="btn-cerrar-ia" aria-label="Cerrar ventana">&times;</button>
+            </div>
+            <i class="fas fa-robot" style="font-size:3em; color:var(--ct-acento); opacity:0.4; margin:20px 0 16px; display:block;"></i>
+            <p style="color:var(--texto-secundario); font-size:0.9em; line-height:1.7;">
+                La asistente acompañada de la inteligencia artificial de Gemini sobre el sistema ASEAC está actualmente en desarrollo.<br>
+                Mas detalles proximamente sobre lo que pienso implementar con la ia y nuestros modos de estudio
+                de las diferentes materias de tu malla curricular. Espero su energico apoyo para seguir adelante con este 
+                proyecto que tiene como objetivo ayudarte en tu vida academica. 
+            </p>
+            <p style="margin-top:12px; font-size:0.75em; color:var(--ct-borde); text-transform:uppercase; letter-spacing:1.5px;">En Desrrollo... :D</p>
+        </div>
+    </div>
+    
+    <!-- MODAL: Apuntes-->
+    <div id="modal-apuntes" class="modal-fondo" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-apuntes">
+        <div class="modal-contenido modal-contenido--apuntes">
+            <div class="modal-header">
+                <h3 id="titulo-modal-apuntes">
+                    <i class="fas fa-book-open" aria-hidden="true"></i>
+                    Libreta de apuntes
+                </h3>
+                <button type="button" class="cerrar-modal" id="btn-cerrar-apuntes" aria-label="Cerrar ventana">
+                    &times;
+                </button>
+            </div>
+            <div id="apunte-layout">
+                <!--panel de navegacion-->
+                <div id="apuntes-lista-panel">
+                    <button type="button" id="btn-nuevo-apunte" class="btn-primario">
+                        <i class="fas fa-plus" aria-hidden="true"></i>Nuevo Apunte
+                    </button>
+                    <div id="apuntes-lista" class="scroll-v">
+                        <div class="apunte-vacio-msg">
+                            Aun no hay apuntes... a trabajar! :)
+                        </div>
+                    </div>
+                </div>
+
+                <!--editor de apuntes-->
+                <div id="apuntes-editor-panel" hidden>
+                    <div class="editor-header">
+                        <div class="mobile-editor-nav">
+                            <button type="button" id="btn-volver-apuntes" class="btn-volver-apuntes" aria-label="Volver a la lista de apuntes">
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                                <span>Notas</span>
+                            </button>
+                        </div>
+                        <input type="text" id="apunte-titulo" class="input-transparente" placeholder="Título del apunte..." autocomplete="off">
+                        <div class="editor-header-actions">
+                            <select id="apunte-materia" title="Vincular a Materia">
+                                <option value="">General (Sin Materia)</option>
+                            </select>
+
+                            <button type="button" id="btn-guardar-apunte" class="btn-primario">
+                                <i class="fas fa-save" aria-hidden="true"></i> Guardar
+                            </button>
+
+                            <button type="button" id="btn-borrar-apunte" class="btn-eliminar-apunte" title="Borrar Apunte" aria-label="Borrar Apunte">
+                                <i class="fas fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Barra de herramientas del editor (Rich Text Toolbar) -->
+                    <div class="editor-toolbar" id="editor-toolbar">
+                        <button type="button" class="tb-btn" data-cmd="bold" title="Negrita (Ctrl+B)">
+                            <i class="fas fa-bold"></i>
+                        </button>
+                        <button type="button" class="tb-btn" data-cmd="italic" title="Cursiva (Ctrl+I)">
+                            <i class="fas fa-italic"></i>
+                        </button>
+                        <button type="button" class="tb-btn" data-cmd="underline" title="Subrayado (Ctrl+U)">
+                            <i class="fas fa-underline"></i>
+                        </button>
+                        <button type="button" class="tb-btn" data-cmd="strikeThrough" title="Tachado">
+                            <i class="fas fa-strikethrough"></i>
+                        </button>
+                        <div class="tb-divider"></div>
+                        <button type="button" class="tb-btn" data-cmd="formatBlock" data-val="H2" title="Título principal">
+                            <i class="fas fa-heading"></i>
+                        </button>
+                        <button type="button" class="tb-btn" data-cmd="formatBlock" data-val="BLOCKQUOTE" title="Cita o nota importante">
+                            <i class="fas fa-quote-right"></i>
+                        </button>
+                        <div class="tb-divider"></div>
+                        <button type="button" class="tb-btn" data-cmd="insertUnorderedList" title="Lista con viñetas">
+                            <i class="fas fa-list-ul"></i>
+                        </button>
+                        <button type="button" class="tb-btn" data-cmd="insertOrderedList" title="Lista numerada">
+                            <i class="fas fa-list-ol"></i>
+                        </button>
+                        <div class="tb-divider"></div>
+                        <button type="button" class="tb-btn tb-highlight-btn" id="btn-resaltar" title="Resaltar texto">
+                            <i class="fas fa-highlighter"></i>
+                        </button>
+                        <label for="input-subir-imagen" class="tb-btn tb-btn-img" title="Adjuntar foto o imagen al apunte">
+                            <i class="fas fa-camera"></i>
+                            <span>Adjuntar Foto</span>
+                        </label>
+                        <input type="file" id="input-subir-imagen" accept="image/*" multiple style="display:none !important;">
+                        <div class="tb-divider"></div>
+                        <button type="button" class="tb-btn" data-cmd="removeFormat" title="Limpiar formato">
+                            <i class="fas fa-remove-format"></i>
+                        </button>
+                    </div>
+
+                    <div class="editor-cuerpo scroll-v">
+                        <!-- Canvas editable estilo cuaderno -->
+                        <div id="apunte-editor-canvas" class="apunte-editor-canvas" contenteditable="true" data-placeholder="Escribe tus notas, fórmulas, resúmenes o inserta fotos aquí..."></div>
+                        <textarea id="apunte-texto" style="display:none;"></textarea>
+
+                        <div class="zona-imagenes">
+                            <div class="imagenes-header">
+                                <h4>
+                                    <i class="fas fa-images" aria-hidden="true"></i> Fotos e Imágenes Adjuntas (<span id="count-imagenes">0</span>)
+                                </h4>
+                                <label for="input-subir-imagen-galeria" class="btn-subir-img">
+                                    <i class="fas fa-plus" aria-hidden="true"></i> Cargar Foto
+                                </label>
+                                <input type="file" id="input-subir-imagen-galeria" accept="image/*" multiple style="display:none !important;">
+                            </div>
+                            <div id="apunte-galeria" class="galeria-grid"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--placeholder-->
+
+                <div id="apuntes-placeholder">
+                    <i class="fas fa-book-reader"></i>
+                    <p> Seleccione un apunte o cree uno nuevo para empezar a escribir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MODAL: Exportar Global-->
+
+    <div id="modal-exportar-global" class="modal-fondo" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-export-global">
+        <div class="modal-contenido modal-contenido--exportar">
+            <div class="modal-header">
+                <h3 id="titulo-modal-export-global">
+                    <i class="fas fa-file-export" aria-hidden="true"></i> Crear Respaldo
+                </h3>
+                <button type="button" class="cerrar-modal" id="btn-cerrar-export-global" aria-label="Cerrar ventana">
+                    &times;
+                </button>
+            </div>
+            <p class="modal-descripcion">
+                Seleccioa que elementos desea incluir en el archivo de Respaldo:
+            </p>
+            <div class="opciones-backup">
+                <label>
+                    <input type="checkbox" id="chk-exp-malla" checked>
+                    Malla Curricular y Progreso
+                </label>
+                <label>
+                    <input type="checkbox" id="chk-exp-horario" checked>
+                    Horario y clases
+                </label>
+                <label>
+                    <input type="checkbox" id="chk-exp-tareas" checked>
+                    Tareas y eventos proximos
+                </label>
+                <label>
+                    <input type="checkbox" id="chk-exp-apuntes" checked>
+                    Apuntes
+                </label>
+                <label>
+                    <input type="checkbox" id="chk-exp-notas" checked>
+                    Notas de estudio
+                </label>
+            </div>
+            <button type="button" id="btn-generar-backup" class="btn-primario">
+                <i class="fas fa-download" aria-hidden="true"></i>
+                Descargar Respaldo ASEAC
+            </button>
+        </div>
+    </div>
+
+    <!--MODAL: importar global-->
+
+    <div id="modal-importar-global" class="modal-fondo" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-import-global">
+        <div class="modal-contenido modal-contenido--importar">
+            <div class="modal-header">
+                <h3 id="titulo-modal-import-global">
+                    <i class="fas fa-file-import" aria-hidden="true"></i>Restaurar Respaldo
+                </h3>
+                <button type="button" class="cerrar-modal" id="btn-cerrar-import-global" aria-label="Cerrar ventana">
+                    &times;
+                </button>
+            </div>
+            <div id="zona-drop-backup" class="zona-drop-backup" role="button" tabindex="0" aria-label="Seleccionar archivo de respaldo">
+                <i class="fas fa-upload" aria-hidden="true"></i>
+                <p>Haz clic para buscar o arrastra aqui tu archivo <b>Respaldo_ASEAC.json</b></p>
+                <input type="file" id="input-archivo-backup" accept=".json">
+            </div>
+            <div id="panel-restauracion-opciones" hidden>
+                <h4>
+                    Archivo detectado.
+                    ¿Qué deseas sobreescribir?
+                </h4>
+                <div id="chk-grupo-importar" class="opciones-backup">
+                    <label id="lbl-imp-malla">
+                        <input type="checkbox" id="chk-imp-malla" checked>
+                        Malla Curricular y Progreso
+                    </label>
+                    <label id="lbl-imp-horario">
+                        <input type="checkbox" id="chk-imp-horario" checked>
+                        Horario y clases
+                    </label>
+                    <label id="lbl-imp-tareas">
+                        <input type="checkbox" id="chk-imp-tareas" checked>
+                        Tareas y eventos proximos
+                    </label>
+                    <label id="lbl-imp-apuntes">
+                        <input type="checkbox" id="chk-imp-apuntes" checked>
+                        Apuntes
+                    </label>
+                    <label id="lbl-imp-notas">
+                        <input type="checkbox" id="chk-imp-notas" checked>
+                        Notas de estudio
+                    </label>
+                </div>
+                <button type="button" id="btn-ejecutar-restauracion" class="btn-primario">
+                    <i class="fas fa-sync-alt" aria-hidden="true"></i> Proceder a Restaurar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--sanitazacion global-->
+    <script>
+        window.escapeHTML = function (str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>"']/g,function (sub) {
+                    return {'&': '&amp;','<': '&lt;','>': '&gt;','"': '&quot;',"'": '&#39;'}[sub];
+                }
+            );
+        };
+    </script>
+
+    <!--CORE JS============================================================ -->
+    <script src="js/core/utils.js"></script>
+    <script src="js/core/db.js"></script>
+    <script src="js/core/backup.js"></script>
+    <script src="js/core/restaurar.js"></script>
+    <script src="js/core/storage.js"></script>
+    <script src="js/core/theme.js"></script>
+    <script src="js/core/pwa-install.js"></script>
+
+    <!-- ============================================================
+         MÓDULOS
+         ============================================================ -->
+    <script src="js/modules/apuntes.js"></script>
+    <script src="js/modules/estudio.js"></script>
+    <script src="js/modules/horario.js"></script>
+    <script src="js/modules/malla.js"></script>
+    <script src="js/modules/modales.js"></script>
+    <script src="js/modules/tareas.js"></script>
+    <!-- ============================================================
+         MÓDULOS MÓVILES
+         ============================================================ -->
+    <script src="js/mobile/mobile-malla.js"></script>
+    <script src="js/core/panel-lateral.js"></script>
+    <script src="js/mobile/mobile-navbar.js"></script>
+    <script src="js/mobile/mobile-init.js"></script>
+    <!-- ============================================================
+         ORQUESTADOR PRINCIPAL
+         ============================================================ -->
+    <script src="js/app.js"></script>
+    <!-- ============================================================
+         COMPATIBILIDAD
+         ============================================================ -->
+    <script>
+        /*
+         * Mantener el comportamiento existente:
+         *
+         * #menu-utilidades-wrapper
+         * #btn-menu-utilidades
+         * .btn-apoyame
+         *
+         * continúan siendo exactamente los mismos elementos.
+         */
+        const sidebarFooter =
+            document.getElementById('sidebar-izq-footer');
+        const menuUtilidades =
+            document.getElementById('menu-utilidades-wrapper');
+        const btnApoyo =
+            document.querySelector('.btn-apoyame');
+        if (sidebarFooter && menuUtilidades) {
+            sidebarFooter.appendChild(menuUtilidades);
+        }
+        if (sidebarFooter && btnApoyo) {
+            sidebarFooter.appendChild(btnApoyo);
+        }
+    </script>
+
+    <!--js-->
+    
+</body>
+</html>

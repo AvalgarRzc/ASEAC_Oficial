@@ -1,0 +1,294 @@
+#ev-materia {
+    width: 100%;
+    background: var(--desplegable-fondo, var(--ct-panel));
+    color: var(--texto-principal);
+    border: 1px solid var(--ct-borde);
+    border-radius: 4px;
+    padding: 7px 10px;
+    font-size: .85rem;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+    transition: border-color .2s;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath fill='%231565c0' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+}
+#ev-materia:focus {
+    border-color: var(--ct-acento);
+    box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.15);
+}
+#ev-materia optgroup {
+    color: var(--ct-acento);
+    font-weight: 700;
+    font-size: .78rem;
+    background: var(--desplegable-fondo, var(--ct-panel));
+}
+#ev-materia option {
+    color: var(--texto-principal);
+    background: var(--desplegable-fondo, var(--ct-panel));
+}
+
+#modal-tareas .modal-contenido {
+    background: var(--ct-panel) !important;
+    border: 1px solid var(--ct-borde) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    border-radius: 8px;
+}
+
+#modal-tareas .modal-header {
+    background: var(--ct-panel) !important;
+    border-bottom: 1px solid var(--ct-borde) !important;
+}
+
+#modal-tareas .modal-header h3 {
+    color: var(--ct-acento) !important;
+}
+
+#modal-tareas .cerrar-modal {
+    color: var(--texto-secundario) !important;
+    border: 1px solid var(--ct-borde) !important;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+#modal-tareas .cerrar-modal:hover {
+    color: var(--texto-principal) !important;
+    background: var(--ct-hover-bg, rgba(0, 0, 0, 0.05)) !important;
+}
+
+#cal-panel {
+    background: var(--ct-panel) !important;
+    border-right: 1px solid var(--ct-borde) !important;
+}
+
+#tareas-side {
+    background: var(--ct-panel) !important;
+}
+
+#cal-selector-row button {
+    background: var(--ct-hover-bg, rgba(0, 0, 0, 0.04)) !important;
+    border: 1px solid var(--ct-borde) !important;
+    color: var(--texto-principal) !important;
+    border-radius: 4px;
+}
+
+#cal-selector-row button:hover {
+    background: var(--ct-acento) !important;
+    color: #ffffff !important;
+    border-color: var(--ct-acento) !important;
+}
+
+#cal-mes-select {
+    color: var(--ct-acento) !important;
+    font-weight: 700;
+}
+
+#cal-ano-select {
+    color: var(--texto-secundario) !important;
+    font-weight: 600;
+}
+
+#cal-mes-select option,
+#cal-ano-select option {
+    background: var(--desplegable-fondo, var(--ct-panel));
+    color: var(--texto-principal);
+}
+
+#cal-dias-semana {
+    border-bottom: 1px solid var(--ct-borde);
+    padding-bottom: 4px;
+}
+
+#cal-dias-semana span {
+    color: var(--texto-secundario) !important;
+    font-weight: 700;
+    opacity: 0.9;
+}
+
+.cal-celda {
+    border-radius: 6px;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.cal-celda:not(.vacia):hover {
+    background: var(--ct-hover-bg, rgba(21, 101, 192, 0.08)) !important;
+}
+
+.cal-num {
+    color: var(--texto-principal) !important;
+    font-weight: 600;
+}
+
+.cal-celda:not(.vacia):hover .cal-num {
+    color: var(--ct-acento) !important;
+}
+
+.cal-celda.hoy {
+    background: var(--ct-hover-bg, rgba(21, 101, 192, 0.1)) !important;
+}
+
+.cal-celda.hoy::after {
+    border: 1.5px solid var(--ct-acento) !important;
+    border-radius: 6px;
+}
+
+.cal-celda.hoy .cal-num {
+    color: var(--ct-acento) !important;
+    font-weight: 800;
+}
+
+.cal-celda.seleccionado {
+    background: var(--ct-acento) !important;
+    box-shadow: 0 2px 8px rgba(21, 101, 192, 0.35) !important;
+}
+
+.cal-celda.seleccionado .cal-num {
+    color: #ffffff !important;
+    font-weight: 800;
+}
+
+.cal-dot {
+    background: var(--ct-acento) !important;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+}
+
+.cal-celda.seleccionado .cal-dot {
+    background: #ffffff !important;
+}
+
+#tareas-dia-titulo {
+    color: var(--texto-principal) !important;
+    border-bottom: 1px solid var(--ct-borde) !important;
+    font-weight: 700;
+}
+
+#tareas-dia-titulo::before {
+    color: var(--ct-acento) !important;
+}
+
+#form-evento {
+    border-bottom: 1px solid var(--ct-borde) !important;
+}
+
+#form-evento .grupo-input label {
+    color: var(--texto-secundario) !important;
+    font-weight: 700;
+}
+
+#form-evento .grupo-input input,
+#form-evento .grupo-input select {
+    background: var(--desplegable-fondo, var(--ct-panel)) !important;
+    border: 1px solid var(--ct-borde) !important;
+    color: var(--texto-principal) !important;
+    border-radius: 4px;
+}
+
+#form-evento .grupo-input input:focus,
+#form-evento .grupo-input select:focus {
+    border-color: var(--ct-acento) !important;
+}
+
+#form-evento .grupo-input select option {
+    background: var(--desplegable-fondo, var(--ct-panel));
+    color: var(--texto-principal);
+}
+
+#btn-guardar-evento {
+    background: var(--ct-acento) !important;
+    color: #ffffff !important;
+    border-radius: 4px;
+    font-weight: 700;
+    transition: opacity 0.15s ease;
+}
+
+#btn-guardar-evento:hover {
+    opacity: 0.9;
+}
+
+.ev-item {
+    background: var(--ct-hover-bg, rgba(0, 0, 0, 0.02)) !important;
+    border: 1px solid var(--ct-borde) !important;
+    border-radius: 6px;
+}
+
+.ev-hora {
+    background: rgba(21, 101, 192, 0.12) !important;
+    color: var(--ct-acento) !important;
+    font-weight: 700;
+    border-radius: 4px;
+}
+
+.ev-tipo {
+    background: var(--ct-hover-bg, rgba(0, 0, 0, 0.06)) !important;
+    color: var(--texto-secundario) !important;
+    border-radius: 3px;
+}
+
+.ev-mat {
+    color: var(--texto-principal) !important;
+}
+
+.ev-desc {
+    color: var(--texto-secundario) !important;
+}
+
+.ev-del {
+    color: var(--texto-secundario) !important;
+}
+
+.ev-del:hover {
+    color: #ef4444 !important;
+    background: rgba(239, 68, 68, 0.1) !important;
+}
+
+.ev-vacio {
+    color: var(--texto-secundario) !important;
+    font-weight: 500;
+}
+
+#proximas-wrap {
+    border-top: 1px solid var(--ct-borde) !important;
+}
+
+.proximas-titulo {
+    color: var(--texto-secundario) !important;
+    font-weight: 700;
+}
+
+.prox-item {
+    color: var(--texto-principal) !important;
+}
+
+.prox-badge {
+    background: var(--ct-hover-bg, rgba(0, 0, 0, 0.04)) !important;
+    border: 1px solid var(--ct-borde) !important;
+    color: var(--texto-secundario) !important;
+    border-radius: 4px;
+}
+
+.prox-badge.urg {
+    color: #d97706 !important;
+    background: rgba(217, 119, 6, 0.12) !important;
+    border-color: rgba(217, 119, 6, 0.3) !important;
+}
+
+.prox-info {
+    color: var(--texto-principal) !important;
+}
+
+.prox-info b {
+    color: var(--ct-acento) !important;
+}
+
+.mobile-tabs-tareas,
+.mobile-tareas-back-nav,
+.btn-volver-calendario,
+.mobile-cal-footer {
+    display: none !important;
+}

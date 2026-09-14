@@ -1,0 +1,284 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--ct-fondo);
+
+    background-image: radial-gradient(var(--ct-pattern) 1px, transparent 1px);
+    background-size: 26px 26px;
+    background-position: -1px -1px;
+    color: var(--texto-principal);
+    display: block;
+}
+
+main{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--ct-borde) transparent;
+}
+
+::-webkit-scrollbar{ width: 4px; height: 4px; }
+::-webkit-scrollbar-track{background: transparent;}
+::-webkit-scrollbar-thumb{ background: var(--ct-acento); border-radius: 4px;}
+::-webkit-scrollbar-thumb:hover{ background: var(--ct-acento);}
+
+.pwa-banner {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    max-width: 440px;
+    background: rgba(18, 22, 30, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(0, 229, 255, 0.25);
+    border-radius: 16px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 229, 255, 0.1);
+    z-index: 990;
+    animation: pwaSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 768px) {
+    .pwa-banner {
+        bottom: 80px; 
+    }
+}
+
+@keyframes pwaSlideUp {
+    from { transform: translate(-50%, 40px); opacity: 0; }
+    to   { transform: translate(-50%, 0); opacity: 1; }
+}
+
+.pwa-banner-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.pwa-banner-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.pwa-banner-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.pwa-banner-title {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pwa-banner-sub {
+    font-size: 11.5px;
+    color: #94a3b8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pwa-banner-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.pwa-btn-install {
+    background: linear-gradient(135deg, #00e5ff, #0099ff);
+    color: #050505;
+    font-weight: 700;
+    font-size: 13px;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pwa-btn-install:active {
+    transform: scale(0.96);
+}
+
+.pwa-btn-close {
+    background: transparent;
+    border: none;
+    color: #64748b;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.15s ease;
+}
+
+.pwa-btn-close:hover {
+    color: #f1f5f9;
+}
+
+.pwa-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 10005;
+    box-sizing: border-box;
+    animation: pwaFadeIn 0.2s ease-out;
+}
+
+@keyframes pwaFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.pwa-modal-card {
+    background: #11141a;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 420px;
+    padding: 24px;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 229, 255, 0.08);
+    box-sizing: border-box;
+    animation: pwaScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pwaScaleUp {
+    from { transform: scale(0.92); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+.pwa-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.pwa-modal-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+}
+
+.pwa-modal-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #f8fafc;
+    flex: 1;
+}
+
+.pwa-modal-close {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 26px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+}
+
+.pwa-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.pwa-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 12px 14px;
+}
+
+.pwa-step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(0, 229, 255, 0.15);
+    color: #00e5ff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.pwa-step-desc {
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: #cbd5e1;
+}
+
+.pwa-step-desc strong {
+    color: #fff;
+}
+
+.pwa-highlight-icon {
+    color: #00e5ff;
+    margin: 0 2px;
+}
+
+.pwa-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pwa-modal-btn-entendido {
+    width: 100%;
+    background: linear-gradient(135deg, #00e5ff, #0099ff);
+    color: #050505;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+}
+
+.pwa-modal-btn-entendido:active {
+    opacity: 0.9;
+}
